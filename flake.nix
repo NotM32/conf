@@ -39,8 +39,16 @@
           # Desktop
           phoenix =
             { hardwareConfig = [ ./machines/phoenix ];
-              systemConfig = [ ./system ];
+              systemConfig =
+                [ # Bootloader and Disks specific to this system
+                  ./system/boot/uefi.nix
+
+                  # More userlandish profile
+                  ./system/october.nix
+
+                ];
               hmUsers = users;
+              deployUser = "m32";
             };
 
           # T430 laptop
@@ -48,6 +56,7 @@
             { hardwareConfig = [ ./machines/phoenix ];
               systemConfig = [ ./system ];
               hmUsers = users;
+              deployUser = "m32";
             };
         };
     in
@@ -60,7 +69,7 @@
         nixosConfigurations = util.makeSystemConfigurations hosts;
 
         # * deploy-rs outputs
-        deploy.nodes = util.makeDeployNodes hosts;
+        deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
 
         inherit hosts users util;
       };

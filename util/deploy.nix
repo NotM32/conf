@@ -1,24 +1,23 @@
-{ inputs, util, ... }:
+{ inputs, util ? (import ./default.nix), ... }:
 let
   deploy = inputs.deploy;
 in
 rec {
-  makeDeployNode = {deployUser ? "root", system ? "x86_64-linux", hostname ? "nixos", nixosSystem, ...}:
+  makeDeployNode = {deployUser ? "root", system ? "x86_64-linux", hostName ? "nixos", remoteBuild ? false, nixosSystem, ...}:
     {
-      "${hostname}".profiles = {
-        profiles = {
-          hardware = {
-            path = deploy.lib."${system}".activate.nixos nixosSystem;
-          };
+      inherit remoteBuild;
 
-          system = {
+      user = deployUser;
 
-          };
+      profiles = {
+        # hardware = { };
 
-          home = {
-
-          };
+        system = {
+          path = deploy.lib."${system}".activate.nixos nixosSystem;
         };
+
+        # home = { };
+
       };
     };
 
