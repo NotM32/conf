@@ -80,7 +80,8 @@
   # Containers
   virtualisation.podman.enable   = true;
 
-  system.copySystemConfiguration = true;
+  # Incompatible with pure mode flakes
+  system.copySystemConfiguration = false;
 
   system.stateVersion = "22.11"; # Did you read the comment?
 
