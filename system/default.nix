@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ];
-
   # Networking
   networking.networkmanager.enable = true;
 
@@ -33,7 +31,7 @@
 
   security.pam.services = {
     login.u2fAuth = true;
-    sudo.u2fAuth  = false;
+    sudo.u2fAuth  = true;
   };
 
   security.pam.yubico = {

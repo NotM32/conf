@@ -2,15 +2,17 @@
   description = "m32.srv and system configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
+    nixpkgs.url = github:nixos/nixpkgs;
+    nur.url = github:nix-community/NUR;
 
-    deploy.url = "github:serokell/deploy-rs";
+    home-manager.url = github:nix-community/home-manager;
+
+    deploy.url = github:serokell/deploy-rs;
 
   };
 
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, ... }:
     # Variables in the let scope are used for composing the actual user configurations,
     # host configuration, hardware configurations, deploy nodes etc.
 
@@ -42,6 +44,9 @@
               systemConfig =
                 [ # Bootloader and Disks specific to this system
                   ./system/boot/uefi.nix
+
+                  # Repos
+                  nur.nixosModules.nur
 
                   # More userlandish profile
                   ./system/october.nix

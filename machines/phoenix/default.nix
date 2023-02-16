@@ -33,14 +33,14 @@
 
       # gpg-card CCID smartcard support
       gpgCard = {
-        publicKey     = "/boot/gpg-keys/pubkey.gpg";
-        encryptedPass = "/boot/gpg-keys/cryptkey.gpg";
+        publicKey     = /boot/gpg-keys/pubkey.gpg;
+        encryptedPass = /boot/gpg-keys/cryptkey.gpg;
       };
 
       # FIDO2 support
       fido2 = {
         credential = "6f80d6063d2301878832f87c28a51fe5";
-        passwordLess = true;
+        passwordLess = false;
       };
 
       fallbackToPassword = true;
