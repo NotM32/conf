@@ -51,6 +51,9 @@
                   # More userlandish profile
                   ./system/october.nix
 
+                  # Others
+                  ./system/X/remap_mac_keys.nix
+
                 ];
               hmUsers = users;
               deployUser = "m32";

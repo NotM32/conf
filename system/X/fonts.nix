@@ -3,6 +3,6 @@
   fonts.fonts = with pkgs;
     [
       tamzen
-      (nerdfonts.override { fonts = [ "Hack" "HackMono" "FiraCode" "DroidSansMono" ];})
+      (nerdfonts.override { fonts = [ "Hack" "FiraCode" "DroidSansMono" ];})
     ];
 }
