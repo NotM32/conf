@@ -1,23 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
-
   imports = [ ];
 
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable     = true;
-    device     = "nodev";
-    efiSupport = true;
-    configurationLimit = 5;
-    theme      = pkgs.breeze-grub;
-
-    # won't work with just this FYI, there's a confirmation option for TPM
-    # trustedBoot.enable = true;
-  };
 
   # Networking
-  networking.hostName = "phoenix";
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   services.zerotierone = {
