@@ -1,0 +1,40 @@
+IMAPAccount protonmail
+# Address to connect to
+Host 127.0.0.1
+Port 1143
+User m32@protonmail.com
+Pass hz93jpuxaliNRzHWnsbSHQ
+# To store the password in an encrypted file use PassCmd instead of Pass
+# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#
+# Use SSL
+SSLType STARTTLS
+SSLVersions TLSv1.2
+# The following line should work. If you get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+#CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+CertificateFile ~/.config/protonmail/bridge/cert.pem
+
+IMAPStore protonmail-remote
+Account protonmail
+
+MaildirStore protonmail-local
+# The trailing "/" is important
+Path ~/.mail/protonmail/
+Inbox ~/.mail/protonmail/Inbox
+Subfolders Legacy
+
+Channel protonmail
+Far :protonmail-remote:
+Near :protonmail-local:
+Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Sync the movement of messages between folders and deletions, add after making sure the sync works
+Expunge Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+Group protonmail
+Channel protonmail
