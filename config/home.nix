@@ -42,6 +42,30 @@
   };
   programs.home-manager.enable = true;
 
+  # Home Structure
+  xdg = {
+    enable = true;
+    userDirs.enable = true;
+    userDirs.createDirectories = true;
+
+    userDirs = {
+      desktop     = "${config.home.homeDirectory}/docs/desktop";
+      documents   = "${config.home.homeDirectory}/docs";
+      download    = "${config.home.homeDirectory}/downloads";
+      music       = "${config.home.homeDirectory}/media/music";
+      pictures    = "${config.home.homeDirectory}/media/pictures";
+      publicShare = "${config.home.homeDirectory}/public";
+      templates   = "${config.home.homeDirectory}/docs/templates";
+      videos      = "${config.home.homeDirectory}/media/videos";
+    };
+
+    userDirs.extraConfig = {
+      XDG_MISC_DIR = "${config.home.homeDirectory}/docs/misc";
+      XDG_GIT_DIR  = "${config.home.homeDirectory}/projects";
+    };
+
+  };
+
   # Security
 
   # ## Pam Auth w/ YubiKey (OTP/chal-resp not U2F)
