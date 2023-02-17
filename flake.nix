@@ -61,8 +61,19 @@
 
           # T430 laptop
           momentum =
-            { hardwareConfig = [ ./machines/phoenix ];
-              systemConfig = [ ./system ];
+            { hardwareConfig = [ ./machines/momentum ];
+              systemConfig =
+                [ # Bootloader
+                  ./system/boot/legacyboot.nix
+
+                  nur.nixosModules.nur
+
+                  # Same shit, different story
+                  ./system/october.nix
+
+                  # Need to find a way TODO this on a per keeb basis
+                  ./system/X/remap_mac_keys.nix
+                ];
               hmUsers = users;
               deployUser = "m32";
             };
