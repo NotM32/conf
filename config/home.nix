@@ -10,9 +10,16 @@
 
     # # Development
     insomnia
+    ansible
+    yarn
 
     # ## LSPs
     rnix-lsp
+
+    # ## Languages
+    elixir
+    nodejs
+    python
 
     # # Environment
     alacritty
@@ -35,6 +42,7 @@
     # # Utilities
     htop
     minicom
+    mosh
   ];
 
   home = {
