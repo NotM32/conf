@@ -19,7 +19,7 @@
     # ## Languages
     elixir
     nodejs
-    python
+    python3
 
     # # Environment
     alacritty
