@@ -10,11 +10,19 @@
 
     # # Development
     insomnia
+    pycharm-community
     ansible
     yarn
 
+    # # DevOps tools
+    terraform
+    ansible
+    pulumi
+
     # ## LSPs
     rnix-lsp
+    tflint
+    terraform-ls
 
     # ## Languages
     elixir
@@ -24,6 +32,7 @@
     # # Environment
     alacritty
     barrier
+    bismuth
 
     # # Media
     spotify
