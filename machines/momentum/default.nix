@@ -10,10 +10,10 @@
   boot.extraModulePackages = [ ];
 
   # The "superbay" shows up first...
-  boot.loader.grub.device = "/dev/sdb"; # or "nodev" for efi only
+  boot.loader.grub.devices = [ "/dev/sda" "/dev/sdb" ];# or "nodev" for efi only
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/89d5ba16-7b83-4020-b959-b9f3726dd9ef";
+    { device = "/dev/disk/by-label/system";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
@@ -24,25 +24,25 @@
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/89d5ba16-7b83-4020-b959-b9f3726dd9ef";
+    { device = "/dev/disk/by-label/system";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/89d5ba16-7b83-4020-b959-b9f3726dd9ef";
+    { device = "/dev/disk/by-label/system";
       fsType = "btrfs";
       options = [ "subvol=@var/log" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/89d5ba16-7b83-4020-b959-b9f3726dd9ef";
+    { device = "/dev/disk/by-label/system";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/root" =
-    { device = "/dev/disk/by-uuid/89d5ba16-7b83-4020-b959-b9f3726dd9ef";
+    { device = "/dev/disk/by-label/system";
       fsType = "btrfs";
       options = [ "subvol=@root" ];
     };

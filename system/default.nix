@@ -21,6 +21,9 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
+    unzip
+    lm_sensors
+    wireguard-tools
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
