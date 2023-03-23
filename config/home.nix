@@ -32,7 +32,7 @@
     # # Environment
     alacritty
     barrier
-    bismuth
+    plasma5Packages.bismuth
 
     # # Media
     spotify
