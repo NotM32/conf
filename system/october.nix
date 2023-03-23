@@ -19,5 +19,6 @@
     "nvidia-x11"
     "nvidia-settings"
     "displaylink"
+    "pycharm-community"
   ];
 }

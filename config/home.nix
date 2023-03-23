@@ -10,7 +10,7 @@
 
     # # Development
     insomnia
-    pycharm-community
+    jetbrains.pycharm-community
     ansible
     yarn
 
