@@ -7,6 +7,7 @@
     hexchat
     protonvpn-gui
     #syncthing
+    filezilla
 
     # # Development
     insomnia
@@ -18,6 +19,8 @@
     terraform
     ansible
     pulumi
+    buildah
+
 
     # ## LSPs
     rnix-lsp
@@ -339,4 +342,6 @@
     preExec = "mkdir -p ~/mail/protonmail/";
       configFile = ./mail/mbsyncrc;
   };
+
+  programs.go.enable = true;
 }
