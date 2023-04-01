@@ -20,5 +20,10 @@
     "nvidia-settings"
     "displaylink"
     "pycharm-community"
+    "steam"
+    "steam-original"
+    "steam-runtime"
   ];
+
+  programs.steam.enable = true;
 }
