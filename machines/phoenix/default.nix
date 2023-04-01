@@ -11,14 +11,27 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  bootl.initrd.secrets =
+    { "/gpg-keys/pubkey.asc" =
+        /persist/secrets/boot/pubkey.asc;
+      "/gpg-keys/cryptkey.gpg" =
+        /persist/secrets/boot/cryptkey.gpg;
+    };
+
   # Support for YubiKey PBA (two factor decryption)
   boot.initrd.luks.yubikeySupport = false;
   # Support for GPG smartcard decryption
-  boot.initrd.luks.gpgSupport = false;
+  boot.initrd.luks.gpgSupport = true;
   # Support for FIDO2 decryption
-  boot.initrd.luks.fido2Support = true;
+  boot.initrd.luks.fido2Support = false;
+
+  # Necessary (and a default) for multiple drives
+  boot.initrd.luks.reusePassphrases = true;
 
   boot.initrd.luks.devices = {
+    # fido2: yes
+    # gpg: yes
+    # yk: no
     "uroot" = {
       device = "/dev/disk/by-uuid/e245dbf3-1c20-4a16-8ac1-d45582a2abee";
       preLVM = true;
@@ -33,14 +46,29 @@
 
       # gpg-card CCID smartcard support
       gpgCard = {
-        publicKey     = /boot/gpg-keys/pubkey.gpg;
-        encryptedPass = /boot/gpg-keys/cryptkey.gpg;
+        publicKey     = /gpg-keys/pubkey.asc;
+        encryptedPass = /gpg-keys/cryptkey.gpg;
       };
 
       # FIDO2 support
       fido2 = {
         credential = "6f80d6063d2301878832f87c28a51fe5";
         passwordLess = false;
+      };
+
+      fallbackToPassword = true;
+    };
+
+    # fido2: no
+    # gpg: yes
+    # yk: no
+    "uroot2" = {
+      device = "53243a77-1b78-49c3-8d26-ccb118c5a692";
+      preLVM = true;
+
+      gpgCard = {
+        publicKey     = /gpg-keys/pubkey.asc;
+        encryptedPass = /gpg-keys/cryptkey.gpg;
       };
 
       fallbackToPassword = true;

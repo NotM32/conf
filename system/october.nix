@@ -23,6 +23,7 @@
     "steam"
     "steam-original"
     "steam-runtime"
+    "steam-run"
   ];
 
   programs.steam.enable = true;
