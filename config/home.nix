@@ -9,6 +9,10 @@
     #syncthing
     filezilla
 
+    # # Games
+    lutris
+    steam
+
     # # Development
     insomnia
     jetbrains.pycharm-community
