@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   services.restic.backups = rec {
+    /** General backup of home directory hosts. */
     rsyncnethome = {
       user = "m32";
       passwordFile = "/etc/nixos/secrets/r_pass";
@@ -16,9 +17,11 @@
       ];
       repository = "sftp:fm1383@fm1383.rsync.net:backups/home/";
       extraOptions = [
-        "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -s sftp'"
+        "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -o UserKnownHostsFile=/home/m32/.ssh/known_hosts -s sftp'"
       ];
-      extraBackupArgs = [ "--option read-concurrency=10" ];
+      extraBackupArgs = [ "--option read-concurrency=10"
+                          "--tag automatic"
+                        ];
       timerConfig = {
         OnCalendar = "6h";
         RandomizedDelaySec = "1h";
@@ -29,14 +32,15 @@
      * the above configuration should be setup not to fail when the backup system can't access a file.
      */
     rsyncnethomepodman = rsyncnethome // {
+      # Create a wrapper package that uses the podman unshare thing
       package = pkgs.writeShellScriptBin "restic" ''
               # Call restic within podman unsahre
               exec ${pkgs.podman}/bin/podman unshare ${pkgs.restic}/bin/restic "$@"
       '';
-      dynamicFilesFrom = "find /home/m32 -type d \! -readable -a \! -executable -a \! -user m32 -print 2>/dev/null; exit 0;";
       paths = [];
-      extraOptions = [
-        "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -o UserKnownHostsFile=/home/m32/.ssh/known_hosts -s sftp'"
+      dynamicFilesFrom = "find /home/m32 -type d \! -readable -a \! -executable -a \! -user m32 -print 2>/dev/null; exit 0;";
+      extraBackupArgs = rsyncnethome.extraBackupArgs ++ [
+        "--tag podman"
       ];
     };
   };
