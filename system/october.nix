@@ -8,6 +8,7 @@
     ./X/kde.nix
     ./X/displaylink.nix
     ./X/fonts.nix
+    ./backup
 
   ];
 
