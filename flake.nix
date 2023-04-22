@@ -43,16 +43,16 @@
             { hardwareConfig = [ ./machines/phoenix ];
               systemConfig =
                 [ # Bootloader and Disks specific to this system
-                  ./system/boot/uefi.nix
+                  ./system/boot/uefi
 
                   # Repos
                   nur.nixosModules.nur
 
                   # More userlandish profile
-                  ./system/october.nix
+                  ./system/october
 
                   # Others
-                  ./system/X/remap_mac_keys.nix
+                  ./system/X/remap_mac_keys
 
                 ];
               hmUsers = users;
@@ -64,19 +64,30 @@
             { hardwareConfig = [ ./machines/momentum ];
               systemConfig =
                 [ # Bootloader
-                  ./system/boot/legacyboot.nix
+                  ./system/boot/legacyboot
 
+                  # Repos
                   nur.nixosModules.nur
 
                   # Same shit, different story
-                  ./system/october.nix
+                  ./system/october
 
                   # Need to find a way TODO this on a per keeb basis
-                  ./system/X/remap_mac_keys.nix
+                  ./system/X/remap_mac_keys
                 ];
               hmUsers = users;
               deployUser = "m32";
             };
+
+          # Server
+          maple =
+            { hardwareConfig = [ ./machines/maple ];
+              systemConfig =
+                [ ./system/server.nix
+                ];
+              deployUser = "m32";
+            };
+
         };
     in
       # - END CONFIG -
