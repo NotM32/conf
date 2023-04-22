@@ -10,4 +10,7 @@
       "233ccaac27077fe3"
     ];
   };
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "zerotierone"
+  ];
 }
