@@ -2,7 +2,7 @@
 {
   services.restic.backups = {
     rsyncnet = {
-      passwordFile = /etc/nixos/secrets/r_pass;
+      passwordFile = "/etc/nixos/secrets/r_pass";
       initialize = true;
       paths = [
         "/srv/"
