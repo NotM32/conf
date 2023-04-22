@@ -24,7 +24,8 @@
     ansible
     pulumi
     buildah
-
+    kubectl
+    helm
 
     # ## LSPs
     rnix-lsp
@@ -32,9 +33,11 @@
     terraform-ls
 
     # ## Languages
+    go
     elixir
     nodejs
     python3
+    gcc
 
     # # Environment
     alacritty
@@ -347,5 +350,8 @@
       configFile = ./mail/mbsyncrc;
   };
 
-  programs.go.enable = true;
+  programs.go.enable = {
+    enable = true;
+    goPath = ./.go;
+  };
 }
