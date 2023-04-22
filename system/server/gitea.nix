@@ -55,13 +55,13 @@
   #################
   # Gitea - vhost #
   #################
-  nginx.upstreams = {
+  services.nginx.upstreams = {
     "gitea" = {
       servers = { "unix:/run/gitea/gitea.sock" = {};};
     };
   };
 
-  nginx.virtualHosts."git.m32.me" = {
+  services.nginx.virtualHosts."git.m32.me" = {
     serverName = "git.m32.me";
 
     forceSSL = true;
