@@ -207,10 +207,10 @@
       };
       font = {
         normal = {
-          family = "Tamzen";
+          family = "FiraCode Nerd Font";
         };
         bold = {
-          family = "Tamzen";
+          family = "FiraCode Nerd Font";
         };
         size = 14;
       };
