@@ -9,7 +9,7 @@
       ];
       repository = "sftp:fm1383@fm1383.rsync.net:backups/maple/srv/";
       extraOptions = [
-        "sftp.command='ssh fm1383@fm1383.rsync.net -i /etc/nixos/secrets/id_backup -s sftp"
+        "sftp.command='ssh fm1383@fm1383.rsync.net -i /etc/nixos/secrets/id_backup -s sftp'"
       ];
       timerConfig = {
         OnCalendar = "00:30";
