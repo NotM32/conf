@@ -27,4 +27,20 @@
   ];
 
   programs.steam.enable = true;
+
+  # Networking
+  networking.networkmanager.enable = true;
+
+  # Firewall
+  networking.firewall.allowedTCPPorts = [
+    # Barrier
+    24800
+  ];
+
+  # Servers
+  services.avahi.enable       = true;
+  services.avahi.openFirewall = true;
+
+  services.printing.enable  = true;
+  services.printing.drivers = with pkgs; [ cups-dymo ];
 }
