@@ -33,7 +33,6 @@
     terraform-ls
 
     # ## Languages
-    go
     elixir
     nodejs
     python3
@@ -336,7 +335,47 @@
     enableBashIntegration = true;
     enableFishIntegration = true;
     agents = [ "ssh" "gpg"];
-    keys = [ "id_rsa" "id_ovh" ];
+    keys = [ "id_rsa" "id_ovh" "id_momentum" ];
+  };
+
+  programs.ssh = {
+    enable = true;
+    controlMaster  = "auto";
+    controlPersist = "10m";
+    # forwardAgent   = true;
+    # Host Level configuration
+    matchBlocks = {
+      # Personal
+      "maple" = {
+        hostname = "git.m32.me";
+        forwardAgent = true;
+      };
+      "phoenix" = {
+        hostname = "10.127.0.66";
+        forwardAgent = true;
+      };
+      "momentum" = {
+        hostname = "10.127.0.2";
+        forwardAgent = true;
+      };
+      "router1" = {
+        hostname = "10.127.0.1";
+        forwardAgent = true;
+      };
+
+      # Churchill
+      "gateway0" = {
+        hostname = "68.64.160.146";
+        forwardAgent = true;
+      };
+
+      # Colorado Colo Network
+      "ccjumpbox" = {
+        hostname = "68.64.160.2";
+        forwardAgent = true;
+      };
+
+    };
   };
 
   programs.zathura = {
