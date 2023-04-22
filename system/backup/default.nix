@@ -31,7 +31,7 @@
     rsyncnethomepodman = rsyncnethome // {
       package = pkgs.writeShellScriptBin "restic" ''
               # Call restic within podman unsahre
-              exec ${pkgs.podman}/bin/podman unshare ${pkgs.restic}/bin/restic
+              exec ${pkgs.podman}/bin/podman unshare ${pkgs.restic}/bin/restic "$@"
       '';
       dynamicFilesFrom = "find /home/m32 -type d \! -readable -a \! -executable -a \! -user m32 -print 2>/dev/null; exit 0;";
       paths = [];
