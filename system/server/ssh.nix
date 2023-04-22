@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 {
-  openssh = {
+  services.openssh = {
     enable = true;
     permitRootLogin = "no";
     passwordAuthentication = false;
