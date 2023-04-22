@@ -1,6 +1,6 @@
 { lib, pkgs, config, ... }:
 {
-  nginx = {
+  services.nginx = {
     enable = true;
     clientMaxBodySize = "10G";
   };
