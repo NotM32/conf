@@ -12,7 +12,7 @@
         "sftp.command='ssh fm1383@fm1383.rsync.net -i /etc/nixos/secrets/id_backup -s sftp'"
       ];
       timerConfig = {
-        OnCalendar = "12h";
+        OnActiveSec = "3h";
         RandomizedDelaySec = "1h";
       };
     };
