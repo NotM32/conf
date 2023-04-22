@@ -16,7 +16,7 @@
       ];
       repository = "sftp:fm1383@fm1383.rsync.net:backups/home/";
       extraOptions = [
-        "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -s sftp"
+        "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -s sftp'"
       ];
       extraBackupArgs = [ "--option read-concurrency=10" ];
       timerConfig = {
