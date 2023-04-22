@@ -11,4 +11,9 @@
     { device = "/dev/sda1";
       fsType = "ext4";
     };
+
+  # OVH VPS has /dev/vram0
+  zRamSwap.enable = true;
+
+  boot.cleanTmpDir = true;
 }

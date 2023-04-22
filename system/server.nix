@@ -1,8 +1,11 @@
 { lib, pkgs, config, ... }:
 {
   imports =
-    [ ./server/ssh.nix
-      ./server/letsencrypt.nix
-      ./server/gitea.nix
+    [ ./server/ssh
+      ./server/letsencrypt
+      ./server/gitea
+      ./server/backups
+      ./server/nginx
+      ./system/network/zerotier
     ];
 }
