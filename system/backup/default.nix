@@ -33,7 +33,7 @@
               # Call restic within podman unsahre
               exec ${pkgs.podman}/bin/podman unshare ${pkgs.restic}
       '';
-      dynamicFilesFrom = "find /home/m32 -not -readable -a -type d";
+      dynamicFilesFrom = "find /home/m32 -type d \! -readable -a \! -executable -a \! -user m32 -print 2>/dev/null";
       paths = [];
       extraOptions = [
         "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -o UserKnownHostsFile=/home/m32/.ssh/known_hosts -s sftp'"
