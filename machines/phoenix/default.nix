@@ -11,10 +11,10 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  bootl.initrd.secrets =
-    { "/gpg-keys/pubkey.asc" =
+  boot.initrd.secrets =
+    { "/persist/secrets/boot/pubkey.asc" =
         /persist/secrets/boot/pubkey.asc;
-      "/gpg-keys/cryptkey.gpg" =
+      "/persist/secrets/boot/cryptkey.gpg" =
         /persist/secrets/boot/cryptkey.gpg;
     };
 
@@ -46,8 +46,8 @@
 
       # gpg-card CCID smartcard support
       gpgCard = {
-        publicKey     = /gpg-keys/pubkey.asc;
-        encryptedPass = /gpg-keys/cryptkey.gpg;
+        publicKey     = /persist/secrets/boot/pubkey.asc;
+        encryptedPass = /persist/secrets/boot/cryptkey.gpg;
       };
 
       # FIDO2 support
@@ -67,8 +67,8 @@
       preLVM = true;
 
       gpgCard = {
-        publicKey     = /gpg-keys/pubkey.asc;
-        encryptedPass = /gpg-keys/cryptkey.gpg;
+        publicKey     = /persist/secrets/boot/pubkey.asc;
+        encryptedPass = /persist/secrets/boot/cryptkey.gpg;
       };
 
       fallbackToPassword = true;

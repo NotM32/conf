@@ -47,8 +47,8 @@
     # ykman otp chalresp --touch --generate 2
     # ykpamcfg -2 -v
     enable = true;
-    debug = false;
-    mode = "challenge-response";
+    debug  = false;
+    mode   = "challenge-response";
   };
 
   # Nix Options
