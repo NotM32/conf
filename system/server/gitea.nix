@@ -3,7 +3,7 @@
   #########
   # Gitea #
   #########
-  gitea = {
+  services.gitea = {
     enable = true;
     # gitea server, served on a unix socket. publicly accessed by the nginx reverse proxy
     appName = "git.m32";
