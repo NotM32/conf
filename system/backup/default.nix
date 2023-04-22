@@ -23,7 +23,7 @@
                           "--tag automatic"
                         ];
       timerConfig = {
-        OnCalendar = "6h";
+        OnActiveSec = "8h";
         RandomizedDelaySec = "1h";
       };
     };
