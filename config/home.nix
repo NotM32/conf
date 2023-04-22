@@ -212,7 +212,7 @@
         bold = {
           family = "Tamzen";
         };
-        size = 12;
+        size = 14;
       };
       colors = {
         primary = {
@@ -243,6 +243,11 @@
       shell = {
         program = "fish";
       };
+      key_bindings = [
+        { key = "Key0"; mods = "Control"; action = "ResetFontSize"; }
+        { key = "Plus"; mods = "Control"; action = "IncreaseFontSize"; }
+        { key = "Minus"; mods = "Control"; action = "DecreaseFontSize"; }
+      ];
     };
   };
 
@@ -350,8 +355,8 @@
       configFile = ./mail/mbsyncrc;
   };
 
-  programs.go.enable = {
+  programs.go = {
     enable = true;
-    goPath = ./.go;
+    goPath = ".go";
   };
 }
