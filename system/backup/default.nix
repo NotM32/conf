@@ -23,8 +23,8 @@
                           "--tag automatic"
                         ];
       timerConfig = {
-        OnActiveSec = "8h";
-        RandomizedDelaySec = "1h";
+        OnCalendar = "00,04,08,12,16,20:00:00";
+        RandomizedDelaySec = "15m";
       };
     };
 
