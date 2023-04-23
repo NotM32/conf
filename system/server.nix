@@ -1,7 +1,8 @@
 { lib, pkgs, config, ... }:
 {
   imports =
-    [ ./server/ssh.nix
+    [ ./default.nix
+      ./server/ssh.nix
       ./server/letsencrypt.nix
       ./server/gitea.nix
       ./server/backups.nix
