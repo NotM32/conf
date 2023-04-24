@@ -2,7 +2,7 @@
   description = "m32.srv and system configurations";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs;
+    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
     nur.url = github:nix-community/NUR;
 
     home-manager.url = github:nix-community/home-manager;
