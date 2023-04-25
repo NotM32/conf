@@ -66,6 +66,11 @@
   hardware.bluetooth.enable = true;
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
+
+  # Keyboard / Mouse
+  hardware.trackpoint = {
+    enable = true;
+    emulateWheel = true;
+  };
 }
