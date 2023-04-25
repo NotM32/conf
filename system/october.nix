@@ -9,7 +9,7 @@
     ./X/displaylink.nix
     ./X/fonts.nix
     ./backup
-
+    ./lights/rgb.nix
   ];
 
   # Unfree Software
@@ -27,6 +27,11 @@
     "steam-run"
   ];
 
+  # General
+  console.earlySetup = true;
+
+
+  # Games
   programs.steam.enable = true;
 
   # Networking
@@ -42,6 +47,17 @@
   services.avahi.enable       = true;
   services.avahi.openFirewall = true;
 
+  # Printing
   services.printing.enable  = true;
   services.printing.drivers = with pkgs; [ cups-dymo ];
+  hardware.sane.enable = true;
+
+  # Other
+  hardware.hackrf.enable = true;
+  hardware.rtl-sdr.enable = true;
+
+  hardware.i2c.enable = true;
+
+  # Sensors
+  hardware.sensor.hddtemp.enable = true;
 }
