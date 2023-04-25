@@ -63,7 +63,7 @@
     # gpg: yes
     # yk: no
     "uroot2" = {
-      device = "53243a77-1b78-49c3-8d26-ccb118c5a692";
+      device = "/dev/disk/by-uuid/53243a77-1b78-49c3-8d26-ccb118c5a692";
       preLVM = true;
 
       gpgCard = {
