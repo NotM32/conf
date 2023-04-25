@@ -61,6 +61,8 @@
     htop
     minicom
     mosh
+    ddcutil
+    ddcui
   ];
 
   home = {
