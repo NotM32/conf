@@ -336,7 +336,8 @@
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
-    agents = [ "ssh" "gpg"];
+    enableXsessionIntegration = true;
+    agents = [ "ssh" "gnupg"];
     keys = [ "id_rsa" "id_ovh" "id_momentum" ];
   };
 
