@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 {
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" "nvidia" ];
   hardware.opengl.enable        = true;
 
   # DisplayLink provider output sink enablement

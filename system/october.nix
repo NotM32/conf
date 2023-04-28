@@ -6,7 +6,7 @@
     ./audio/pipewire.nix
     ./virt/libvirt.nix
     ./X/kde.nix
-    ./X/displaylink.nix
+    # ./X/displaylink.nix
     ./X/fonts.nix
     ./backup
     ./lights/rgb.nix
@@ -30,22 +30,19 @@
   # General
   console.earlySetup = true;
 
-
   # Games
   programs.steam.enable = true;
 
   # Networking
   networking.networkmanager.enable = true;
+  services.avahi.enable       = true;
+  services.avahi.openFirewall = true;
 
   # Firewall
   networking.firewall.allowedTCPPorts = [
     # Barrier
     24800
   ];
-
-  # Servers
-  services.avahi.enable       = true;
-  services.avahi.openFirewall = true;
 
   # Printing
   services.printing.enable  = true;
@@ -58,6 +55,18 @@
 
   hardware.i2c.enable = true;
 
-  # Sensors
-  hardware.sensor.hddtemp.enable = true;
+  boot.plymouth.enable = true;
+
+  # Multihead Mixed DPI xrandr Layout...
+  /**
+  services.xserver.xrandrHeads = [
+    {
+      output = "HDMI-0";
+      monitorConfig = ''Option \"Rotate\" \"right\"
+
+      ''
+    }
+  ];
+  */
+
 }

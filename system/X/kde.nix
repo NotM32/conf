@@ -1,23 +1,59 @@
 { lib, pkgs, ... }:
 {
+  # X11 Video Drivers
+  hardware.opengl.enable        = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # SDDM Display Manager (kde)
-  services.xserver.displayManager = rec {
+  services.xserver.displayManager = {
     sddm.enable = true;
     sddm.enableHidpi = true;
-    sessionCommands = ''
-                    xrandr --output HDMI-0 --scale 2x2 --rate 240 --filter nearest \
-                    --output DP-2 --scale 1x1 --mode 4096x2160 --pos 2160x258 \
-                    --output DP-0 --scale 2x2 --rate 165 --pos 6256x582 --filter nearest
+    setupCommands = ''
+                    ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr \
+                    --output HDMI-0 --scale 2x2 --mode 1920x1080 --rate 240 --pos 0x0      --filter nearest \
+                    --output DP-2   --scale 1x1 --mode 4096x2160 --rate 60  --pos 2160x258 \
+                    --output DP-0   --scale 2x2 --mode 1920x1080 --rate 165 --pos 6256x582 --filter nearest
     '';
-    setupCommands = sessionCommands;
+    defaultSession = "plasmawayland";
   };
 
 
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.desktopManager.plasma5.enable   = true;
 
+  # Remove packages I don't want
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+    konsole
+    elisa
+    gwenview
+  ];
+
+  environment.systemPackages = with pkgs; [
+    # GUI programs
+    kleopatra
+
+    # Utils
+    glxinfo
+    clinfo
+    wayland-utils
+    vulkan-tools
+  ];
+
+  /* Wayland */
+  # services.xserver.displayManager.sessionPackages = [
+  #   (pkgs.plasma-workspace.overrideAttrs
+  #   old: { passthru.providedSession = ["plasmawayland"]; })
+  # ];
+
+  # Drivers / Hardware options
+  services.xserver.videoDrivers = [ "modesetting" "fbdev" "nvidia" ];
+  hardware.nvidia.modesetting.enable = true;
+
+  programs.xwayland.enable = true;
+
+  # Some Electron apps were showing black
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
 }
