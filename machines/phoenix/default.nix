@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, kernel, ... }:
 
 {
   imports =
@@ -141,4 +141,12 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # Hardware Temps
+  hardware.gkraken.enable = true;
+
+  environment.systemPackages = [ pkgs.liquidctl
+                                 # hwmon drivers for AIO coolers and liquid devs
+                                 pkgs.linuxKernel.packages.linuxPackages.liquidtux
+                               ];
 }
