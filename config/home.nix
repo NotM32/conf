@@ -25,12 +25,14 @@
     pulumi
     buildah
     kubectl
-    helm
+    kubernetes-helm
 
     # ## LSPs
     rnix-lsp
     tflint
     terraform-ls
+    helm-ls
+    gopls
 
     # ## Languages
     elixir
@@ -46,6 +48,7 @@
     # # Media
     spotify
     vlc
+    obs-studio
 
     # # Virt
     virt-manager
