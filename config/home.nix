@@ -5,6 +5,7 @@
     #firefox
     signal-desktop
     hexchat
+    element-desktop
     protonvpn-gui
     #syncthing
     filezilla
@@ -52,8 +53,7 @@
 
     # # Virt
     virt-manager
-    vagrant
-    virtualbox
+    # vagrant disabled because I don't even think that I use vagrant, and it broke an update
     podman
 
     # # Office
@@ -404,4 +404,6 @@
     enable = true;
     goPath = ".go";
   };
+
+  programs.nheko.enable = true;
 }
