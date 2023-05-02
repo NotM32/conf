@@ -7,8 +7,6 @@
     enable = true;
     # gitea server, served on a unix socket. publicly accessed by the nginx reverse proxy
     appName = "git.m32";
-    domain = "git.m32.me";
-    rootUrl = "https://git.m32.me/";
     # not used if listening on local unix socket
     #httpAddress = "127.0.0.1";
     #httpPort = 3000;
@@ -43,12 +41,17 @@
         };
       "server" =
         { OFFLINE_MODE = true;
-          DISABLE_SSH  = true;
+          DISABLE_SSH  = false;
+          ROOT_URL = "https://git.m32.me/";
+          DOMAIN = "git.m32.me";
         };
       "picture" =
         { AVATAR_MAX_FILE_SIZE = 5242880; };
       "session" =
         { COOKIE_SECURE = true; };
+      "actions" =
+        { ENABLED = true; };
+
     };
   };
 

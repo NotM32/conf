@@ -34,12 +34,16 @@
     terraform-ls
     helm-ls
     gopls
+    texlab
 
     # ## Languages
     elixir
     nodejs
     python3
     gcc
+
+    # ## Latex
+    git-latexdiff
 
     # # Environment
     alacritty

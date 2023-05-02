@@ -53,6 +53,8 @@ This function should only modify configuration layer settings."
      restructuredtext
      asciidoc
      pdf
+     latex
+     bibtex
 
      ;; #language layers
      emacs-lisp
