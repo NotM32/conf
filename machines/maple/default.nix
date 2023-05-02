@@ -15,5 +15,5 @@
   # OVH VPS has /dev/vram0
   zramSwap.enable = true;
 
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 }

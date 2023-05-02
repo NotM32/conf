@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, kernel, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 {
   imports =
@@ -145,8 +145,4 @@
   # Hardware Temps
   hardware.gkraken.enable = true;
 
-  environment.systemPackages = [ pkgs.liquidctl
-                                 # hwmon drivers for AIO coolers and liquid devs
-                                 # pkgs.linuxPackages.liquidtux
-                               ];
 }
