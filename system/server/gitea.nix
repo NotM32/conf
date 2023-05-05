@@ -13,9 +13,6 @@
     stateDir = "/srv/gitea/";
     lfs.enable = true;
 
-    # socket location is hardcoded to `unix:/run/gitea/gitea.sock` with PROTOCOL as unix
-    enableUnixSocket = true;
-
     settings = {
       "ui" = { THEMES = "auto,arc-green,darkred"; };
       "ui.meta" =
@@ -44,6 +41,7 @@
           DISABLE_SSH  = false;
           ROOT_URL = "https://git.m32.me/";
           DOMAIN = "git.m32.me";
+          PROTOCOL = "http+unix";
         };
       "picture" =
         { AVATAR_MAX_FILE_SIZE = 5242880; };
