@@ -1,5 +1,7 @@
 { config, pkgs, ...}:
-{
+let
+  font = "FiraCode Nerd Font";
+in {
   home.packages = with pkgs; [
     # # Internet
     #firefox
@@ -215,10 +217,10 @@
       };
       font = {
         normal = {
-          family = "FiraCode Nerd Font";
+          family = font;
         };
         bold = {
-          family = "FiraCode Nerd Font";
+          family = font;
         };
         size = 8;
       };
@@ -344,7 +346,7 @@
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableXsessionIntegration = true;
-    agents = [ "ssh" "gnupg"];
+    agents = [ "ssh" "gpg"];
     keys = [ "id_rsa" "id_ovh" "id_momentum" ];
   };
 
