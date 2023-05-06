@@ -8,7 +8,7 @@
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
-  boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" ];
+  boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" "nct6775" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ liquidtux asus-ec-sensors ];
 
   boot.initrd.secrets =
