@@ -48,7 +48,7 @@
   # ];
 
   # Drivers / Hardware options
-  services.xserver.videoDrivers = [ "modesetting" "fbdev" ];
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
   hardware.nvidia.modesetting.enable = true;
 
   programs.xwayland.enable = true;
