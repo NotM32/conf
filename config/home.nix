@@ -327,7 +327,7 @@ in {
       url = "https://github.com/syl20bnr/spacemacs";
       ref = "develop";
       # tag: v0.200.14
-      rev = "f3f0d6e6da07ee3fa9c2f47c124500662aad50ac";
+      # rev = "f3f0d6e6da07ee3fa9c2f47c124500662aad50ac";
     };
     recursive = true;
   };
