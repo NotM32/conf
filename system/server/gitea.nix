@@ -86,4 +86,9 @@
     };
 
   };
+
+  # Actions Runner --
+  environment.systemPackages = with pkgs; [ gitea-actions-runner ];
+
+
 }
