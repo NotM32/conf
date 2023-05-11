@@ -46,6 +46,8 @@ This function should only modify configuration layer settings."
      multiple-cursors
      lsp
      themes-megapack
+     tabs
+     tree-sitter
 
      ;; #docs / markup languages
      org
@@ -91,8 +93,11 @@ This function should only modify configuration layer settings."
      yaml
      ansible
      kubernetes
+     systemd
 
      ;; #applications
+     spotify
+     ranger
      gnus
      hackernews
      notmuch)
@@ -583,7 +588,11 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-home-shorten-agenda-source nil
 
    ;; If non-nil then byte-compile some of Spacemacs files.
-   dotspacemacs-byte-compile nil))
+   dotspacemacs-byte-compile nil
+
+   ;; Key combination for evil-escape (fd/df)
+   evil-escape-key-sequence "df"
+   ))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
