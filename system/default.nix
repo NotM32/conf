@@ -21,6 +21,7 @@
     unzip
     lm_sensors
     wireguard-tools
+    nixos-option
   ];
 
   # Personal stuff is under m32.me
