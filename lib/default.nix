@@ -15,37 +15,45 @@ rec {
   inherit deploy;
 
   # Make one configuration
-  makeSystemConfiguration = { hardwareConfig, systemConfig, hmConfig ? {}, hmUsers ? {}, system ? "x86_64-linux", hostName ? "nixos", ... }@args:
+  makeSystemConfiguration = { hardwareConfig,
+                              systemConfig,
+                              hmConfig ? { },
+                              hmUsers ? { },
+                              system ? "x86_64-linux",
+                              hostName ? "nixos",
+                              ... }@args:
     let
       hmModules =
         {
-          home-manager.useGlobalPkgs   = true;
+          home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users           = hmUsers;
+          home-manager.users = hmUsers;
         } // hmConfig;
 
       hostnameConfig =
         {
           networking.hostName = hostName;
           # system.nixos.label = "";
+
         };
     in
-      pkgs.lib.nixosSystem {
-        system = system;
-        modules =
-          # System Configurations
-          hardwareConfig ++
-          systemConfig ++
-          [
-            hostnameConfig
-            # Home Manager
-            home-manager.nixosModules.home-manager hmModules
-          ];
+    pkgs.lib.nixosSystem {
+      system = system;
+      modules =
+        # System Configurations
+        hardwareConfig ++
+        systemConfig ++
+        [
+          hostnameConfig
+          # Home Manager
+          home-manager.nixosModules.home-manager
+          hmModules
+        ];
 
-        specialArgs = {
-          inherit inputs;
-        };
+      specialArgs = {
+        inherit inputs;
       };
+    };
 
   # Make many configurations
   makeSystemConfigurations = hosts:
