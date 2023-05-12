@@ -18,24 +18,18 @@ rec {
   makeSystemConfiguration = { hardwareConfig,
                               systemConfig,
                               hmConfig ? { },
-                              hmUsers ? { },
+                              users ? { },
                               system ? "x86_64-linux",
                               hostName ? "nixos",
                               ... }@args:
     let
       hmModules =
-        {
-          home-manager.useGlobalPkgs = true;
+        { home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users = hmUsers;
+          home-manager.users = users;
         } // hmConfig;
 
-      hostnameConfig =
-        {
-          networking.hostName = hostName;
-          # system.nixos.label = "";
-
-        };
+      hostnameConfig = { networking.hostName = hostName; };
     in
     pkgs.lib.nixosSystem {
       system = system;
@@ -43,13 +37,12 @@ rec {
         # System Configurations
         hardwareConfig ++
         systemConfig ++
-        [
-          hostnameConfig
+        [ hostnameConfig
           # Home Manager
           home-manager.nixosModules.home-manager
           hmModules
         ];
-
+      # Give us access to flake inputs by providing it as an argument to the configuraiton module calls
       specialArgs = {
         inherit inputs;
       };
