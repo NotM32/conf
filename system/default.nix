@@ -22,6 +22,7 @@
     lm_sensors
     wireguard-tools
     nixos-option
+    cachix
   ];
 
   # Personal stuff is under m32.me

@@ -42,7 +42,7 @@
                   ./system/X/remap_mac_keys.nix
 
                 ];
-              hmUsers = users;
+              users = users;
               deployUser = "m32";
             };
 
@@ -62,7 +62,7 @@
                   # Need to find a way TODO this on a per keeb basis
                   ./system/X/remap_mac_keys.nix
                 ];
-              hmUsers = users;
+              users = users;
               deployUser = "m32";
             };
 
