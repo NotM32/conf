@@ -59,6 +59,7 @@
   nix.settings = {
     system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
     experimental-features = [ "nix-command" "flakes" "recursive-nix" ];
+    trusted-users = [ "root" "m32" ];
   };
 
   nix.gc = {
