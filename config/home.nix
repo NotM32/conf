@@ -54,6 +54,7 @@ in {
 
     # # Media
     spotify
+    psst
     vlc
     obs-studio
 
@@ -412,4 +413,11 @@ in {
   };
 
   programs.nheko.enable = true;
+
+  programs.rbw = {
+    enable = true;
+    settings.pinentry = "qt";
+    settings.email = "m32@protonmail.com";
+    settings.lock_timeout = 3600;
+  };
 }
