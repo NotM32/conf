@@ -397,7 +397,8 @@ in {
 
   # services.barrier.client.enable = true;
 
-  services.easyeffects.enable = true;
+  # disabled for now, seems to be having issues. DAC equalizer will have to do.
+  # services.easyeffects.enable = true;
 
   services.kdeconnect.enable = true;
 
