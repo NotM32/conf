@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   services.restic.backups = rec {
     /** General backup of home directory hosts. */
