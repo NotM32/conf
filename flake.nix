@@ -3,12 +3,12 @@
 
   inputs = {
     # Primary Package Repos
-    nixpkgs.url = github:nixos/nixpkgs/nixpkgs-unstable;
-    nur.url = github:nix-community/NUR;
-    home-manager.url = github:nix-community/home-manager;
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nur.url = "github:nix-community/NUR";
+    home-manager.url = "github:nix-community/home-manager";
 
     # Tools / Ops Utilities
-    deploy.url = github:serokell/deploy-rs;
+    deploy.url = "github:serokell/deploy-rs";
 
   };
 
