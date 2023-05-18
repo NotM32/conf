@@ -32,6 +32,7 @@ in {
 
     # ## LSPs
     rnix-lsp
+    nil          # nil is a better nix lsp
     tflint
     terraform-ls
     helm-ls
