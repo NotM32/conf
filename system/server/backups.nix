@@ -1,4 +1,4 @@
-{ config, ... }:
+{ ... }:
 {
   services.restic.backups = {
     rsyncnet = {
