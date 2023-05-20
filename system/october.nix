@@ -27,6 +27,16 @@
     "steam-run"
   ];
 
+  # Automatic Upgrades / Configuration sync
+  system.autoUpgrade = {
+    enable = true;
+    flake = "m32conf";
+    flags = [
+      # Something keeps flipping out, haven't traced it yet
+      "--impure"
+    ];
+  };
+
   # General
   console.earlySetup = true;
 
@@ -58,16 +68,6 @@
 
   boot.plymouth.enable = true;
 
-  # Multihead Mixed DPI xrandr Layout...
-  /**
-  services.xserver.xrandrHeads = [
-    {
-      output = "HDMI-0";
-      monitorConfig = ''Option \"Rotate\" \"right\"
 
-      ''
-    }
-  ];
-  */
 
 }
