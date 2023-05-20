@@ -281,6 +281,10 @@ in {
       color  = "auto";
     };
 
+    safe.directory = [
+      "/etc/nixos"
+    ];
+
   };
 
   programs.vscode = {
