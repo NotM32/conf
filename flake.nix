@@ -88,5 +88,5 @@
       lib = util;
     };
 
-  # Nix COn
+  # Nix Con
 }
