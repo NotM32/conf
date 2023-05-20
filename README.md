@@ -1,21 +1,30 @@
-m32's system and configs
-------------------------
+m32's system configs
+--------------------
 
-Just some configs. Some tidbits below
+Configuration files and NixOS bits for (some) of my systems.
 
-## Systems
+## Foreword
+
+
+## High Level Pointers
+
+    * Additional documentation, and a knowledge database of sorts is in `docs/` and can be served locally with `mdbook serve --open docs`
+    * The file hierarchy has no standard, and is of my own making. It is is subject to breaking change at any point in time
+    * There is a fair bit cleanup necessary, formatting, etc, that will happen later in the future. If you can learn something great, but I don't recommend/approve citing this as 'm32 did it this way, this is correct'. Cuz it works, but it sure as hell ain't the gospel
+    * There are skeletons of features that have only been partially implemented, and even more on the list of thigns to be implemented. At time of writing, this monorepo is no where near satisfaction. And if I were ever capable of being satisfied with something simple/easy/jurt works, I probably wouldn't be using NixOS in the first place.
+
+
+## System Specs
 
 | hostname    | system role | specs CPU/RAM/Motherboard                                                                                                                                                     | use case                  |
 |-------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
-| phoenix     | workstation | 32C/16T@4.00GHz AMD Ryzen 9 5950x, 32G DDR4@3600MHz, Asus ROG Crosshair VIII Impact Mini-DTX, GTX 1070                                                                        | primary                   |
+| phoenix     | workstation | 32C/16T@4.00GHz AMD Ryzen 9 5950x, 32G DDR4@3600MHz, Asus ROG Crosshair VIII Impact Mini-DTX, Mystery Craigslist GTX 1070                                                     | primary                   |
 | momentum    | laptop      | ThinkPad T430, 2K display mod, onboard hardware RNG, onboard TPM2.0, CoreBoot TianoCore payload UEFI with secure boot, 16G Memory (not an Optimus mobo, but I would like one) | secure mobile workstation |
 | maple       | server      | OVH VPS                                                                                                                                                                       | low cost remote computer  |
-| antikythera | laptop      | idk, it was an "i need a computer" purchase                                                                                                                                   | mobile gamin              |
+| antikythera | laptop      | 4C/8T@1.9-4.9GHz Intel i7-10510U, GTX 1050M, 16G RAM, 1000G/32G Storage/Optane cache                                                                                          | secondary travel computer |
 
 
-## Provisioning a System
 
-Install NixOS. Use the flake URI as the system's configuration flake.
 
 ## The `util` Thing
 
