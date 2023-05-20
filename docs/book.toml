@@ -1,0 +1,10 @@
+[book]
+authors = ["m32"]
+language = "en"
+multilingual = false
+src = "src"
+title = "m32.me systems configuration"
+
+[preprocessor.nix-eval]
+command = "mdbook-nix-eval"
+renderer = ["html"]
