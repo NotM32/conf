@@ -68,8 +68,9 @@
         url = "ssh://gitea@git.m32.me/conf/m32.me.git";
       };
     };
-
   };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   nix.settings = {
     system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
