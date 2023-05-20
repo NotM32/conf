@@ -224,7 +224,7 @@ in {
         bold = {
           family = font;
         };
-        size = 8;
+        size = 12;
       };
       colors = {
         primary = {
