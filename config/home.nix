@@ -281,9 +281,10 @@ in {
       color  = "auto";
     };
 
-    safe.directory = [
-      "/etc/nixos"
-    ];
+    includes."local".contents = {
+      safe.directory =
+        [ "/etc/nixos" ];
+    };
 
   };
 
