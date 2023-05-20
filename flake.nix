@@ -7,12 +7,15 @@
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
 
+    # Nix Utilities/Libraries
+    flake-utils.url = "github:numtide/flake-utils";
+
     # Tools / Ops Utilities
     deploy.url = "github:serokell/deploy-rs";
 
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils }:
     let
       # - Local imports --
       util = import ./lib { inherit inputs; };
@@ -27,7 +30,7 @@
         { # ** Hosts
           # Desktop
           phoenix =
-            { hardwareConfig = [ ./machines/phoenix ];
+            { hardwareProfile = ./hardware/phoenix;
               systemConfig =
                 [ # Bootloader and Disks specific to this system
                   ./system/boot/uefi.nix
@@ -48,7 +51,7 @@
 
           # T430 laptop
           momentum =
-            { hardwareConfig = [ ./machines/momentum ];
+            { hardwareProfile = ./hardware/momentum;
               systemConfig =
                 [ # Bootloader
                   ./system/boot/legacyboot.nix
@@ -68,7 +71,7 @@
 
           # Server
           maple =
-            { hardwareConfig = [ ./machines/maple ];
+            { hardwareProfile = ./hardware/maple;
               systemConfig =
                 [ ./system/server.nix
                 ];
@@ -80,6 +83,10 @@
 
       # - NixOS Configurations
       nixosConfigurations = util.makeSystemConfigurations hosts;
+
+      # - DevShells
+      devShells = {
+      };
 
       # - deploy-rs outputs
       deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
