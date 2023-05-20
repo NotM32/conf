@@ -16,6 +16,37 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils }:
+    with flake-utils.lib; eachDefaultSystem (system:
+    let pkgs = nixpkgs.legacyPackages.${system};
+    /* Flake outputs not-related to system configuration are in the below attrset */
+    in {
+
+      packages = {
+        docs = pkgs.stdenvNoCC.mkDerivation rec {
+          pname = "m32meconf-docs";
+          version = self.lastModifiedDate;
+          src = self;
+
+          doCheck = true;
+
+          buildInputs = with pkgs; [ mdbook mdbook-pdf ];
+          phases = [ "unpackPhase" "buildPhase" "installPhase" ];
+
+          buildPhase = ''
+            export PATH="${pkgs.lib.makeBinPath buildInputs}";
+            mdbook build ./docs/
+          '';
+
+          installPhase = ''
+            mkdir -p $out
+            cp ./docs/book/ $out
+          '';
+        };
+      };
+
+    }) // (
+
+    /* System configuration related items  are below this line */
     let
       # - Local imports --
       util = import ./lib { inherit inputs; };
@@ -84,16 +115,12 @@
       # - NixOS Configurations
       nixosConfigurations = util.makeSystemConfigurations hosts;
 
-      # - DevShells
-      devShells = {
-      };
-
       # - deploy-rs outputs
       deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
 
       # - Lib outputs
       lib = util;
-    };
+    });
 
   # Nix Con
 }
