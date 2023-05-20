@@ -56,4 +56,10 @@
   # Some Electron apps were showing black
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  # Keyboard Support....
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;
+  };
+
 }
