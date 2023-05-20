@@ -281,10 +281,12 @@ in {
       color  = "auto";
     };
 
-    includes."local".contents = {
-      safe.directory =
-        [ "/etc/nixos" ];
-    };
+    includes = [
+      { contents = {
+          safe.directory = [ "/etc/nixos" ];
+        };
+      }
+    ];
 
   };
 
