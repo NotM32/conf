@@ -12,6 +12,8 @@
 
     # Tools / Ops Utilities
     deploy.url = "github:serokell/deploy-rs";
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    impermanence.url = "github:nix-community/impermanence";
 
   };
 
@@ -43,6 +45,7 @@
             cp -r ./docs/book/* $out
           '';
         };
+
         /* PDF version of the docs */
         docs-pdf = pkgs.stdenvNoCC.mkDerivation rec {
           pname = "m32meconf-pdfdocs";
