@@ -20,7 +20,7 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils }:
+  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils, impermanence, lanzaboote, nixos-generators }:
     with flake-utils.lib; eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system};
     /* Flake outputs not-related to system configuration are in the below attrset */
