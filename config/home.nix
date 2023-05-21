@@ -38,6 +38,7 @@ in {
     helm-ls
     gopls
     texlab
+    nixfmt
 
     # ## Languages
     elixir
