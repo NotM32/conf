@@ -27,16 +27,6 @@
     "steam-run"
   ];
 
-  # Automatic Upgrades / Configuration sync
-  system.autoUpgrade = {
-    enable = true;
-    flake = "m32conf";
-    flags = [
-      # Something keeps flipping out, haven't traced it yet
-      "--impure"
-    ];
-  };
-
   # General
   console.earlySetup = true;
 
