@@ -13,7 +13,10 @@
     # Tools / Ops Utilities
     deploy.url = "github:serokell/deploy-rs";
     nixos-generators.url = "github:nix-community/nixos-generators";
+
+    # System Utils
     impermanence.url = "github:nix-community/impermanence";
+    lanzaboote.url = "github:nix-community/lanzaboote";
 
   };
 
