@@ -101,7 +101,7 @@
     "${inputs.self.shortRev}-${lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags))}";
 
   # Also store commit revision where it can be accessed with `nixos-version`
-  system.configurationRevision = lib.mkIf (inputs.self ? rev) inputs.self.rev;
+  system.configurationRevision = inputs.self.rev or "dirty";
 
   system.stateVersion = "22.11"; # Did you read the comment?
 
