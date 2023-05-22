@@ -66,6 +66,29 @@
 
       };
 
+      devShell = pkgs.mkShell {
+        inputsFrom = builtins.attrValues self.packages.${system};
+        packages = with pkgs; [ ];
+        shellHook = ''
+        alias devdocs='mdbook serve --port 3025 --open ./docs/'
+        alias mkdocs='nix build .#docs'
+        alias nsp='nix search nixpkgs'
+        alias dh='echo -e "$DEVSHELL_HELP"'
+
+        DEVSHELL_HELP="
+        Devshell Command Glossary
+        [docs] devdocs       | Start the mdbook watch server
+               mkdocs        | Build the docs
+
+        [util] nixos-option  | Search for nixos options
+               nsp {package} | Search nixpkgs
+               dh            | Show this again
+        "
+
+        echo -e "$DEVSHELL_HELP"
+        '';
+      };
+
     }) // (
 
     /* System configuration related items  are below this line */
