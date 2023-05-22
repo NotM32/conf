@@ -40,6 +40,7 @@
 
           buildPhase = ''
             export PATH="${pkgs.lib.makeBinPath buildInputs}";
+            cargo install mdbook-nix-eval
             mdbook build ./docs/
           '';
 
@@ -47,6 +48,20 @@
             mkdir -p $out
             cp -r ./docs/book/* $out
           '';
+        };
+
+        /* Things I couldn't find a package for */
+        mdbook-nix-eval = pkgs.rustPlatform.buildRustPackage rec {
+          pname = "mdbook-nix-eval";
+          version = "1.0.1";
+
+          src = pkgs.fetchCrate {
+            inherit pname version;
+            sha256 = "sha256-u8iiMyveTQVve7XTuYKHfkPS64ygfhQj7Md2EzGImIY";
+          };
+
+          cargoDepsName = pname;
+          cargoHash = "sha256-4v6stOMSowbtsKuJO09Rd/nmjF+pJj5hq0/Zgs/yZMc=";
         };
 
       };
