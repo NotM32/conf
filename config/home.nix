@@ -40,6 +40,10 @@ in {
     texlab
     nixfmt
 
+    # ## Nix stuff
+    nurl
+    nixos-option
+
     # ## Languages
     elixir
     nodejs
