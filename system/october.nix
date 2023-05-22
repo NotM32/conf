@@ -46,7 +46,7 @@
 
   # Printing
   services.printing.enable  = true;
-  services.printing.drivers = with pkgs; [ cups-dymo ];
+  services.printing.drivers = with pkgs; [ cups-dymo escpr escpr2 ];
   hardware.sane.enable = true;
 
   # Other
