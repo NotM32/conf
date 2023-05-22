@@ -27,7 +27,7 @@
     in {
 
       packages = {
-        /* HTML version of the docs */
+        /* Build the documentation book in `docs/` */
         docs = pkgs.stdenvNoCC.mkDerivation rec {
           pname = "m32meconf-docs";
           version = self.lastModifiedDate;
@@ -49,27 +49,6 @@
           '';
         };
 
-        /* PDF version of the docs */
-        docs-pdf = pkgs.stdenvNoCC.mkDerivation rec {
-          pname = "m32meconf-pdfdocs";
-          version = self.lastModifiedDate;
-          src = self;
-
-          doCheck = true;
-
-          buildInputs = with pkgs; [ coreutils mdbook mdbook-pdf ];
-          phases = [ "unpackPhase" "buildPhase" "installPhase" ];
-
-          buildPhase = ''
-            export PATH="${pkgs.lib.makeBinPath buildInputs}";
-            mdbook build ./docs/
-          '';
-
-          installPhase = ''
-            mkdir -p $out
-            cp -r ./docs/book/* $out
-          '';
-        };
       };
 
     }) // (
