@@ -113,6 +113,13 @@
   # Also store commit revision where it can be accessed with `nixos-version`
   system.configurationRevision = inputs.self.rev or "dirty";
 
+  # And finally, link the latest version of the subscribed flake to /etc/nixos, so it can be built from.
+  environment.etc = {
+    "nixos" = {
+      source = "${(builtins.getFlake "m32conf").sourceInfo.outPath}/**";
+    };
+  };
+
   system.stateVersion = "22.11"; # Did you read the comment?
 
 }
