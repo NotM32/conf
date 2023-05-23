@@ -102,9 +102,6 @@
   # Containers
   virtualisation.podman.enable   = true;
 
-  # Incompatible with pure mode flakes
-  system.copySystemConfiguration = false;
-
   # Store commit data in generation label
   system.nixos.label =
     lib.mkIf (inputs.self ? rev)
@@ -114,6 +111,7 @@
   system.configurationRevision = inputs.self.rev or "dirty";
 
   # And finally, link the latest version of the subscribed flake to /etc/nixos, so it can be built from.
+  # this is a pure flake option similar to that of system.copySystemConfiguration, but for another purpose
   environment.etc = {
     "nixos" = {
       source = "${(builtins.getFlake "m32conf").sourceInfo.outPath}/**";
