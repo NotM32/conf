@@ -340,8 +340,7 @@ in {
     source = builtins.fetchGit {
       url = "https://github.com/syl20bnr/spacemacs";
       ref = "develop";
-      # tag: v0.200.14
-      # rev = "f3f0d6e6da07ee3fa9c2f47c124500662aad50ac";
+      rev = "66128ffbac8d8a030f849e81698fc5b83a1491ae";
     };
     recursive = true;
   };
