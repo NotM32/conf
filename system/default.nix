@@ -114,7 +114,7 @@
   # this is a pure flake option similar to that of system.copySystemConfiguration, but for another purpose
   environment.etc = {
     "nixos" = {
-      source = "${(builtins.getFlake "m32conf").sourceInfo.outPath}/**";
+      source = "${inputs.self.sourceInfo.outPath}/**";
     };
   };
 
