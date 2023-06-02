@@ -1,5 +1,6 @@
 { lib, pkgs, ... }:
 {
+
   # X11 Video Drivers
   hardware.opengl.enable        = true;
 
@@ -40,6 +41,11 @@
     wayland-utils
     vulkan-tools
   ];
+
+  networking.firewall = {
+    allowedTCPPortRanges = [ { from = 1714; to = 1764; } ];
+    allowedUDPPortRanges = [ { from = 1714; to = 1764; } ];
+  };
 
   /* Wayland */
   # services.xserver.displayManager.sessionPackages = [
