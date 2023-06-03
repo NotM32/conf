@@ -144,7 +144,7 @@
     in {
 
       # - NixOS Configurations
-      nixosConfigurations = util.makeSystemConfigurations hosts;
+      nixosConfigurations = util.system.makeSystemConfigurations hosts;
 
       # - deploy-rs outputs
       deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
