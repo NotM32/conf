@@ -80,7 +80,7 @@
     /* System configuration related items  are below this line */
     let
       # - Local imports --
-      util = import ./lib { inherit inputs; };
+      util = import ./lib inputs;
 
       # - System Configurations
 
