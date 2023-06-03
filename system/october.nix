@@ -6,7 +6,6 @@
     ./audio/pipewire.nix
     ./virt/libvirt.nix
     ./X/kde.nix
-    # ./X/displaylink.nix
     ./X/fonts.nix
     ./backup
     ./lights/rgb.nix
