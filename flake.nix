@@ -8,15 +8,16 @@
     home-manager.url = "github:nix-community/home-manager";
 
     # Nix Utilities/Libraries
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";                  # flake-utils
+    sops-nix.url = "github:Mic92/sops-nix";                          # for secrets management
 
     # Tools / Ops Utilities
-    deploy.url = "github:serokell/deploy-rs";
-    nixos-generators.url = "github:nix-community/nixos-generators";
+    deploy.url = "github:serokell/deploy-rs";                        # Unused, TODO: add overlay and pkg to devshell
+    nixos-generators.url = "github:nix-community/nixos-generators";  # Unused, ditto
 
     # System Utils
-    impermanence.url = "github:nix-community/impermanence";
-    lanzaboote.url = "github:nix-community/lanzaboote";
+    impermanence.url = "github:nix-community/impermanence";          # Unused, but when I have free time
+    lanzaboote.url = "github:nix-community/lanzaboote";              # Unused, waiting for development to progress
 
   };
 
