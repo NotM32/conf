@@ -18,31 +18,30 @@ in {
 
     # # Development
     insomnia
-    jetbrains.pycharm-community
     ansible
     yarn
 
     # # DevOps tools
-    terraform
-    ansible
-    pulumi
-    buildah
     kubectl
     kubernetes-helm
+    terraform
+    pulumi
+    ansible
+    buildah
 
-    # ## LSPs
-    rnix-lsp
+    # ## Language Tools
+    rnix-lsp     # the standard nix-lsp
     nil          # nil is a better nix lsp
-    tflint
-    terraform-ls
-    helm-ls
-    gopls
-    texlab
-    nixfmt
+    nixfmt       # formatter for nix
+    tflint       # terraform linter
+    terraform-ls # terraform language server
+    helm-ls      # helm (kubernetes package manager) language server
+    gopls        # gopls
+    texlab       # texlab
 
-    # ## Nix stuff
-    nurl
-    nixos-option
+    # ## Nix Utilities
+    nurl          # nix-prefetch but more useful
+    nixos-option  # command line search of nixos option declarations
 
     # ## Languages
     elixir
@@ -51,12 +50,12 @@ in {
     gcc
 
     # ## Latex
-    git-latexdiff
+    git-latexdiff # More helpful diffs for latex files in git
 
     # # Environment
-    alacritty
-    barrier
-    plasma5Packages.bismuth
+    alacritty                # fast terminal emulator
+    barrier                  # the software kvm
+    plasma5Packages.bismuth  # Tiling functionality in KDE
 
     # # Media
     spotify
@@ -64,9 +63,7 @@ in {
     vlc
     obs-studio
 
-    # # Virt
-    virt-manager
-    # vagrant disabled because I don't even think that I use vagrant, and it broke an update
+    # # Virt / Containers
     podman
 
     # # Office
@@ -75,16 +72,16 @@ in {
 
     # # Utilities
     htop
-    minicom
-    mosh
-    ddcutil
-    ddcui
+    minicom     # connecting to devices over serial modem connection (router/switch consoles)
+    mosh        # mobile shell, for latent/spotty ssh connections
+    ddcutil     # cli tool for controlling digital monitors without using their OSDs
+    ddcui       # GUI for ddcutil
   ];
 
+  programs.home-manager.enable = true;
   home = {
     stateVersion = "22.11";
   };
-  programs.home-manager.enable = true;
 
   # Home Structure
   xdg = {
@@ -113,9 +110,7 @@ in {
   # Security
 
   # ## Pam Auth w/ YubiKey (OTP/chal-resp not U2F)
-  pam.yubico.authorizedYubiKeys.ids = [
-    "ccccccvedkdn"
-  ];
+  pam.yubico.authorizedYubiKeys.ids = [ "ccccccvedkdn" ];
 
   # ## U2F Pam Auth
   home.file."u2f_keys" = {
@@ -124,7 +119,6 @@ in {
     target = ".config/Yubico/u2f_keys";
     source = ./pam/u2f_keys;
   };
-
 
   # Program Configs
   programs.firefox = {
@@ -268,9 +262,7 @@ in {
     };
   };
 
-  services.syncthing = {
-    enable = true;
-  };
+  services.syncthing = { enable = true; };
 
   # # Development
   programs.git = {
@@ -286,6 +278,7 @@ in {
       color  = "auto";
     };
 
+    # Additional configuration not defined in modules
     includes = [
       { contents = {
           safe.directory = [ "/etc/nixos" ];
@@ -298,7 +291,8 @@ in {
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    extensions = with pkgs.vscode-extensions;
+    extensions =
+      with pkgs.vscode-extensions;
       [ apollographql.vscode-apollo
         b4dm4n.vscode-nixpkgs-fmt
         bbenoist.nix
@@ -319,7 +313,6 @@ in {
         scala-lang.scala
         svelte.svelte-vscode
         rust-lang.rust-analyzer
-
       ];
   };
 
@@ -403,9 +396,7 @@ in {
     };
   };
 
-  programs.zathura = {
-    enable = true;
-  };
+  programs.zathura.enable = true;
 
   # services.barrier.client.enable = true;
 
