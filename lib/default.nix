@@ -1,12 +1,5 @@
-# No-bullshit, simple utility function for creating dynamic, composable
-# multi-system configurations.
-
-{ inputs, ... }:
+inputs@{ nixpkgs, home-manager, self, ... }:
 let
-  # Flake
-  pkgs = inputs.nixpkgs;
-  home-manager = inputs.home-manager;
-
   # Local Imports
   deploy = import ./deploy.nix { inherit inputs; };
 in
@@ -23,11 +16,13 @@ rec {
 
       # Set a default hostname --
       hostnameConfig = { networking.hostName = hostName; };
-    in pkgs.lib.nixosSystem {
+
+    in nixpkgs.lib.nixosSystem {
       modules = systemConfig ++ [ hardwareProfile hostnameConfig home-manager.nixosModules.home-manager hmModules ];
       # Give us access to flake inputs by providing it as an argument to the configuration module calls
       specialArgs = {
         inherit inputs;
+        libm32 = self.lib;
       };
     };
 
