@@ -37,6 +37,19 @@
   services.avahi.enable       = true;
   services.avahi.openFirewall = true;
 
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    shares = {
+      swhpics = {
+        path = "/home/m32/media/pictures/sweetheart";
+        comment = "Sweetheart Pictures";
+        browseable = "yes";
+        "guest ok" = "yes";
+      };
+    };
+  };
+
   services.openssh = {
     enable = true;
     openFirewall = true;
