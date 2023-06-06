@@ -37,6 +37,12 @@
   services.avahi.enable       = true;
   services.avahi.openFirewall = true;
 
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    allowSFTP = true;
+  };
+
   # Firewall
   networking.firewall.allowedTCPPorts = [
     # Barrier
