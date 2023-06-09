@@ -1,0 +1,7 @@
+keys:
+  - &admin_m32_pgp DE0FE946DDA34B3BD1F92D59E017B967AC29E321
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+    - pgp:
+        - *admin_m32_pgp
