@@ -1,5 +1,4 @@
-{ lib, pkgs, ... }:
-{
+{ lib, pkgs, ... }: {
   imports = [
     ./default.nix
     ./network/zerotier.nix
@@ -12,19 +11,20 @@
   ];
 
   # Unfree Software
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "obsidian"
-    "spotify"
-    "zerotierone"
-    "nvidia-x11"
-    "nvidia-settings"
-    "displaylink"
-    "pycharm-community"
-    "steam"
-    "steam-original"
-    "steam-runtime"
-    "steam-run"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "obsidian"
+      "spotify"
+      "zerotierone"
+      "nvidia-x11"
+      "nvidia-settings"
+      "displaylink"
+      "pycharm-community"
+      "steam"
+      "steam-original"
+      "steam-runtime"
+      "steam-run"
+    ];
 
   # General
   console.earlySetup = true;
@@ -34,27 +34,8 @@
 
   # Networking
   networking.networkmanager.enable = true;
-  services.avahi.enable       = true;
+  services.avahi.enable = true;
   services.avahi.openFirewall = true;
-
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    shares = {
-      swhpics = {
-        path = "/home/m32/media/pictures/sweetheart";
-        comment = "Sweetheart Pictures";
-        browseable = "yes";
-        "guest ok" = "yes";
-      };
-    };
-  };
-
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    allowSFTP = true;
-  };
 
   # Firewall
   networking.firewall.allowedTCPPorts = [
@@ -63,7 +44,7 @@
   ];
 
   # Printing
-  services.printing.enable  = true;
+  services.printing.enable = true;
   services.printing.drivers = with pkgs; [ cups-dymo epson-escpr ];
   hardware.sane.enable = true;
 
@@ -75,7 +56,5 @@
   boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
   boot.plymouth.enable = true;
-
-
 
 }
