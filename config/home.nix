@@ -62,6 +62,9 @@ in {
     psst
     vlc
     obs-studio
+    gimp
+    inkscape
+    krita
 
     # # Virt / Containers
     podman
