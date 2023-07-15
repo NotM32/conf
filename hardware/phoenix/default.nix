@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, modulesPath, ... }:
 
 {
   imports =
@@ -144,5 +144,9 @@
 
   # Hardware Temps
   hardware.gkraken.enable = true;
+
+  # Video Drivers / Hardware options
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+  hardware.nvidia.modesetting.enable = true;
 
 }

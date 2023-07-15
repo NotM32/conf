@@ -53,10 +53,6 @@
   #   old: { passthru.providedSession = ["plasmawayland"]; })
   # ];
 
-  # Drivers / Hardware options
-  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
-  hardware.nvidia.modesetting.enable = true;
-
   programs.xwayland.enable = true;
 
   # Some Electron apps were showing black
