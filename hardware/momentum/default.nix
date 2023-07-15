@@ -67,6 +67,10 @@
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  powerManagement.cpuFreqGovernor = "powersave";
+
+  services.thermald.enable = true;
+
   # Keyboard / Mouse
   hardware.trackpoint = {
     enable = true;
