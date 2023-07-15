@@ -38,6 +38,7 @@ in {
     helm-ls      # helm (kubernetes package manager) language server
     gopls        # gopls
     texlab       # texlab
+    direnv
 
     # ## Nix Utilities
     nurl          # nix-prefetch but more useful
