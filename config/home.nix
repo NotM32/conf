@@ -357,7 +357,15 @@ in {
     enableFishIntegration = true;
     enableXsessionIntegration = true;
     agents = [ "ssh" "gpg"];
-    keys = [ "id_rsa" "id_ovh" "id_momentum" ];
+    keys = [
+      # General
+      "id_ed25519"
+      "id_rsa"
+      "id_rsa_secondary"
+
+      # Clients
+      "id_ed25519_churchill"
+    ];
   };
 
   programs.ssh = {
@@ -386,13 +394,21 @@ in {
       };
 
       # Churchill
-      "gateway0" = {
-        hostname = "68.64.160.146";
+      "access1.net.churchill" = {
+        hostname = "68.64.164.164";
+        forwardAgent = true;
+      };
+      "switch0.net.churchill" = {
+        hostname = "68.64.164.170";
+        forwardAgent = true;
+      };
+      "switch1.net.churchill" = {
+        hostname = "68.64.164.171";
         forwardAgent = true;
       };
 
       # Colorado Colo Network
-      "ccjumpbox" = {
+      "jumpbox.colo" = {
         hostname = "68.64.160.2";
         forwardAgent = true;
       };
