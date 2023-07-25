@@ -69,6 +69,8 @@ in {
 
     # # Virt / Containers
     podman
+    virt-manager
+    virt-manager-qt
 
     # # Office
     obsidian
@@ -395,7 +397,7 @@ in {
 
       # Churchill
       "access1.net.churchill" = {
-        hostname = "68.64.164.164";
+        hostname = "68.64.164.174";
         forwardAgent = true;
       };
       "switch0.net.churchill" = {
