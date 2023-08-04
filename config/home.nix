@@ -417,7 +417,9 @@ in {
       "ns1.colo" = {
         hostname = "ns1.corporatecolo.com";
         forwardAgent = true;
-        hostKeyAlgorithms = "ssh-rsa";
+        extraOptions = {
+          hostKeyAlgorithms = "ssh-rsa";
+        };
       };
 
     };
