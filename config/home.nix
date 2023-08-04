@@ -414,6 +414,11 @@ in {
         hostname = "68.64.160.2";
         forwardAgent = true;
       };
+      "ns1.colo" = {
+        hostname = "ns1.corporatecolo.com";
+        forwardAgent = true;
+        hostKeyAlgorithms = "ssh-rsa";
+      };
 
     };
   };
