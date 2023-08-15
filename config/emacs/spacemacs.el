@@ -67,6 +67,7 @@ This function should only modify configuration layer settings."
      elixir
      erlang
      go
+     php
 
      ;; #data display and langs
      csv
