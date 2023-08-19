@@ -36,6 +36,7 @@
   networking.networkmanager.enable = true;
   services.avahi.enable = true;
   services.avahi.openFirewall = true;
+  services.openssh.enable = true;
 
   # Firewall
   networking.firewall.allowedTCPPorts = [
