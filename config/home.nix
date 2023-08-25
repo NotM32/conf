@@ -73,7 +73,6 @@ in {
     obsidian
     onlyoffice-bin
     libreoffice
-    hunspell-dict-ru-ru-libreoffice
     unoconv
 
     # # Utilities
@@ -198,7 +197,7 @@ in {
         "browser.newtabpage.enabled" = false;
         "browser.safebrowsing.malware.enabled" = false;
         "browser.safebrowsing.phishing.enabled" = false;
-        "dom.event.clipboardevents.enabled" = false;
+        "dom.event.clipboardevents.enabled" = true;
         "extensions.pocket.enabled" = false;
         "geo.enabled" = false;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
@@ -214,7 +213,6 @@ in {
         "signon.autofillForms" = false;
         "network.prefetch-next" = false;
         "network.predictor.enabled" = false;
-
       };
     };
 
