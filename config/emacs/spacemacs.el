@@ -87,7 +87,8 @@ This function should only modify configuration layer settings."
      racket
      go
      php
-     typescript
+     (typescript :variables
+                 typescript-fmt-tool 'prettier)
      zig
      nim
 
