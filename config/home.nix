@@ -83,7 +83,6 @@ in {
     ddcui # GUI for ddcutil
 
     # For emacs
-    emacs-libvterm
     libvterm
   ];
 
