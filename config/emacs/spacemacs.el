@@ -49,7 +49,7 @@ This function should only modify configuration layer settings."
      tabs
      tree-sitter
 
-     ;; #docs / markup languages
+     ;; docs / markup languages
      org
      markdown
      restructuredtext
@@ -58,34 +58,36 @@ This function should only modify configuration layer settings."
      latex
      bibtex
 
-     ;; #language layers
+     ;; language layers
      emacs-lisp
      rust
+     elixir
      python
+     ocaml
      (nixos :variables
             nix-backend 'lsp)
-     elixir
      erlang
      go
      php
+     typescript
+     zig
 
-     ;; #data display and langs
+     ;; data display and langs
      csv
      sql
      graphql
      graphviz
-
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
 
      ;; #webdev
-     vue
-     svelte
      html
-     web-beautify
-     typescript
      javascript
+     svelte
+     vue
+     web-beautify
+     prettier
 
      ;; #ops
      (terraform :variables
@@ -101,7 +103,9 @@ This function should only modify configuration layer settings."
      ranger
      gnus
      hackernews
-     notmuch)
+     notmuch
+     restclient
+     )
 
 
    ;; List of additional packages that will be installed without being wrapped
