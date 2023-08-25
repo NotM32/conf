@@ -48,6 +48,7 @@ This function should only modify configuration layer settings."
      themes-megapack
      tabs
      tree-sitter
+     emoji
 
      ;; docs / markup languages
      org
@@ -57,54 +58,75 @@ This function should only modify configuration layer settings."
      pdf
      latex
      bibtex
-
-     ;; language layers
-     emacs-lisp
-     rust
-     elixir
-     python
-     ocaml
-     (nixos :variables
-            nix-backend 'lsp)
-     erlang
-     go
-     php
-     typescript
-     zig
+     pandoc
 
      ;; data display and langs
      csv
      sql
      graphql
+     json
      graphviz
+
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
 
+     ;; language layers
+     emacs-lisp
+     rust
+     elixir
+     ruby
+     python
+     ocaml
+     (nixos :variables
+            nix-backend 'lsp)
+     erlang
+     scheme
+     racket
+     go
+     php
+     typescript
+     zig
+     nim
+
      ;; #webdev
      html
      javascript
+     phoenix
+     ruby-on-rails
      svelte
+     django
      vue
+     elm
      web-beautify
      prettier
+     restclient
+     protobuf
 
      ;; #ops
      (terraform :variables
                 terraform-backend 'lsp)
      docker
-     yaml
+     salt
      ansible
      kubernetes
      systemd
 
+     ;; configuration
+     yaml
+     nginx
+     meson
+
      ;; #applications
      spotify
+     mu4e
      ranger
      gnus
      hackernews
      notmuch
-     restclient
+     search-engine
+     finance
+     openai
      )
 
 
