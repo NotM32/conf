@@ -97,7 +97,8 @@ This function should only modify configuration layer settings."
      javascript
      phoenix
      ruby-on-rails
-     svelte
+     (svelte :variables
+             svelte-backend 'lsp)
      django
      vue
      elm
