@@ -1,16 +1,20 @@
-{ config, pkgs, ...}:
-let
-  font = "FiraCode Nerd Font";
+{ config, pkgs, ... }:
+let font = "FiraCode Nerd Font";
 in {
   home.packages = with pkgs; [
     # # Internet
-    #firefox
     signal-desktop
     hexchat
     element-desktop
     protonvpn-gui
-    #syncthing
     filezilla
+
+    # # Nix Utilities
+    nurl # nix-prefetch but more useful
+    nixos-option # command line search of nixos option declarations
+    rnix-lsp # the standard nix-lsp
+    nil # nil is a better nix lsp
+    nixfmt # formatter for nix
 
     # # Games
     lutris
@@ -21,7 +25,7 @@ in {
     ansible
     yarn
 
-    # # DevOps tools
+    # # Infrastructure tools
     kubectl
     kubernetes-helm
     terraform
@@ -29,20 +33,13 @@ in {
     ansible
     buildah
 
-    # ## Language Tools
-    rnix-lsp     # the standard nix-lsp
-    nil          # nil is a better nix lsp
-    nixfmt       # formatter for nix
-    tflint       # terraform linter
+    # ## Language Servers
+    tflint # terraform linter
     terraform-ls # terraform language server
-    helm-ls      # helm (kubernetes package manager) language server
-    gopls        # gopls
-    texlab       # texlab
+    helm-ls # helm (kubernetes package manager) language server
+    gopls # gopls
+    texlab # texlab
     direnv
-
-    # ## Nix Utilities
-    nurl          # nix-prefetch but more useful
-    nixos-option  # command line search of nixos option declarations
 
     # ## Languages
     elixir
@@ -54,9 +51,9 @@ in {
     git-latexdiff # More helpful diffs for latex files in git
 
     # # Environment
-    alacritty                # fast terminal emulator
-    barrier                  # the software kvm
-    plasma5Packages.bismuth  # Tiling functionality in KDE
+    alacritty # fast terminal emulator
+    barrier # the software kvm
+    plasma5Packages.bismuth # Tiling functionality in KDE
 
     # # Media
     spotify
@@ -75,19 +72,24 @@ in {
     # # Office
     obsidian
     onlyoffice-bin
+    libreoffice
+    hunspell-dict-ru-ru-libreoffice
+    unoconv
 
     # # Utilities
     htop
-    minicom     # connecting to devices over serial modem connection (router/switch consoles)
-    mosh        # mobile shell, for latent/spotty ssh connections
-    ddcutil     # cli tool for controlling digital monitors without using their OSDs
-    ddcui       # GUI for ddcutil
+    minicom # connecting to devices over serial modem connection (router/switch consoles)
+    mosh # mobile shell, for latent/spotty ssh connections
+    ddcutil # cli tool for controlling digital monitors without using their OSDs
+    ddcui # GUI for ddcutil
+
+    # For emacs
+    emacs-libvterm
+    libvterm
   ];
 
   programs.home-manager.enable = true;
-  home = {
-    stateVersion = "22.11";
-  };
+  home = { stateVersion = "22.11"; };
 
   # Home Structure
   xdg = {
@@ -96,19 +98,19 @@ in {
     userDirs.createDirectories = true;
 
     userDirs = {
-      desktop     = "${config.home.homeDirectory}/docs/desktop";
-      documents   = "${config.home.homeDirectory}/docs";
-      download    = "${config.home.homeDirectory}/downloads";
-      music       = "${config.home.homeDirectory}/media/music";
-      pictures    = "${config.home.homeDirectory}/media/pictures";
+      desktop = "${config.home.homeDirectory}/docs/desktop";
+      documents = "${config.home.homeDirectory}/docs";
+      download = "${config.home.homeDirectory}/downloads";
+      music = "${config.home.homeDirectory}/media/music";
+      pictures = "${config.home.homeDirectory}/media/pictures";
       publicShare = "${config.home.homeDirectory}/public";
-      templates   = "${config.home.homeDirectory}/docs/templates";
-      videos      = "${config.home.homeDirectory}/media/videos";
+      templates = "${config.home.homeDirectory}/docs/templates";
+      videos = "${config.home.homeDirectory}/media/videos";
     };
 
     userDirs.extraConfig = {
       XDG_MISC_DIR = "${config.home.homeDirectory}/docs/misc";
-      XDG_GIT_DIR  = "${config.home.homeDirectory}/projects";
+      XDG_GIT_DIR = "${config.home.homeDirectory}/projects";
     };
 
   };
@@ -138,17 +140,26 @@ in {
           urls = [{
             template = "https://search.nixos.org/packages";
             params = [
-              { name = "type"; value = "packages"; }
-              { name = "query"; value = "{searchTerms}"; }
+              {
+                name = "type";
+                value = "packages";
+              }
+              {
+                name = "query";
+                value = "{searchTerms}";
+              }
             ];
           }];
 
-          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          icon =
+            "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
           definedAliases = [ "@np" ];
         };
 
         "NixOS Wiki" = {
-          urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+          urls = [{
+            template = "https://nixos.wiki/index.php?search={searchTerms}";
+          }];
           iconUpdateURL = "https://nixos.wiki/favicon.png";
           updateInterval = 24 * 60 * 60 * 1000; # every day
           definedAliases = [ "@nxw" ];
@@ -158,9 +169,10 @@ in {
           definedAliases = [ "@sp" ];
           urls = [{
             template = "https://www.startpage.com/sp/search";
-            params = [
-              { name = "query"; value = "{searchTerms}"; }
-            ];
+            params = [{
+              name = "query";
+              value = "{searchTerms}";
+            }];
           }];
         };
 
@@ -172,16 +184,15 @@ in {
         "Wikipedia (en)".metaData.hidden = true;
       };
 
-      userChrome =
-        ''
-          #sidebar-header {
-           display: none;
-          }
+      userChrome = ''
+        #sidebar-header {
+         display: none;
+        }
 
-          #TabsToolbar {
-           display: none;
-          }
-        '';
+        #TabsToolbar {
+         display: none;
+        }
+      '';
 
       settings = {
         "browser.newtabpage.enabled" = false;
@@ -212,23 +223,15 @@ in {
   programs.alacritty = {
     enable = true;
     settings = {
-      env = {
-        TERM = "alacritty";
-      };
+      env = { TERM = "alacritty"; };
       window = {
         title = "terminal";
         dynamic_title = true;
       };
-      scrolling = {
-        history = 10000;
-      };
+      scrolling = { history = 10000; };
       font = {
-        normal = {
-          family = font;
-        };
-        bold = {
-          family = font;
-        };
+        normal = { family = font; };
+        bold = { family = font; };
         size = 10;
       };
       colors = {
@@ -257,13 +260,23 @@ in {
           white = "0x978965";
         };
       };
-      shell = {
-        program = "fish";
-      };
+      shell = { program = "fish"; };
       key_bindings = [
-        { key = "Key0"; mods = "Control"; action = "ResetFontSize"; }
-        { key = "Plus"; mods = "Control"; action = "IncreaseFontSize"; }
-        { key = "Minus"; mods = "Control"; action = "DecreaseFontSize"; }
+        {
+          key = "Key0";
+          mods = "Control";
+          action = "ResetFontSize";
+        }
+        {
+          key = "Plus";
+          mods = "Control";
+          action = "IncreaseFontSize";
+        }
+        {
+          key = "Minus";
+          mods = "Control";
+          action = "DecreaseFontSize";
+        }
       ];
     };
   };
@@ -273,63 +286,55 @@ in {
   # # Development
   programs.git = {
     enable = true;
-    userName  = "m32";
+    userName = "m32";
     userEmail = "m32@m32.io";
 
     signing.signByDefault = true;
-    signing.key           = "0DF687B328D99A05";
+    signing.key = "0DF687B328D99A05";
 
     difftastic = {
       enable = true;
-      color  = "auto";
+      color = "auto";
     };
 
     # Additional configuration not defined in modules
-    includes = [
-      { contents = {
-          safe.directory = [ "/etc/nixos" ];
-        };
-      }
-    ];
+    includes = [{ contents = { safe.directory = [ "/etc/nixos" ]; }; }];
 
   };
 
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    extensions =
-      with pkgs.vscode-extensions;
-      [ apollographql.vscode-apollo
-        b4dm4n.vscode-nixpkgs-fmt
-        bbenoist.nix
-        chenglou92.rescript-vscode
-        bierner.markdown-mermaid
-        bierner.markdown-checkbox
-        dart-code.flutter
-        elixir-lsp.vscode-elixir-ls
-        elmtooling.elm-ls-vscode
-        golang.go
-        hashicorp.terraform
-        graphql.vscode-graphql
-        influxdata.flux
-        ms-kubernetes-tools.vscode-kubernetes-tools
-        ms-azuretools.vscode-docker
-        phoenixframework.phoenix
-        prisma.prisma
-        scala-lang.scala
-        svelte.svelte-vscode
-        rust-lang.rust-analyzer
-      ];
+    extensions = with pkgs.vscode-extensions; [
+      apollographql.vscode-apollo
+      b4dm4n.vscode-nixpkgs-fmt
+      bbenoist.nix
+      chenglou92.rescript-vscode
+      bierner.markdown-mermaid
+      bierner.markdown-checkbox
+      dart-code.flutter
+      elixir-lsp.vscode-elixir-ls
+      elmtooling.elm-ls-vscode
+      golang.go
+      hashicorp.terraform
+      graphql.vscode-graphql
+      influxdata.flux
+      ms-kubernetes-tools.vscode-kubernetes-tools
+      ms-azuretools.vscode-docker
+      phoenixframework.phoenix
+      prisma.prisma
+      scala-lang.scala
+      svelte.svelte-vscode
+      rust-lang.rust-analyzer
+    ];
   };
 
   # ## Emacs
-  programs.emacs = {
-    enable = true;
-  };
+  programs.emacs = { enable = true; };
 
   services.emacs = {
     enable = true;
-    defaultEditor        = true;
+    defaultEditor = true;
     startWithUserSession = true;
   };
 
@@ -339,18 +344,16 @@ in {
     source = builtins.fetchGit {
       url = "https://github.com/syl20bnr/spacemacs";
       ref = "develop";
-      rev = "66128ffbac8d8a030f849e81698fc5b83a1491ae";
+      rev = "7d25dc6cc593b4100212d99fc3fce63aa902ac04";
     };
     recursive = true;
   };
 
-  programs.fish = {
-    enable = true;
-  };
+  programs.fish = { enable = true; };
 
   programs.gpg = {
     enable = true;
-    publicKeys = [{ source = ./gpg/pubkey.asc;}];
+    publicKeys = [{ source = ./gpg/pubkey.asc; }];
   };
 
   programs.keychain = {
@@ -358,7 +361,7 @@ in {
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableXsessionIntegration = true;
-    agents = [ "ssh" "gpg"];
+    agents = [ "ssh" "gpg" ];
     keys = [
       # General
       "id_ed25519"
@@ -372,7 +375,7 @@ in {
 
   programs.ssh = {
     enable = true;
-    controlMaster  = "auto";
+    controlMaster = "auto";
     controlPersist = "10m";
     # forwardAgent   = true;
     # Host Level configuration
@@ -417,9 +420,7 @@ in {
       "ns1.colo" = {
         hostname = "ns1.corporatecolo.com";
         forwardAgent = true;
-        extraOptions = {
-          hostKeyAlgorithms = "ssh-rsa";
-        };
+        extraOptions = { hostKeyAlgorithms = "ssh-rsa"; };
       };
 
     };
@@ -437,7 +438,7 @@ in {
   services.mbsync = {
     enable = true;
     preExec = "mkdir -p ~/mail/protonmail/";
-      configFile = ./mail/mbsyncrc;
+    configFile = ./mail/mbsyncrc;
   };
 
   programs.go = {
