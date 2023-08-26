@@ -40,8 +40,7 @@ This function should only modify configuration layer settings."
      auto-completion
      spell-checking
      syntax-checking
-     (treemacs :variables
-               treemacs-use-all-the-icons-theme t)
+     treemacs
      git
      helm
      multiple-cursors
@@ -657,11 +656,13 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq-default
-   ;; web-mode
+   ;; indentation
    indent-tabs-mode t
    tab-width 4
+   ;; web-mode
    web-mode-script-padding 4
    setq web-mode-code-indent-offset 1)
+
   (setq gnus-secondary-select-methods
   '(
     (nnimap "protonmail"
