@@ -40,7 +40,8 @@ This function should only modify configuration layer settings."
      auto-completion
      spell-checking
      syntax-checking
-     treemacs
+     (treemacs :variables
+			   treemacs--icon-size 18)
      git
      helm
      multiple-cursors
@@ -50,6 +51,9 @@ This function should only modify configuration layer settings."
      tree-sitter
      emoji
      imenu-list
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
 
      ;; docs / markup languages
      org
@@ -59,7 +63,7 @@ This function should only modify configuration layer settings."
      pdf
      latex
      bibtex
-     pandoc
+     ;; pandoc
 
      ;; data display and langs
      csv
@@ -68,9 +72,6 @@ This function should only modify configuration layer settings."
      json
      graphviz
 
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
 
      ;; language layers
      emacs-lisp
@@ -78,7 +79,7 @@ This function should only modify configuration layer settings."
      elixir
      ruby
      python
-     ocaml
+     ;; ocaml
      (nixos :variables
             nix-backend 'lsp)
      erlang
@@ -123,7 +124,6 @@ This function should only modify configuration layer settings."
 
      ;; #applications
      spotify
-     mu4e
      ranger
      gnus
      hackernews
@@ -656,7 +656,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq-default
-   ;; indentation
+   ;; use tabs
    indent-tabs-mode t
    tab-width 4
    ;; web-mode
