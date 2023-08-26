@@ -658,7 +658,10 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq-default
    ;; web-mode
-   web-mode-script-padding 1)
+   indent-tabs-mode t
+   tab-width 4
+   web-mode-script-padding 4
+   setq web-mode-code-indent-offset 1)
   (setq gnus-secondary-select-methods
   '(
     (nnimap "protonmail"
