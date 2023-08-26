@@ -98,7 +98,8 @@ This function should only modify configuration layer settings."
      phoenix
      ruby-on-rails
      (svelte :variables
-             svelte-backend 'lsp)
+             svelte-backend 'lsp
+             node-add-modules-path t)
      django
      vue
      elm
@@ -319,12 +320,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-tokyo-night
-                         badwolf
-                         fogus
-                         jbeans
-                         spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(doom-tokyo-night)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -447,7 +443,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -660,6 +656,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (setq-default
+   ;; web-mode
+   web-mode-script-padding 1)
   (setq gnus-secondary-select-methods
   '(
     (nnimap "protonmail"
@@ -668,7 +667,7 @@ before packages are loaded."
             (nnimap-stream ssl))
     (nntp "news.eweka.nl"
           (nntp-address "news.eweka.nl"))
-   )
+    )
   )
 )
 
