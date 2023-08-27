@@ -12,8 +12,7 @@
     sops-nix.url = "github:Mic92/sops-nix";                          # for secrets management
 
     # Tools / Ops Utilities
-    deploy.url = "github:serokell/deploy-rs";                        # Unused, TODO: add overlay and pkg to devshell
-    nixos-generators.url = "github:nix-community/nixos-generators";  # Unused, ditto
+    nixos-generators.url = "github:nix-community/nixos-generators";  # Unused
 
     # System Utils
     impermanence.url = "github:nix-community/impermanence";          # Unused, but when I have free time
@@ -21,7 +20,7 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix, ... }:
     with flake-utils.lib; eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system};
     /* Flake outputs not-related to system configuration are in the below attrset */
@@ -109,7 +108,6 @@
 
                 ];
               users = users;
-              deployUser = "m32";
             };
 
           # T430 laptop
@@ -129,7 +127,6 @@
                   ./system/X/remap_mac_keys.nix
                 ];
               users = users;
-              deployUser = "m32";
             };
 
           # Server
@@ -138,7 +135,6 @@
               systemConfig =
                 [ ./system/server.nix
                 ];
-              deployUser = "m32";
             };
 
         };
@@ -147,12 +143,7 @@
       # - NixOS Configurations
       nixosConfigurations = util.system.makeSystemConfigurations hosts;
 
-      # - deploy-rs outputs
-      deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
-
       # - Lib outputs
       lib = util;
     });
-
-  # Nix Con
 }
