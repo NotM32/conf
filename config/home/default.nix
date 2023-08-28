@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
-let font = "FiraCode Nerd Font";
+let
+  font = "FiraCode Nerd Font";
 in {
   home.packages = with pkgs; [
     # # Internet
