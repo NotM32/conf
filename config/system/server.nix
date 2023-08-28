@@ -1,7 +1,7 @@
 { ... }:
 {
   imports =
-    [ ./default.nix
+    [ ./global.nix
       ./server/ssh.nix
       ./server/letsencrypt.nix
       ./server/gitea.nix

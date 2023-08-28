@@ -1,6 +1,6 @@
 { lib, pkgs, ... }: {
   imports = [
-    ./default.nix
+    ./global.nix
     ./network/zerotier.nix
     ./audio/pipewire.nix
     ./virt/libvirt.nix
