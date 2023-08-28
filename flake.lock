@@ -351,7 +351,8 @@
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_4",
         "nur": "nur",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "spacemacs": "spacemacs"
       }
     },
     "sops-nix": {
@@ -370,6 +371,23 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spacemacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1693197437,
+        "narHash": "sha256-FmUqdc9t5Niri0LuK4/ZONFj6aKJMjp8XPqHVWPe8jw=",
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
+        "rev": "b86a074437503677d21e2172bd175b37edbdb029",
+        "type": "github"
+      },
+      "original": {
+        "owner": "syl20bnr",
+        "ref": "develop",
+        "repo": "spacemacs",
         "type": "github"
       }
     },

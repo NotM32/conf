@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   font = "FiraCode Nerd Font";
 in {
@@ -77,9 +77,6 @@ in {
     unoconv
 
     # # Utilities
-    htop
-    minicom # connecting to devices over serial modem connection (router/switch consoles)
-    mosh # mobile shell, for latent/spotty ssh connections
     ddcutil # cli tool for controlling digital monitors without using their OSDs
     ddcui # GUI for ddcutil
 
@@ -87,36 +84,7 @@ in {
     libvterm
   ];
 
-  programs.home-manager.enable = true;
-
-  home = { stateVersion = "23.11"; };
-
-  # Home Structure
-  xdg = {
-    enable = true;
-    userDirs.enable = true;
-    userDirs.createDirectories = true;
-
-    userDirs = {
-      desktop = "${config.home.homeDirectory}/docs/desktop";
-      documents = "${config.home.homeDirectory}/docs";
-      download = "${config.home.homeDirectory}/downloads";
-      music = "${config.home.homeDirectory}/media/music";
-      pictures = "${config.home.homeDirectory}/media/pictures";
-      publicShare = "${config.home.homeDirectory}/public";
-      templates = "${config.home.homeDirectory}/docs/templates";
-      videos = "${config.home.homeDirectory}/media/videos";
-    };
-
-    userDirs.extraConfig = {
-      XDG_MISC_DIR = "${config.home.homeDirectory}/docs/misc";
-      XDG_GIT_DIR = "${config.home.homeDirectory}/projects";
-    };
-
-  };
-
   # Security
-
   # ## Pam Auth w/ YubiKey (OTP/chal-resp not U2F)
   pam.yubico.authorizedYubiKeys.ids = [ "ccccccvedkdn" ];
 
@@ -328,31 +296,16 @@ in {
     ];
   };
 
-  # ## Emacs
   programs.emacs = { enable = true; };
-
   services.emacs = {
     enable = true;
     defaultEditor = true;
     startWithUserSession = true;
   };
-
-  # ### Spacemacs
   home.file.".spacemacs".source = ./emacs/spacemacs.el;
   home.file.".emacs.d" = {
-    source = builtins.fetchGit {
-      url = "https://github.com/syl20bnr/spacemacs";
-      ref = "develop";
-      rev = "7d25dc6cc593b4100212d99fc3fce63aa902ac04";
-    };
+    source = inputs.spacemacs;
     recursive = true;
-  };
-
-  programs.fish = { enable = true; };
-
-  programs.gpg = {
-    enable = true;
-    publicKeys = [{ source = ./gpg/pubkey.asc; }];
   };
 
   programs.keychain = {

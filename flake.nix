@@ -17,6 +17,12 @@
     # System Utils
     impermanence.url = "github:nix-community/impermanence"; # Unused
     lanzaboote.url   = "github:nix-community/lanzaboote"; # Unused
+
+    # Other
+    spacemacs = {
+      url = "github:syl20bnr/spacemacs/develop";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, flake-utils, ... }:
