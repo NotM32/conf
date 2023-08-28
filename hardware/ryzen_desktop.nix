@@ -133,9 +133,6 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp7s0f3u3u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
 
   hardware.bluetooth.enable = true;
 
@@ -148,5 +145,4 @@
   # Video Drivers / Hardware options
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
   hardware.nvidia.modesetting.enable = true;
-
 }

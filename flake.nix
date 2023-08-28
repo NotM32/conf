@@ -21,68 +21,9 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix, ... }:
-    with flake-utils.lib; eachDefaultSystem (system:
-    let pkgs = nixpkgs.legacyPackages.${system};
-    /* Flake outputs not-related to system configuration are in the below attrset */
-    in {
-
-      packages = {
-        /* Build the documentation book in `docs/` */
-        docs = pkgs.stdenvNoCC.mkDerivation rec {
-          pname = "m32meconf-docs";
-          version = self.lastModifiedDate;
-          src = self;
-
-          doCheck = true;
-
-          buildInputs = with pkgs; [ coreutils mdbook ];
-          phases = [ "unpackPhase" "buildPhase" "installPhase" ];
-
-          buildPhase = ''
-            export PATH="${pkgs.lib.makeBinPath buildInputs}";
-            cargo install mdbook-nix-eval
-            mdbook build ./docs/
-          '';
-
-          installPhase = ''
-            mkdir -p $out
-            cp -r ./docs/book/* $out
-          '';
-        };
-
-      };
-
-      devShell = pkgs.mkShell {
-        inputsFrom = builtins.attrValues self.packages.${system};
-        # packages = with pkgs; [ ];
-        shellHook = ''
-        alias devdocs='mdbook serve --port 3025 --open ./docs/'
-        alias mkdocs='nix build .#docs'
-        alias nsp='nix search nixpkgs'
-        alias dh='echo -e "$DEVSHELL_HELP"'
-
-        DEVSHELL_HELP="
-        Devshell Command Glossary
-        [docs] devdocs       | Start the mdbook watch server
-               mkdocs        | Build the docs
-
-        [util] nixos-option  | Search for nixos options
-               nsp {package} | Search nixpkgs
-               dh            | Show this again
-        "
-
-        echo -e "$DEVSHELL_HELP"
-        '';
-      };
-
-    }) // (
-
-    /* System configuration related items  are below this line */
     let
       # - Local imports --
-      util = import ./lib inputs;
-
-      # - System Configurations
+      libconf = import ./lib inputs;
 
       # Users / Home Conf --
       users.m32 = import ./config/home.nix;
@@ -92,7 +33,7 @@
         { # ** Hosts
           # Desktop
           phoenix =
-            { hardwareProfile = ./hardware/phoenix;
+            { hardwareProfile = ./hardware/ryzen_desktop.nix;
               systemConfig =
                 [ # Bootloader and Disks specific to this system
                   ./system/boot/uefi.nix
@@ -112,7 +53,7 @@
 
           # T430 laptop
           momentum =
-            { hardwareProfile = ./hardware/momentum;
+            { hardwareProfile = ./hardware/t430.nix;
               systemConfig =
                 [ # Bootloader
                   ./system/boot/legacyboot.nix
@@ -131,7 +72,7 @@
 
           # Server
           maple =
-            { hardwareProfile = ./hardware/maple;
+            { hardwareProfile = ./hardware/ovh_vps.nix;
               systemConfig =
                 [ ./system/server.nix
                 ];
@@ -139,11 +80,10 @@
 
         };
     in {
-
       # - NixOS Configurations
-      nixosConfigurations = util.system.makeSystemConfigurations hosts;
+      nixosConfigurations = libconf.system.makeSystemConfigurations hosts;
 
       # - Lib outputs
-      lib = util;
-    });
+      lib = libconf;
+    };
 }

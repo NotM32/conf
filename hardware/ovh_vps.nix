@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ modulesPath, ... }:
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
@@ -14,6 +14,5 @@
 
   # OVH VPS has /dev/vram0
   zramSwap.enable = true;
-
   boot.tmp.cleanOnBoot = true;
 }
