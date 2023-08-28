@@ -1,10 +1,7 @@
-/* Base profile inherited by all other configurations of my user. */
-{ config, pkgs, ... }:
-{
+# * Base profile inherited by all other configurations of my user.
+{ config, pkgs, ... }: {
   programs.home-manager.enable = true;
-  home = {
-    stateVersion = "23.11";
-  };
+  home = { stateVersion = "23.11"; };
 
   # Home directory structure -- I like it this way
   xdg = {
@@ -35,13 +32,12 @@
   # GPG
   programs.gpg = {
     enable = true;
-    publicKeys = [{ source = ./gpg/pubkey.asc; }];
+    publicKeys = [{ source = ../gpg/pubkey.asc; }];
   };
 
-
+  # Extra packages
   home.packages = with pkgs; [
-
-    # # Utilities
+    # Utilities
     htop
     nmap
     minicom

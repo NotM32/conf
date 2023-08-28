@@ -4,6 +4,7 @@
   users.users.m32 = {
     isNormalUser = true;
     extraGroups = [ "wheel" "libvirtd" "docker" ];
+
     openssh.authorizedKeys.keyFiles =
       builtins.map (value: "./ssh/" + value) builtins.attrNames
       lib.attrsets.filterAttrs (name: value: value == "regular")

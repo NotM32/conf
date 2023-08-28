@@ -1,8 +1,8 @@
-{ self, nur, ... }:
+{ nur, ... }:
 let
   users.m32 = import ../config/home.nix;
 in {
-  nixosConfigurations = self.lib.system.makeSystemConfigurations { # ** Hosts
+ hosts = { # ** Hosts
     # Desktop
     phoenix = {
       hardwareProfile = ./hardware/ryzen_desktop.nix;
