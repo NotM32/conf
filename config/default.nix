@@ -5,5 +5,7 @@ let
   hostsPath = ./hosts;
   systemPath = ./system;
 in ( flake-utils.lib.meld inputs [ hardwarePath homeProfilePath hostsPath systemPath ] // {
-  nixosConfigurations = { };
+  nixosConfigurations = {
+
+  };
 })
