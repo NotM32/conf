@@ -18,7 +18,7 @@
     enable = true;
     persistent = true;
     operation = "switch";
-    flake = "git://https://git.m32.me/conf/m32.nix?ref=prod#${networking.hostname}";
+    flake = "git://https://git.m32.me/conf/m32.nix?ref=master#${networking.hostname}";
     dates = "daily";
   };
 }
