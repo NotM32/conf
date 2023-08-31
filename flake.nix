@@ -25,14 +25,5 @@
     };
   };
 
-  outputs = inputs@{ self, flake-utils, ... }:
-    flake-utils.lib.meld inputs [ ./pkgs ./config ./lib ./modules ] // (
-      let
-        configPath = ./config;
-      in {
-        lib.flake = {
-          inherit configPath;
-        };
-      }
-    );
+  outputs = inputs@{ self, flake-utils, ... }: flake-utils.lib.meld inputs [ ./pkgs ./config ./lib ./modules ];
 }

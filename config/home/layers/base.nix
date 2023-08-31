@@ -44,5 +44,7 @@
     mosh
     dmidecode
     ipmitool
+    inetutils
+    dig
   ];
 }
