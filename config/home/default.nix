@@ -10,9 +10,12 @@ let
     full = all;
     server = [ "base" "security" ];
   };
-  #
 in {
-  conf.home = builtins.mapAttrs (name: comp: (builtins.map (layer: import "./${layersDir}/${layer}.nix") comp)) profiles;
-    # map profile attrset, map the list to convert relative names to full path and yea
+  conf.home = {
+    inherit userConfig;
 
+    profiles = builtins.mapAttrs (name: comp:
+      (builtins.map (layer: import "${layersDir}/${layer}.nix") comp))
+      profiles;
+  };
 }

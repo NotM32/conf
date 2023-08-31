@@ -2,7 +2,7 @@
 let
   users.m32 = import ../config/home.nix;
 in {
- hosts = { # ** Hosts
+ conf.hosts = { # ** Hosts
     # Desktop
     phoenix = {
       hardwareProfile = ./hardware/ryzen_desktop.nix;

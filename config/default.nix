@@ -1,4 +1,4 @@
-inputs@{ self, flake-utils, ... }:
+inputs@{ flake-utils, ... }:
 let
   hardwarePath    = ./hardware;
   homeProfilePath = ./home;

@@ -1,7 +1,11 @@
 { pkgs, inputs, lib, config, ... }:
-
 {
-  time.timeZone = "America/Los_Angeles";
+  imports = [];
+
+  time.timeZone = "America/Denver";
+
+  # Personal stuff is under m32.me
+  networking.domain = "m32.me";
 
   # System Wide Packages
   environment.systemPackages = with pkgs; [
@@ -14,38 +18,11 @@
     cachix
   ];
 
-  # Personal stuff is under m32.me
-  networking.domain = "m32.me";
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable           = true;
-    enableSSHSupport = true;
-  };
-
-  # Security
-  services.pcscd.enable = true;
-
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth  = true;
-  };
-
-  security.pam.yubico = {
-    # Commands for onboarding with the chalresp key in the second slot:
-    # ykman otp chalresp --touch --generate 2
-    # ykpamcfg -2 -v
-    enable = true;
-    debug  = false;
-    mode   = "challenge-response";
-  };
-
   # Nix Options
   nix.package = pkgs.nixUnstable;
 
   nix.registry = {
+    # add this repository
     "m32conf" = {
       from = {
         id = "m32conf";
@@ -87,9 +64,6 @@
       "--impure"
     ];
   };
-
-  # Containers
-  virtualisation.podman.enable   = true;
 
   # Store commit data in generation label
   system.nixos.label =
