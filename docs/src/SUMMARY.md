@@ -1,3 +1,8 @@
-# Summary
+# Introduction
+- [Introduction](./intro.md)
+- [Project Layout](./project_layout.md)
 
-- [Chapter 1](./chapter_1.md)
+# Development
+- [Secrets](./secrets.md)
+
+# Usage
