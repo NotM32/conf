@@ -1,50 +1,54 @@
-{ self, nur, ... }:
+/** This final is the final layer of configuration and last comosition of roles, etc */
+inputs@{ self, nixpkgs, home-manager, sops-nix, ... }:
 let
-  users.m32 = import ../config/home.nix;
-in {
- conf.hosts = { # ** Hosts
-    # Desktop
-    phoenix = {
-      hardwareProfile = ./hardware/ryzen_desktop.nix;
-      systemConfig = [ # Bootloader and Disks specific to this system
-        ./system/boot/uefi.nix
+  lib = nixpkgs.lib;
 
-        # Repos
-        nur.nixosModules.nur
-
-        # More userlandish profile
-        ./system/october.nix
-
-        # Others
-        ./system/X/remap_mac_keys.nix
-
-      ];
-      inherit users;
+  hosts = {
+    "phoenix" = {
+      userProfile = { "m32" = self.conf.home.profiles."all"; };
+      hwProfile = "ryzen_desktop";
+      hostConfig = import ./phoenix.nix;
+      systemRole = "workstation";
     };
-
-    # T430 laptop
-    momentum = {
-      hardwareProfile = ./hardware/t430.nix;
-      systemConfig = [ # Bootloader
-        ./system/boot/legacyboot.nix
-
-        # Repos
-        nur.nixosModules.nur
-
-        # Same shit, different story
-        ./system/october.nix
-
-        # Need to find a way TODO this on a per keeb basis
-        ./system/X/remap_mac_keys.nix
-      ];
-      inherit users;
-    };
-
-    # Server
-    maple = {
-      hardwareProfile = ./hardware/ovh_vps.nix;
-      systemConfig = [ ./system/server.nix ];
-    };
-
   };
+
+  hostModules =
+    let
+      getModules = { userProfile ? { }, hwProfile, hostName ? "system", systemRole ? "base", hostConfig ? { },  extraConfig ? {}, ... }: lib.lists.flatten [
+        # Modules from Libraries
+        # - Home Manager
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
+        # - Secrets
+        sops-nix.nixosModules.sops
+
+        # Configuration Composition --
+        # - NixOS user defintion
+        self.conf.home.userConfig
+        # - HM user defintion
+        {
+          home-manager.users = userProfile;
+        }
+        # - Hardware Profile
+        self.conf.hardware.profiles.${hwProfile}
+        # - Hostname Config
+        { networking.hostName = hostName; }
+        # - System Role
+        import "${self.conf.system.rolesPath}/${systemRole}.nix"
+        hostConfig
+    ];
+  in builtins.mapAttrs (hostName: value: getModules (value // {inherit hostName;})) hosts;
+
+in {
+  nixosConfigurations = builtins.mapAttrs (hostName: modules: lib.nixosSystem {
+    inherit modules;
+
+    specialArgs = {
+      inherit inputs; # Share access to the flake inputs in the configuration.
+      libm32 = self.lib; # Make this library available in the configuration.
+    };
+  }) hostModules;
 }

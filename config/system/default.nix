@@ -1,5 +1,6 @@
 { ... }:
 let
+  /* Configuration */
   layersPath = ./layers;
   rolesPath = ./roles;
 in {

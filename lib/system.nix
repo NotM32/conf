@@ -29,7 +29,11 @@ inputs@{ self, nixpkgs, home-manager, sops-nix, ... }: {
         sops-nix.nixosModules.sops
       ];
 
-      modules = sysMods ++ libMods ++ hwMods ++ [{ networking.hostName = hostName; }] ++ extraConfig;
+      modules = sysMods ++
+                libMods ++
+                hwMods ++
+                [{ networking.hostName = hostName; }] ++
+                extraConfig;
 
     in nixpkgs.lib.nixosSystem {
       inherit modules;

@@ -12,7 +12,7 @@ let
   };
 in {
   conf.home = {
-    inherit userConfig;
+    userConfig = import userConfig;
 
     profiles = builtins.mapAttrs (name: comp:
       (builtins.map (layer: import "${layersDir}/${layer}.nix") comp))
