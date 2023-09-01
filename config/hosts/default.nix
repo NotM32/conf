@@ -1,4 +1,4 @@
-{ nur, ... }:
+{ self, nur, ... }:
 let
   users.m32 = import ../config/home.nix;
 in {
