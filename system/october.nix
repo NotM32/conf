@@ -24,6 +24,7 @@
       "steam-original"
       "steam-runtime"
       "steam-run"
+      "terraform" # TODO: OpenTofu
     ];
 
   # General
