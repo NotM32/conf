@@ -27,6 +27,10 @@
       "terraform" # TODO: OpenTofu
     ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0" # EOL, required for Obsidian
+  ];
+
   # General
   console.earlySetup = true;
 
