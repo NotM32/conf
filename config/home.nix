@@ -19,6 +19,7 @@ in {
     # # Games
     lutris
     steam
+    ArchiSteamFarm
 
     # # Development
     insomnia
