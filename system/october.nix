@@ -7,7 +7,6 @@
     ./X/kde.nix
     ./X/fonts.nix
     ./backup
-    ./lights/rgb.nix
   ];
 
   # Unfree Software
