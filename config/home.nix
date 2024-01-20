@@ -48,7 +48,6 @@ in {
     python3
     gcc
     rustc
-    rustup
     cargo
 
     # ## Latex
