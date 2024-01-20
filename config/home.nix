@@ -47,6 +47,9 @@ in {
     nodejs
     python3
     gcc
+    rustc
+    rustup
+    cargo
 
     # ## Latex
     git-latexdiff # More helpful diffs for latex files in git
