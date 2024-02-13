@@ -7,6 +7,7 @@
     ./X/kde.nix
     ./X/fonts.nix
     ./backup
+    ./lights/rgb.nix # TODO: enable support, disable daemon
   ];
 
   # Unfree Software
@@ -23,11 +24,15 @@
       "steam-original"
       "steam-runtime"
       "steam-run"
-      "terraform" # TODO: OpenTofu
+      "terraform" # TODO: Use OpenTofu or migrate all HCL I've written to Pulumi
     ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0" # EOL, required for Obsidian
+  ];
+
+  environment.systemPackages = with pkgs; [
+    liquidctl
   ];
 
   # General
