@@ -11,21 +11,21 @@
   services.xserver.displayManager = {
     sddm.enable = true;
     sddm.enableHidpi = true;
-    setupCommands = ''
-                    ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr \
-                    --output HDMI-0 --scale 2x2 --mode 1920x1080 --rate 240 --pos 0x0      --filter nearest \
-                    --output DP-2   --scale 1x1 --mode 4096x2160 --rate 60  --pos 2160x258 \
-                    --output DP-0   --scale 2x2 --mode 1920x1080 --rate 165 --pos 6256x582 --filter nearest
-    '';
+    # setupCommands = ''
+    #                 ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr \
+    #                 --output HDMI-0 --scale 2x2 --mode 1920x1080 --rate 240 --pos 0x0      --filter nearest \
+    #                 --output DP-2   --scale 1x1 --mode 4096x2160 --rate 60  --pos 2160x258 \
+    #                 --output DP-0   --scale 2x2 --mode 1920x1080 --rate 165 --pos 6256x582 --filter nearest
+    # '';
     defaultSession = "plasmawayland";
   };
 
 
-  # Enable the Plasma 5 Desktop Environment.
-  services.xserver.desktopManager.plasma5.enable   = true;
+  # Enable the Plasma 6 Desktop Environment.
+  services.xserver.desktopManager.plasma6.enable   = true;
 
   # Remove packages I don't want
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+  environment.plasma6.excludePackages = with pkgs.libsForQt5; [
     konsole
     elisa
     gwenview
