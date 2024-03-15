@@ -65,6 +65,4 @@
   hardware.i2c.enable = true;
   boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
-  boot.plymouth.enable = true;
-
 }
