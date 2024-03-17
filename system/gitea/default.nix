@@ -1,8 +1,5 @@
 { pkgs, ... }:
 {
-  #########
-  # Gitea #
-  #########
   services.gitea = {
     enable = true;
     # gitea server, served on a unix socket. publicly accessed by the nginx reverse proxy
@@ -34,7 +31,7 @@
         { INSTALL_LOCK = true; };
       "service" =
         { REQUIRE_SIGNIN_VIEW = true;
-          DISALBE_REGISTRATION = true;
+          DISABLE_REGISTRATION = true;
         };
       "server" =
         { OFFLINE_MODE = true;
@@ -52,6 +49,7 @@
 
     };
   };
+
 
   #################
   # Gitea - vhost #
