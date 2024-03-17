@@ -4,7 +4,7 @@
     [ ./default.nix
       ./server/ssh.nix
       ./server/letsencrypt.nix
-      ./server/gitea.nix
+      ./gitea
       ./server/backups.nix
       ./server/nginx.nix
       ./network/zerotier.nix
