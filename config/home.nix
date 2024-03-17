@@ -33,6 +33,7 @@ in {
     pulumi
     ansible
     buildah
+    pomerium-cli
 
     # ## Language Servers
     tflint # terraform linter
