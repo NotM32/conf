@@ -34,6 +34,7 @@ in {
     ansible
     buildah
     pomerium-cli
+    podman-desktop
 
     # ## Language Servers
     tflint # terraform linter
@@ -57,7 +58,7 @@ in {
     # # Environment
     alacritty # fast terminal emulator
     barrier # the software kvm
-    plasma5Packages.bismuth # Tiling functionality in KDE
+    plasma6Packages.bismuth # Tiling functionality in KDE
 
     # # Media
     spotify
