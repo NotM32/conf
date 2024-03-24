@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, spacemacs, ... }:
 let font = "FiraCode Nerd Font";
 in {
   home.packages = with pkgs; [
@@ -344,11 +344,7 @@ in {
   # ### Spacemacs
   home.file.".spacemacs".source = ./emacs/spacemacs.el;
   home.file.".emacs.d" = {
-    source = builtins.fetchGit {
-      url = "https://github.com/syl20bnr/spacemacs";
-      ref = "develop";
-      rev = "7d25dc6cc593b4100212d99fc3fce63aa902ac04";
-    };
+    source = spacemacs;
     recursive = true;
   };
 

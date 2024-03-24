@@ -18,6 +18,8 @@ inputs@{ self, nixpkgs, home-manager, sops-nix, ... }: {
 
     in nixpkgs.lib.nixosSystem {
       modules = systemConfig ++ [
+        { _module.args = inputs; } # Pass the flake inputs to the module call arguments
+        { _module.args.libm32 = self.lib; } # Pass the flake inputs to the module call arguments
         hardwareProfile
         hostnameConfig
         # Home Manager --
@@ -26,10 +28,6 @@ inputs@{ self, nixpkgs, home-manager, sops-nix, ... }: {
         # Secrets --
         sops-nix.nixosModules.sops
       ];
-      specialArgs = {
-        inherit inputs; # Share access to the flake inputs in the configuration.
-        libm32 = self.lib; # Make this library available in the configuration.
-      };
     };
 
   /* Helper to perform makeSystemConfiguration on an attrset of multiple hosts */
