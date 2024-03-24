@@ -6,25 +6,29 @@ inputs@{ self, nixpkgs, home-manager, sops-nix, ... }: {
   makeSystemConfiguration = { hardwareProfile, systemConfig, hmConfig ? { }
     , users ? { }, hostName ? "nixos", ... }:
     let
-      # Home Mananger --
-      hmModules = {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users = users;
-      } // hmConfig;
-
-      # Set a default hostname --
-      hostnameConfig = { networking.hostName = hostName; };
+      # Extra module arguments need to be sent to home-manager and nixos separetely.
+      extraModuleArgs = {
+        libm32 = self.lib;
+      } // inputs; # Pass the flake inputs to the module call arguments
 
     in nixpkgs.lib.nixosSystem {
       modules = systemConfig ++ [
-        { _module.args = inputs; } # Pass the flake inputs to the module call arguments
-        { _module.args.libm32 = self.lib; } # Pass the flake inputs to the module call arguments
+        { _module.args = extraModuleArgs; }
+
+        { networking.hostName = hostName; }
         hardwareProfile
-        hostnameConfig
+
         # Home Manager --
         home-manager.nixosModules.home-manager
-        hmModules
+        {
+          home-manager.extraSpecialArgs = extraModuleArgs;
+
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users = users;
+        }
+        hmConfig
+
         # Secrets --
         sops-nix.nixosModules.sops
       ];
