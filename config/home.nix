@@ -2,6 +2,8 @@
 let font = "FiraCode Nerd Font";
 in {
   home.packages = with pkgs; [
+    home-manager
+
     # # Internet
     signal-desktop
     hexchat
