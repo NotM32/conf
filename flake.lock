@@ -427,7 +427,8 @@
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_5",
         "nur": "nur",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "spacemacs": "spacemacs"
       }
     },
     "rust-overlay": {
@@ -471,6 +472,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spacemacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711140430,
+        "narHash": "sha256-wA75R/1xHLs84WmXDiG4lRGykyWM+pLKWkqB9vxooHw=",
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
+        "rev": "17e03e6faba2a850c1ef38778326921cc0da1ccc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
         "type": "github"
       }
     },

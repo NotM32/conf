@@ -19,9 +19,14 @@
     impermanence.url = "github:nix-community/impermanence";          # Unused, but when I have free time
     lanzaboote.url = "github:nix-community/lanzaboote";              # Unused, waiting for development to progress
 
+    # Spacemacs
+    spacemacs = {
+      url = "github:syl20bnr/spacemacs";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix }:
+  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix, spacemacs }:
     with flake-utils.lib; eachDefaultSystem (system:
     let pkgs = nixpkgs.legacyPackages.${system};
     /* Flake outputs not-related to system configuration are in the below attrset */
