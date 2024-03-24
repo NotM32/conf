@@ -35,6 +35,7 @@ in {
     buildah
     pomerium-cli
     podman-desktop
+    docker-compose # for use with podman compose
 
     # ## Language Servers
     tflint # terraform linter
@@ -58,7 +59,6 @@ in {
     # # Environment
     alacritty # fast terminal emulator
     barrier # the software kvm
-    plasma6Packages.bismuth # Tiling functionality in KDE
 
     # # Media
     spotify
