@@ -14,7 +14,6 @@ in {
     # # Nix Utilities
     nurl # nix-prefetch but more useful
     nixos-option # command line search of nixos option declarations
-    rnix-lsp # the standard nix-lsp
     nil # nil is a better nix lsp
     nixfmt # formatter for nix
 
@@ -266,7 +265,7 @@ in {
         };
       };
       shell = { program = "fish"; };
-      key_bindings = [
+      keyboard.bindings = [
         {
           key = "Key0";
           mods = "Control";
@@ -418,7 +417,7 @@ in {
 
   programs.rbw = {
     enable = true;
-    settings.pinentry = "qt";
+    settings.pinentry = pkgs.pinentry-qt;
     settings.email = "m32@protonmail.com";
     settings.lock_timeout = 3600;
   };
