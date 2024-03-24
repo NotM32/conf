@@ -22,7 +22,7 @@
 
 
   # Enable the Plasma 6 Desktop Environment.
-  services.xserver.desktopManager.plasma6.enable   = true;
+  services.desktopManager.plasma6.enable   = true;
 
   # Remove packages I don't want
   environment.plasma6.excludePackages = with pkgs.libsForQt5; [
