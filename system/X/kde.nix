@@ -17,7 +17,7 @@
     #                 --output DP-2   --scale 1x1 --mode 4096x2160 --rate 60  --pos 2160x258 \
     #                 --output DP-0   --scale 2x2 --mode 1920x1080 --rate 165 --pos 6256x582 --filter nearest
     # '';
-    defaultSession = "plasmawayland";
+    defaultSession = "plasma";
   };
 
 
