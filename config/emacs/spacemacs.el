@@ -52,8 +52,9 @@ This function should only modify configuration layer settings."
      emoji
      imenu-list
      (shell :variables
-            shell-default-height 30
+            shell-default-height  25
             shell-default-position 'bottom)
+	 dap
 
      ;; docs / markup languages
      org
@@ -76,8 +77,9 @@ This function should only modify configuration layer settings."
      ;; language layers
      emacs-lisp
      rust
-     elixir
+     (elixir :variables elixir-backend 'alchemist)
      ruby
+	 ruby-on-rails
      python
      ;; ocaml
      (nixos :variables
@@ -86,9 +88,11 @@ This function should only modify configuration layer settings."
      scheme
      racket
      go
-     php
+     ;; php
      (typescript :variables
-                 typescript-fmt-tool 'prettier)
+				 typescript-backend 'lsp
+				 typescript-fmt-on-save t
+				 typescript-fmt-tool 'prettier)
      zig
      nim
 
@@ -97,9 +101,8 @@ This function should only modify configuration layer settings."
      javascript
      phoenix
      ruby-on-rails
-     (svelte :variables
-             svelte-backend 'lsp
-             node-add-modules-path t)
+     (svelte :variables svelte-backend 'lsp)
+	 (node :variables node-add-modules-path t)
      django
      vue
      elm
@@ -661,7 +664,7 @@ before packages are loaded."
    tab-width 4
    ;; web-mode
    web-mode-script-padding 4
-   setq web-mode-code-indent-offset 1)
+   web-mode-code-indent-offset 1)
 
   (setq gnus-secondary-select-methods
   '(
@@ -673,6 +676,8 @@ before packages are loaded."
           (nntp-address "news.eweka.nl"))
     )
   )
+  (setq openai-key (getenv "OPENAI_API_KEY"))
+  (setq openai-user "m32")
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -692,7 +697,7 @@ This function is called at the very end of Spacemacs initialization."
  '(package-selected-packages
    '(pdf-view-restore pdf-tools afternoon-theme alect-themes ample-theme ample-zen-theme anti-zenburn-theme apropospriate-theme badwolf-theme birds-of-paradise-plus-theme bubbleberry-theme busybee-theme cherry-blossom-theme chocolate-theme clues-theme color-theme-sanityinc-solarized color-theme-sanityinc-tomorrow cyberpunk-theme dakrone-theme darkmine-theme darkokai-theme darktooth-theme django-theme doom-themes dracula-theme espresso-theme exotica-theme flatland-theme flatui-theme gandalf-theme gotham-theme grandshell-theme gruber-darker-theme gruvbox-theme hc-zenburn-theme hemisu-theme heroku-theme inkpot-theme ir-black-theme jazz-theme jbeans-theme kaolin-themes light-soap-theme lush-theme madhat2r-theme majapahit-theme material-theme minimal-theme modus-themes moe-theme molokai-theme monochrome-theme monokai-theme mustang-theme naquadah-theme noctilux-theme obsidian-theme occidental-theme oldlace-theme omtose-phellack-theme organic-green-theme phoenix-dark-mono-theme phoenix-dark-pink-theme planet-theme professional-theme purple-haze-theme railscasts-theme rebecca-theme reverse-theme seti-theme smyx-theme soft-charcoal-theme soft-morning-theme soft-stone-theme solarized-theme soothe-theme autothemer spacegray-theme subatomic-theme subatomic256-theme sublime-themes sunny-day-theme tango-2-theme tango-plus-theme tangotango-theme tao-theme toxi-theme twilight-anti-bright-theme twilight-bright-theme twilight-theme ujelly-theme underwater-theme white-sand-theme zen-and-art-theme zenburn-theme zonokai-emacs ansible ansible-doc company-ansible jinja2-mode kubernetes-evil kubernetes magit-popup kubernetes-tramp helm-notmuch notmuch company-terraform helm-mu mu4e-alert mu4e-maildirs-extension terraform-mode hcl-mode yaml-mode company-web web-completion-data emmet-mode helm-css-scss impatient-mode js-doc js2-refactor multiple-cursors json-navigator hierarchy json-reformat livid-mode nodejs-repl npm-mode prettier-js pug-mode sass-mode haml-mode scss-mode skewer-mode js2-mode simple-httpd slim-mode tagedit tide typescript-mode web-beautify web-mode alchemist attrap cmm-mode company-cabal company-go company-plsense dante lcr dune elixir-mode elm-mode reformatter elm-test-runner erlang flycheck-credo flycheck-elm flycheck-haskell flycheck-ocaml go-eldoc go-fill-struct go-gen-test go-guru go-impl go-rename go-tag go-mode godoctor haskell-mode haskell-snippets helm-hoogle hindent hlint-refactor lsp-haskell merlin-company merlin-eldoc merlin-iedit merlin ob-elixir ocamlformat ocp-indent racket-mode utop tuareg caml lsp-docker graphviz-dot-mode dap-mode bui yasnippet-snippets yapfify treemacs-magit toml-mode sql-indent sphinx-doc smeargle rust-mode ron-mode pytest pylookup pyenv-mode pydoc py-isort poetry pippel pipenv load-env-vars pyvenv pip-requirements orgit-forge orgit org-rich-yank org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-contrib org-cliplink org nose nix-mode mmm-mode markdown-toc lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami live-py-mode importmagic epc ctable concurrent deferred htmlize helm-pydoc helm-org-rifle helm-nixos-options helm-lsp lsp-mode helm-ls-git helm-git-grep helm-company helm-c-yasnippet hackernews graphql-mode gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md fuzzy forge yaml magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor flyspell-correct-helm flyspell-correct flycheck-rust flycheck-pos-tip pos-tip evil-org dockerfile-mode docker transient tablist json-mode docker-tramp aio json-snatcher cython-mode csv-mode company-nixos-options nixos-options company-anaconda company code-cells cargo markdown-mode blacken auto-yasnippet yasnippet auto-dictionary anaconda-mode pythonic adoc-mode markup-faces ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))
  '(warning-suppress-log-types '((use-package)))
- '(warning-suppress-types '((use-package))))
+ '(warning-suppress-types '((lsp-mode) (use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

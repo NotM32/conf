@@ -385,7 +385,7 @@ in {
     matchBlocks = {
       # Personal
       "maple" = {
-        hostname = "git.m32.me";
+        hostname = "10.127.1.1";
         forwardAgent = true;
       };
       "phoenix" = {
@@ -396,45 +396,12 @@ in {
         hostname = "10.127.0.2";
         forwardAgent = true;
       };
-      "router1" = {
+      "router1.m32.me" = {
         hostname = "10.127.0.1";
         forwardAgent = true;
       };
-
-      # Churchill
-      "access1.net.churchill" = {
-        hostname = "68.64.164.174";
-        forwardAgent = true;
-      };
-      "switch0.net.churchill" = {
-        hostname = "68.64.164.170";
-        forwardAgent = true;
-      };
-      "switch1.net.churchill" = {
-        hostname = "68.64.164.171";
-        forwardAgent = true;
-      };
-
-      # Colorado Colo Network
-      "jumpbox.colo" = {
-        hostname = "68.64.160.2";
-        forwardAgent = true;
-      };
-      "ns1.colo" = {
-        hostname = "ns1.corporatecolo.com";
-        forwardAgent = true;
-        extraOptions = { hostKeyAlgorithms = "ssh-rsa"; };
-      };
-
     };
   };
-
-  programs.zathura.enable = true;
-
-  # services.barrier.client.enable = true;
-
-  # disabled for now, seems to be having issues. DAC equalizer will have to do.
-  # services.easyeffects.enable = true;
 
   services.kdeconnect.enable = true;
 
