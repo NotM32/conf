@@ -44,6 +44,10 @@ in {
     helm-ls # helm (kubernetes package manager) language server
     gopls # gopls
     texlab # texlab
+    hadolint
+    dockerfile-language-server-nodejs
+
+    # ## Extra dev tools
     direnv
 
     # ## Languages
