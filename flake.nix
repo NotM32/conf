@@ -16,10 +16,8 @@
     nixos-anywhere.url = "github:nix-community/nixos-anywhere/pxe-boot";
 
     # System Utils
-    impermanence.url =
-      "github:nix-community/impermanence";
-    lanzaboote.url =
-      "github:nix-community/lanzaboote";
+    impermanence.url = "github:nix-community/impermanence";
+    lanzaboote.url = "github:nix-community/lanzaboote";
 
     # Spacemacs
     spacemacs = {
@@ -31,16 +29,31 @@
     flake-registry.flake = false;
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs@{ self, flake-parts, home-manager, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
 
       imports = [
         ./configurations.nix
         ./devShells/flake-module.nix
+        ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
 
+      perSystem = { pkgs, ... }: {
+        legacyPackages.homeConfigurations = {
+          "m32" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit self; } // self.inputs;
+
+            modules = [ ./home/home.nix ];
+          };
+        };
+      };
+
+      flake = {
+        homeModules.default = { pkgs, ... }: { imports = [ ]; };
+      };
     };
 
   # otheroutputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils
