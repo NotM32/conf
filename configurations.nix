@@ -30,18 +30,15 @@ let
         time.timeZone = "America/Denver";
       })
 
-    home-manager.nixosModules.home-manager
-    { home-manager.extraSpecialArgs = { inherit self; } // self.inputs;
-      home-manager.useGlobalPkgs = true;
-    }
+    self.nixosModules.home-manager
   ];
 
   workstationModules = [
-    { home-manager.users.m32 = import ./home/home.nix; }
+    { home-manager.users.m32 = self.homeModules.desktop; }
   ];
 
   serverModules = [
-
+    { home-manager.users.m32 = self.homeModules.default; }
   ];
 
 in {
@@ -58,7 +55,7 @@ in {
 
     maple = nixosSystem {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = commonModules ++ workstationModules ++ [ ./hosts/maple.nix ];
+      modules = commonModules ++ serverModules ++ [ ./hosts/maple.nix ];
     };
   };
 }
