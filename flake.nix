@@ -13,6 +13,7 @@
     disko.url = "github:nix-community/disko";
     deploy.url = "github:serokell/deploy-rs";
     nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere/pxe-boot";
 
     # System Utils
     impermanence.url =
@@ -32,7 +33,7 @@
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin"];
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
 
       imports = [
         ./configurations.nix
@@ -40,31 +41,6 @@
         ./pkgs/flake-module.nix
       ];
 
-      perSystem = { self', config, pkgs, system, ... }: {
-        packages = {
-          docs = pkgs.stdenvNoCC.mkDerivation rec {
-            pname = "m32conf-docs";
-            version = self'.lastModifiedDate;
-            src = self';
-
-            doCheck = true;
-
-            buildInputs = with pkgs; [ coreutils mdbook ];
-            phases = [ "unpackPhase" "buildPhase" "installPhase" ];
-
-            buildPhase = ''
-              export PATH="${pkgs.lib.makeBinPath buildInputs}";
-              cargo install mdbook-nix-eval
-              mdbook build ./docs/
-            '';
-
-            installPhase = ''
-              mkdir -p $out
-              cp -r ./docs/book/* $out
-            '';
-          };
-        };
-      };
     };
 
   # otheroutputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils
