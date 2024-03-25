@@ -73,7 +73,6 @@ This function should only modify configuration layer settings."
      json
      graphviz
 
-
      ;; language layers
      emacs-lisp
      rust
@@ -114,10 +113,12 @@ This function should only modify configuration layer settings."
      ;; #ops
      (terraform :variables
                 terraform-backend 'lsp)
-     docker
+	 (docker :variables
+			 docker-dockerfile-backend 'lsp
+			 docker-command 'podman) ;; TODO: folllow up when podman is fully suppoorted by this
+     kubernetes
      salt
      ansible
-     kubernetes
      systemd
 
      ;; configuration
@@ -322,7 +323,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-tokyo-night)
+   dotspacemacs-themes '(doom-tokyo-night doom-tomorrow-night)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -331,7 +332,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator slant :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(doom :separator slant :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -340,7 +341,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Hack Nerd Font Mono"
+   dotspacemacs-default-font '("FiraCode Nerd Font Mono"
                                :size 10.0
                                :weight normal
                                :width normal
@@ -678,6 +679,8 @@ before packages are loaded."
   )
   (setq openai-key (getenv "OPENAI_API_KEY"))
   (setq openai-user "m32")
+  (setq magit-repository-directories
+		'(("~/projects" . 2) ("~/conf" . 1)))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
