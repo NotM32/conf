@@ -3,7 +3,6 @@
 
   devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self'.packages.${system};
-          # packages = with pkgs; [ ];
           buildInputs = [
             pkgs.ipmitool
             pkgs.python3.pkgs.invoke
@@ -23,6 +22,7 @@
             pkgs.sops
             pkgs.jq
           ] ++ pkgs.lib.optional (pkgs.stdenv.isLinux) pkgs.mkpasswd;
+
           shellHook = ''
             alias devdocs='mdbook serve --port 3025 --open ./docs/'
             alias mkdocs='nix build .#docs'
