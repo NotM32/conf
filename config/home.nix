@@ -26,6 +26,7 @@ in {
     insomnia
     ansible
     yarn
+    zeal
 
     # # Infrastructure tools
     kubectl
