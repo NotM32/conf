@@ -95,7 +95,7 @@ This function should only modify configuration layer settings."
      zig
      nim
 
-     ;; #webdev
+     ;; webdev
      html
      javascript
      phoenix
@@ -110,7 +110,7 @@ This function should only modify configuration layer settings."
      restclient
      protobuf
 
-     ;; #ops
+     ;; ops
      (terraform :variables
                 terraform-backend 'lsp)
 	 (docker :variables
@@ -120,17 +120,21 @@ This function should only modify configuration layer settings."
      salt
      ansible
      systemd
+	 dash
+	 prodigy
 
      ;; configuration
      yaml
      nginx
      meson
 
-     ;; #applications
+     ;; applications
      spotify
      ranger
      gnus
      hackernews
+	 lobsters
+	 twitter
      notmuch
      search-engine
      finance
