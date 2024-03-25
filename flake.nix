@@ -35,86 +35,14 @@
 
       imports = [
         ./configurations.nix
+        ./home/flake-module.nix
         ./devShells/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
 
-      perSystem = { pkgs, ... }: {
-        legacyPackages.homeConfigurations = {
-          "m32" = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            extraSpecialArgs = { inherit self; } // self.inputs;
-
-            modules = [ ./home/home.nix ];
-          };
-        };
-      };
-
-      flake = {
-        homeModules.default = { pkgs, ... }: { imports = [ ]; };
-      };
     };
 
-  # otheroutputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils
-  #   , impermanence, lanzaboote, nixos-generators, sops-nix, spacemacs }:
-  #   with flake-utils.lib;
-  #   eachDefaultSystem (system:
-  #     let
-  #       pkgs = nixpkgs.legacyPackages.${system};
-  #       # Flake outputs not-related to system configuration are in the below attrset
-  #     in {
-  #       packages = {
-  #         # Build the documentation book in `docs/`
-  #         docs = pkgs.stdenvNoCC.mkDerivation rec {
-  #           pname = "m32meconf-docs";
-  #           version = self.lastModifiedDate;
-  #           src = self;
-
-  #           doCheck = true;
-
-  #           buildInputs = with pkgs; [ coreutils mdbook ];
-  #           phases = [ "unpackPhase" "buildPhase" "installPhase" ];
-
-  #           buildPhase = ''
-  #             export PATH="${pkgs.lib.makeBinPath buildInputs}";
-  #             cargo install mdbook-nix-eval
-  #             mdbook build ./docs/
-  #           '';
-
-  #           installPhase = ''
-  #             mkdir -p $out
-  #             cp -r ./docs/book/* $out
-  #           '';
-  #         };
-
-  #       };
-
-  #       devShell =
-  #         pkgs.mkShell {
-  #         inputsFrom = builtins.attrValues self.packages.${system};
-  #         # packages = with pkgs; [ ];
-  #         shellHook = ''
-  #           alias devdocs='mdbook serve --port 3025 --open ./docs/'
-  #           alias mkdocs='nix build .#docs'
-  #           alias nsp='nix search nixpkgs'
-  #           alias dh='echo -e "$DEVSHELL_HELP"'
-
-  #           DEVSHELL_HELP="
-  #           Devshell Command Glossary
-  #           [docs] devdocs       | Start the mdbook watch server
-  #                  mkdocs        | Build the docs
-
-  #           [util] nixos-option  | Search for nixos options
-  #                  nsp {package} | Search nixpkgs
-  #                  dh            | Show this again
-  #           "
-
-  #           echo -e "$DEVSHELL_HELP"
-  #         '';
-  #       };
-
-  #     }) // (
 
   #       # System configuration related items  are below this line
   #       let

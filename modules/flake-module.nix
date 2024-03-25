@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 let
-  home-manager = inputs.home-manager;
+  inherit (inputs) home-manager;
 in {
   flake.nixosModules = {
     home-manager = {
