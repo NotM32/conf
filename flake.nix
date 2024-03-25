@@ -2,162 +2,202 @@
   description = "git.m32.me/conf/m32.conf - configuration for my systems";
 
   inputs = {
-    # Primary Package Repos
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
 
-    # Nix Utilities/Libraries
-    flake-utils.url = "github:numtide/flake-utils";                  # flake-utils
-    sops-nix.url = "github:Mic92/sops-nix";                          # for secrets management
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    sops-nix.url = "github:Mic92/sops-nix"; # for secrets management
 
-    # Tools / Ops Utilities
-    deploy.url = "github:serokell/deploy-rs";                        # Unused, TODO: add overlay and pkg to devshell
-    nixos-generators.url = "github:nix-community/nixos-generators";  # Unused, ditto
+    # Deployment / Provisioning
+    disko.url = "github:nix-community/disko";
+    deploy.url = "github:serokell/deploy-rs";
+    nixos-generators.url = "github:nix-community/nixos-generators";
 
     # System Utils
-    impermanence.url = "github:nix-community/impermanence";          # Unused, but when I have free time
-    lanzaboote.url = "github:nix-community/lanzaboote";              # Unused, waiting for development to progress
+    impermanence.url =
+      "github:nix-community/impermanence";
+    lanzaboote.url =
+      "github:nix-community/lanzaboote";
 
     # Spacemacs
     spacemacs = {
       url = "github:syl20bnr/spacemacs";
       flake = false;
     };
+
+    flake-registry.url = "github:NixOS/flake-registry";
+    flake-registry.flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils, impermanence, lanzaboote, nixos-generators, sops-nix, spacemacs }:
-    with flake-utils.lib; eachDefaultSystem (system:
-    let pkgs = nixpkgs.legacyPackages.${system};
-    /* Flake outputs not-related to system configuration are in the below attrset */
-    in {
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFLake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
-      packages = {
-        /* Build the documentation book in `docs/` */
-        docs = pkgs.stdenvNoCC.mkDerivation rec {
-          pname = "m32meconf-docs";
-          version = self.lastModifiedDate;
-          src = self;
+      imports = [
+        ./configurations.nix
+        ./devShells/flake-module.nix
+        ./pkgs/flake-module.nix
+      ];
 
-          doCheck = true;
+      perSystem = { self', config, pkgs, system, ... }: {
+        packages = {
+          docs = pkgs.stdenvNoCC.mkDerivation rec {
+            pname = "m32conf-docs";
+            version = self'.lastModifiedDate;
+            src = self';
 
-          buildInputs = with pkgs; [ coreutils mdbook ];
-          phases = [ "unpackPhase" "buildPhase" "installPhase" ];
+            doCheck = true;
 
-          buildPhase = ''
-            export PATH="${pkgs.lib.makeBinPath buildInputs}";
-            cargo install mdbook-nix-eval
-            mdbook build ./docs/
-          '';
+            buildInputs = with pkgs; [ coreutils mdbook ];
+            phases = [ "unpackPhase" "buildPhase" "installPhase" ];
 
-          installPhase = ''
-            mkdir -p $out
-            cp -r ./docs/book/* $out
-          '';
+            buildPhase = ''
+              export PATH="${pkgs.lib.makeBinPath buildInputs}";
+              cargo install mdbook-nix-eval
+              mdbook build ./docs/
+            '';
+
+            installPhase = ''
+              mkdir -p $out
+              cp -r ./docs/book/* $out
+            '';
+          };
         };
-
       };
+    };
 
-      devShell = pkgs.mkShell {
-        inputsFrom = builtins.attrValues self.packages.${system};
-        # packages = with pkgs; [ ];
-        shellHook = ''
-        alias devdocs='mdbook serve --port 3025 --open ./docs/'
-        alias mkdocs='nix build .#docs'
-        alias nsp='nix search nixpkgs'
-        alias dh='echo -e "$DEVSHELL_HELP"'
+  # otheroutputs = inputs@{ self, nixpkgs, home-manager, deploy, nur, flake-utils
+  #   , impermanence, lanzaboote, nixos-generators, sops-nix, spacemacs }:
+  #   with flake-utils.lib;
+  #   eachDefaultSystem (system:
+  #     let
+  #       pkgs = nixpkgs.legacyPackages.${system};
+  #       # Flake outputs not-related to system configuration are in the below attrset
+  #     in {
+  #       packages = {
+  #         # Build the documentation book in `docs/`
+  #         docs = pkgs.stdenvNoCC.mkDerivation rec {
+  #           pname = "m32meconf-docs";
+  #           version = self.lastModifiedDate;
+  #           src = self;
 
-        DEVSHELL_HELP="
-        Devshell Command Glossary
-        [docs] devdocs       | Start the mdbook watch server
-               mkdocs        | Build the docs
+  #           doCheck = true;
 
-        [util] nixos-option  | Search for nixos options
-               nsp {package} | Search nixpkgs
-               dh            | Show this again
-        "
+  #           buildInputs = with pkgs; [ coreutils mdbook ];
+  #           phases = [ "unpackPhase" "buildPhase" "installPhase" ];
 
-        echo -e "$DEVSHELL_HELP"
-        '';
-      };
+  #           buildPhase = ''
+  #             export PATH="${pkgs.lib.makeBinPath buildInputs}";
+  #             cargo install mdbook-nix-eval
+  #             mdbook build ./docs/
+  #           '';
 
-    }) // (
+  #           installPhase = ''
+  #             mkdir -p $out
+  #             cp -r ./docs/book/* $out
+  #           '';
+  #         };
 
-    /* System configuration related items  are below this line */
-    let
-      # - Local imports --
-      util = import ./lib inputs;
+  #       };
 
-      # - System Configurations
+  #       devShell =
+  #         pkgs.mkShell {
+  #         inputsFrom = builtins.attrValues self.packages.${system};
+  #         # packages = with pkgs; [ ];
+  #         shellHook = ''
+  #           alias devdocs='mdbook serve --port 3025 --open ./docs/'
+  #           alias mkdocs='nix build .#docs'
+  #           alias nsp='nix search nixpkgs'
+  #           alias dh='echo -e "$DEVSHELL_HELP"'
 
-      # Users / Home Conf --
-      users.m32 = import ./config/home.nix;
+  #           DEVSHELL_HELP="
+  #           Devshell Command Glossary
+  #           [docs] devdocs       | Start the mdbook watch server
+  #                  mkdocs        | Build the docs
 
-      # Host Composition --
-      hosts =
-        { # ** Hosts
-          # Desktop
-          phoenix =
-            { hardwareProfile = ./hardware/phoenix;
-              systemConfig =
-                [ # Bootloader and Disks specific to this system
-                  ./system/boot/uefi.nix
+  #           [util] nixos-option  | Search for nixos options
+  #                  nsp {package} | Search nixpkgs
+  #                  dh            | Show this again
+  #           "
 
-                  # Repos
-                  nur.nixosModules.nur
+  #           echo -e "$DEVSHELL_HELP"
+  #         '';
+  #       };
 
-                  # More userlandish profile
-                  ./system/october.nix
+  #     }) // (
 
-                  # Others
-                  ./system/X/remap_mac_keys.nix
+  #       # System configuration related items  are below this line
+  #       let
+  #         # - Local imports --
+  #         util = import ./lib inputs;
 
-                ];
-              users = users;
-              deployUser = "m32";
-            };
+  #         # - System Configurations
 
-          # T430 laptop
-          momentum =
-            { hardwareProfile = ./hardware/momentum;
-              systemConfig =
-                [ # Bootloader
-                  ./system/boot/legacyboot.nix
+  #         # Users / Home Conf --
+  #         users.m32 = import ./config/home.nix;
 
-                  # Repos
-                  nur.nixosModules.nur
+  #         # Host Composition --
+  #         hosts = { # ** Hosts
+  #           # Desktop
+  #           phoenix = {
+  #             hardwareProfile = ./hardware/phoenix;
+  #             systemConfig = [ # Bootloader and Disks specific to this system
+  #               ./system/boot/uefi.nix
 
-                  # Same shit, different story
-                  ./system/october.nix
+  #               # Repos
+  #               nur.nixosModules.nur
 
-                  # Need to find a way TODO this on a per keeb basis
-                  ./system/X/remap_mac_keys.nix
-                ];
-              users = users;
-              deployUser = "m32";
-            };
+  #               # More userlandish profile
+  #               ./system/october.nix
 
-          # Server
-          maple =
-            { hardwareProfile = ./hardware/maple;
-              systemConfig =
-                [ ./system/server.nix
-                ];
-              deployUser = "m32";
-            };
+  #               # Others
+  #               ./system/X/remap_mac_keys.nix
 
-        };
-    in {
+  #             ];
+  #             users = users;
+  #             deployUser = "m32";
+  #           };
 
-      # - NixOS Configurations
-      nixosConfigurations = util.system.makeSystemConfigurations hosts;
+  #           # T430 laptop
+  #           momentum = {
+  #             hardwareProfile = ./hardware/momentum;
+  #             systemConfig = [ # Bootloader
+  #               ./system/boot/legacyboot.nix
 
-      # - deploy-rs outputs
-      deploy.nodes = util.deploy.makeDeployNodes hosts self.nixosConfigurations;
+  #               # Repos
+  #               nur.nixosModules.nur
 
-      # - Lib outputs
-      lib = util;
-    });
+  #               # Same shit, different story
+  #               ./system/october.nix
+
+  #               # Need to find a way TODO this on a per keeb basis
+  #               ./system/X/remap_mac_keys.nix
+  #             ];
+  #             users = users;
+  #             deployUser = "m32";
+  #           };
+
+  #           # Server
+  #           maple = {
+  #             hardwareProfile = ./hardware/maple;
+  #             systemConfig = [ ./system/server.nix ];
+  #             deployUser = "m32";
+  #           };
+
+  #         };
+  #       in {
+
+  #         # - NixOS Configurations
+  #         nixosConfigurations = util.system.makeSystemConfigurations hosts;
+
+  #         # - deploy-rs outputs
+  #         deploy.nodes =
+  #           util.deploy.makeDeployNodes hosts self.nixosConfigurations;
+
+  #         # - Lib outputs
+  #         lib = util;
+  #       });
 
   # Nix Con
 }
