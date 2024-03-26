@@ -11,58 +11,14 @@
   ];
 
   # Unfree Software
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "obsidian"
-      "spotify"
-      "zerotierone"
-      "nvidia-x11"
-      "nvidia-settings"
-      "displaylink"
-      "pycharm-community"
-      "steam"
-      "steam-original"
-      "steam-runtime"
-      "steam-run"
-      "terraform" # TODO: Use OpenTofu or migrate all HCL I've written to Pulumi
-    ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # EOL, required for Obsidian
-  ];
-
-  environment.systemPackages = with pkgs; [
-    liquidctl
-  ];
 
   # General
-  console.earlySetup = true;
 
   # Games
-  programs.steam.enable = true;
 
-  # Networking
-  networking.networkmanager.enable = true;
-  services.avahi.enable = true;
-  services.avahi.openFirewall = true;
-  services.openssh.enable = true;
 
   # Firewall
-  networking.firewall.allowedTCPPorts = [
-    # Barrier
-    24800
-  ];
 
-  # Printing
-  services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ cups-dymo epson-escpr ];
-  hardware.sane.enable = true;
 
-  # Other
-  hardware.hackrf.enable = true;
-  hardware.rtl-sdr.enable = true;
-
-  hardware.i2c.enable = true;
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
 }

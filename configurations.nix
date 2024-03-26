@@ -34,9 +34,25 @@ let
 
         time.timeZone = "America/Denver";
       })
+
+    ./modules/nix.nix
+    ./modules/packages.nix
+    ./modules/auto-upgrade.nix
+    ./modules/registry.nix
+    ./modules/system.nix
+    ./modules/networking
+    ./modules/security
+    ./modules/users
   ];
 
-  workstationModules = [{ home-manager.users.m32 = self.homeModules.desktop; }];
+  workstationModules = [
+    { home-manager.users.m32 = self.homeModules.desktop; }
+
+    ./modules/workstation.nix
+    ./modules/desktop
+    ./modules/backup
+    ./modules/containers.nix
+  ];
 
   serverModules = [{ home-manager.users.m32 = self.homeModules.default; }];
 
