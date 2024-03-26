@@ -4,15 +4,20 @@ let
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
 
   commonModules = [
-    {
-      _module.args = { inherit self; } // self.inputs;
-    }
+    { _module.args = { inherit self; } // self.inputs; }
 
-    disko.nixosModules.sops
+    disko.nixosModules.disko
+    sops-nix.nixosModules.sops
+    self.nixosModules.home-manager
+
     ({ pkgs, config, lib, ... }:
       let sopsFile = ./. + "hosts/${config.networking.hostName}.yml";
       in {
-        nix.nixPath = [ "nixpkgs=${pkgs.path}" "nur=${nur}" "home-manager=${home-manager}" ];
+        nix.nixPath = [
+          "nixpkgs=${pkgs.path}"
+          "nur=${nur}"
+          "home-manager=${home-manager}"
+        ];
 
         sops.secrets = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
 
@@ -29,17 +34,11 @@ let
 
         time.timeZone = "America/Denver";
       })
-
-    self.nixosModules.home-manager
   ];
 
-  workstationModules = [
-    { home-manager.users.m32 = self.homeModules.desktop; }
-  ];
+  workstationModules = [{ home-manager.users.m32 = self.homeModules.desktop; }];
 
-  serverModules = [
-    { home-manager.users.m32 = self.homeModules.default; }
-  ];
+  serverModules = [{ home-manager.users.m32 = self.homeModules.default; }];
 
 in {
   flake.nixosConfigurations = {
