@@ -25,8 +25,10 @@
       flake = false;
     };
 
-    flake-registry.url = "github:NixOS/flake-registry";
-    flake-registry.flake = false;
+    flake-registry = {
+      url = "github:NixOS/flake-registry";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, flake-parts, home-manager, ... }:
@@ -40,7 +42,6 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
-
     };
 
 
