@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
   services.zerotierone = {
     enable = true;
     joinNetworks = [
@@ -10,7 +9,7 @@
       "233ccaac27077fe3"
     ];
   };
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "zerotierone"
-  ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "zerotierone" ];
 }

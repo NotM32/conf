@@ -7,4 +7,6 @@
       PasswordAuthentication = false;
     };
   };
+
+  security.pam.enableSSHAgentAuth = true;
 }
