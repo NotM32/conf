@@ -2,7 +2,6 @@
   security.pam.services = {
     login.u2fAuth = true;
     sudo.u2fAuth = true;
-    sshd.u2fauth = false;
     sshd.yubicoAuth = false;
   };
 
