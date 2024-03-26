@@ -1,5 +1,5 @@
 { config, pkgs, spacemacs, ... }:
-let font = "FiraCode Nerd Font";
+let font = "Hack Nerd Font";
 in {
   home.packages = with pkgs; [
     home-manager
@@ -99,7 +99,7 @@ in {
 
   programs.home-manager.enable = true;
 
-  home = { stateVersion = "23.11"; };
+  home = { stateVersion = "23.11"; username = "m32"; };
 
   # Home Structure
   xdg = {

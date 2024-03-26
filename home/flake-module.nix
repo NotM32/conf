@@ -6,18 +6,34 @@ in {
     legacyPackages.homeConfigurations = {
       "m32" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = { inherit self; } // inputs;
 
-        modules = [ ./home.nix ];
+        modules = [ self.homeModules.default ];
       };
     };
   };
 
   flake.homeModules = {
-    default = { ... }: {
+    /** Just basic shell stuff / cli tool */
+    default = {
       imports = [ ./default.nix ];
     };
-    desktop = { ... }: {
+    /** Full workstation suite with graphical tools and development stuff */
+    desktop = {
       imports = [ ./default.nix ./home.nix ];
+    };
+  };
+
+  flake.nixosModules = {
+    home-manager = {
+      imports = [
+        home-manager.nixosModules.home-manager
+        ({
+          home-manager.extraSpecialArgs = { inherit self; } // inputs;
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        })
+      ];
     };
   };
 }
