@@ -3,6 +3,7 @@
 
   imports = [
     ../modules/hardware/ryzen-desktop.nix
+    ../modules/boot/uefi.nix
 
     ../modules/rgb.nix
   ];
