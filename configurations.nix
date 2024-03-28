@@ -54,7 +54,15 @@ let
     ./modules/containers.nix
   ];
 
-  serverModules = [{ home-manager.users.m32 = self.homeModules.default; }];
+  serverModules = [ { home-manager.users.m32 = self.homeModules.default; }
+                    { networking.domain = "cubit.sh"; }
+
+                    ./modules/backup/server.nix
+                    ./modules/containers.nix
+                    ./modules/web/nginx.nix
+                    ./modules/web/letsencrypt.nix
+                    ./modules/sshd.nix
+                  ];
 
 in {
   flake.nixosConfigurations = {
