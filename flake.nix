@@ -1,5 +1,5 @@
 {
-  description = "git.m32.me/conf/m32.conf - configuration for my systems";
+  description = "m32-conf - configuration for various workstations and servers";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -7,7 +7,7 @@
     home-manager.url = "github:nix-community/home-manager";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    sops-nix.url = "github:Mic92/sops-nix"; # for secrets management
+    sops-nix.url = "github:Mic92/sops-nix";
 
     # Deployment / Provisioning
     disko.url = "github:nix-community/disko";
@@ -43,79 +43,4 @@
         ./pkgs/flake-module.nix
       ];
     };
-
-
-  #       # System configuration related items  are below this line
-  #       let
-  #         # - Local imports --
-  #         util = import ./lib inputs;
-
-  #         # - System Configurations
-
-  #         # Users / Home Conf --
-  #         users.m32 = import ./config/home.nix;
-
-  #         # Host Composition --
-  #         hosts = { # ** Hosts
-  #           # Desktop
-  #           phoenix = {
-  #             hardwareProfile = ./hardware/phoenix;
-  #             systemConfig = [ # Bootloader and Disks specific to this system
-  #               ./system/boot/uefi.nix
-
-  #               # Repos
-  #               nur.nixosModules.nur
-
-  #               # More userlandish profile
-  #               ./system/october.nix
-
-  #               # Others
-  #               ./system/X/remap_mac_keys.nix
-
-  #             ];
-  #             users = users;
-  #             deployUser = "m32";
-  #           };
-
-  #           # T430 laptop
-  #           momentum = {
-  #             hardwareProfile = ./hardware/momentum;
-  #             systemConfig = [ # Bootloader
-  #               ./system/boot/legacyboot.nix
-
-  #               # Repos
-  #               nur.nixosModules.nur
-
-  #               # Same shit, different story
-  #               ./system/october.nix
-
-  #               # Need to find a way TODO this on a per keeb basis
-  #               ./system/X/remap_mac_keys.nix
-  #             ];
-  #             users = users;
-  #             deployUser = "m32";
-  #           };
-
-  #           # Server
-  #           maple = {
-  #             hardwareProfile = ./hardware/maple;
-  #             systemConfig = [ ./system/server.nix ];
-  #             deployUser = "m32";
-  #           };
-
-  #         };
-  #       in {
-
-  #         # - NixOS Configurations
-  #         nixosConfigurations = util.system.makeSystemConfigurations hosts;
-
-  #         # - deploy-rs outputs
-  #         deploy.nodes =
-  #           util.deploy.makeDeployNodes hosts self.nixosConfigurations;
-
-  #         # - Lib outputs
-  #         lib = util;
-  #       });
-
-  # Nix Con
 }
