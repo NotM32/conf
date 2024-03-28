@@ -29,6 +29,7 @@ in {
         "spotify"
         "pycharm-community"
         "terraform" # TODO: Use OpenTofu or migrate all HCL I've written to Pulumi
+        "zerotierone"
       ];
 
     nixpkgs.config.permittedInsecurePackages = [
