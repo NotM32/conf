@@ -18,6 +18,7 @@ in {
     default = {
       imports = [ ./default.nix ];
     };
+
     /** Full workstation suite with graphical tools and development stuff */
     desktop = {
       imports = [ ./default.nix ./home.nix ];
