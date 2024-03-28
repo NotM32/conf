@@ -7,7 +7,5 @@
     ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
   '';
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "displaylink" ];
-
+  allowUnfreePackages = [ "displaylink" ];
 }
