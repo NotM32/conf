@@ -59,17 +59,14 @@ let
 in {
   flake.nixosConfigurations = {
     phoenix = nixosSystem {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = commonModules ++ workstationModules ++ [ ./hosts/phoenix.nix ];
     };
 
     momentum = nixosSystem {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = commonModules ++ workstationModules ++ [ ./hosts/momentum.nix ];
     };
 
     maple = nixosSystem {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = commonModules ++ serverModules ++ [ ./hosts/maple.nix ];
     };
   };

@@ -18,8 +18,8 @@ in {
     nixfmt # formatter for nix
 
     # # Games
-    lutris
     steam
+    lutris
     ArchiSteamFarm
 
     # # Development
