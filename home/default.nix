@@ -51,7 +51,7 @@
     userEmail = "m32@m32.io";
 
     signing.signByDefault = true;
-    signing.key = "0DF687B328D99A05";
+    signing.key = "EF5FDF7F8EAC7878";
 
     difftastic = {
       enable = true;
