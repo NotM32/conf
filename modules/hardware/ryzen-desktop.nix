@@ -13,7 +13,7 @@
 
   boot.initrd.secrets =
     { "/persist/secrets/boot/pubkey.asc" =
-        ../../config/gpg/pubkey.asc;
+        ../../home/gpg/pubkey.asc;
       "/persist/secrets/boot/cryptkey.gpg" =
         /persist/secrets/boot/cryptkey.gpg;
     };
@@ -46,7 +46,7 @@
 
       # gpg-card CCID smartcard support
       gpgCard = {
-        publicKey     = ../../config/gpg/pubkey.asc;
+        publicKey     = ../../home/gpg/pubkey.asc;
         encryptedPass = /persist/secrets/boot/cryptkey.gpg;
       };
 
