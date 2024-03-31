@@ -1,8 +1,5 @@
-{ inputs, util ? (import ./default.nix), ... }:
-let
-  deploy = inputs.deploy;
-in
-rec {
+{ self, deploy, ... }:
+{
   makeDeployNode = {deployUser ? "root", system ? "x86_64-linux", hostName ? "nixos", remoteBuild ? false, nixosSystem, ...}:
     {
       inherit remoteBuild;
@@ -23,7 +20,7 @@ rec {
 
   makeDeployNodes = hosts: nixosConfigurations:
     builtins.mapAttrs (hostName: hostConfig:
-      makeDeployNode (hostConfig // { inherit hostName;
+      self.lib.deploy.makeDeployNode (hostConfig // { inherit hostName;
                                       nixosSystem = nixosConfigurations."${hostName}";
                                     })
     ) hosts;
