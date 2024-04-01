@@ -53,6 +53,7 @@ in {
 
     # ## Extra dev tools
     direnv
+    asdf-vm
 
     # ## Languages
     elixir
