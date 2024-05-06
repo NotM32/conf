@@ -12,5 +12,7 @@
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
+  services.sshd.enable = true;
+
   system.stateVersion = "22.11";
 }
