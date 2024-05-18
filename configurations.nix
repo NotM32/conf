@@ -46,7 +46,7 @@ let
   ];
 
   workstationModules = [
-    { home-manager.users.m32 = self.homeModules.desktop; }
+    { home-manager.users.m32 = nixpkgs.lib.mkDefault self.homeModules.desktop; }
 
     ./modules/backup
     { backups.srv.enable = true; }

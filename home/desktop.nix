@@ -1,4 +1,4 @@
-{ pkgs, spacemacs, ... }:
+{ pkgs, spacemacs, lib, ... }:
 let
   font = "Hack Nerd Font";
 in {
