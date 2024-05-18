@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   # Use the latest version of nix
-  nix.package = pkgs.nixUnstable;
 
   nix.settings = {
     system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
