@@ -7,6 +7,8 @@
     ../modules/boot/uefi.nix
 
     ../modules/rgb.nix
+
+    ../modules/desktop/kde.nix
   ];
 
   environment.systemPackages = with pkgs; [ liquidctl ];
