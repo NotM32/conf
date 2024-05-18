@@ -48,16 +48,22 @@ let
   workstationModules = [
     { home-manager.users.m32 = self.homeModules.desktop; }
 
+    ./modules/backup
+    { backups.srv.enable = true; }
+    { backups.home.enable = true; }
+    { backups.podman.enable = true; }
+
     ./modules/workstation.nix
     ./modules/desktop
-    ./modules/backup
     ./modules/containers.nix
   ];
 
   serverModules = [ { home-manager.users.m32 = self.homeModules.default; }
                     { networking.domain = "cubit.sh"; }
 
-                    ./modules/backup/server.nix
+                    ./modules/backup
+                    { backups.srv.enable = true; }
+
                     ./modules/containers.nix
                     ./modules/web/nginx.nix
                     ./modules/web/letsencrypt.nix
