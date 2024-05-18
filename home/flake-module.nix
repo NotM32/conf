@@ -21,7 +21,12 @@ in {
 
     /** Full workstation suite with graphical tools and development stuff */
     desktop = {
-      imports = [ ./default.nix ./home.nix ];
+      imports = [ ./desktop.nix ];
+    };
+
+    /** Desktop app configurations with tiling manager config */
+    desktop-tiling = {
+      imports = [ ./desktop.nix ./hypr.nix ];
     };
   };
 
