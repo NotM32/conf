@@ -1,6 +1,6 @@
 { self, ... }:
 let
-  inherit (self.inputs) nixpkgs nur home-manager sops-nix disko flake-registry;
+  inherit (self.inputs) nixpkgs nur home-manager sops-nix disko flake-registry emacs-overlay;
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
 
   commonModules = [
@@ -13,6 +13,8 @@ let
     ({ pkgs, config, lib, ... }:
       let sopsFile = ./. + "hosts/${config.networking.hostName}.yml";
       in {
+        nixpkgs.overlays = [ emacs-overlay.overlay ];
+
         nix.nixPath = [
           "nixpkgs=${pkgs.path}"
           "nur=${nur}"
