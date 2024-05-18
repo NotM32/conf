@@ -2,5 +2,8 @@
 {
   imports = [ ./sddm.nix ];
 
-  services.xserver.displayManager.defaultSession = "hyprland";
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 }
