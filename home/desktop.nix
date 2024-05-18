@@ -1,4 +1,4 @@
-{ config, pkgs, spacemacs, ... }:
+{ pkgs, spacemacs, ... }:
 let
   font = "Hack Nerd Font";
 in {
@@ -39,7 +39,6 @@ in {
     ansible
     buildah
     pomerium-cli
-    podman-desktop
     docker-compose # for use with podman compose
 
     # ## Language Servers
@@ -68,7 +67,6 @@ in {
 
     # # Environment
     alacritty # fast terminal emulator
-    barrier # the software kvm
 
     # # Media
     spotify
