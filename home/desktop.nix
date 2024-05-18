@@ -279,7 +279,10 @@ in {
     ];
   };
 
-  programs.emacs = { enable = true; };
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs-pgtk;
+  };
   home.file.".spacemacs".source = ./emacs/spacemacs.el;
   home.file.".emacs.d" = {
     source = spacemacs;

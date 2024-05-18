@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 let
-  inherit (inputs) home-manager;
+  inherit (inputs) home-manager emacs-overlay;
 in {
   perSystem = { pkgs, ... }: {
     legacyPackages.homeConfigurations = {
@@ -21,11 +21,13 @@ in {
 
     /** Full workstation suite with graphical tools and development stuff */
     desktop = {
+      nixpkgs.overlays = [ emacs-overlay.overlay ];
       imports = [ ./desktop.nix ];
     };
 
     /** Desktop app configurations with tiling manager config */
     desktop-tiling = {
+      nixpkgs.overlays = [ emacs-overlay.overlay ];
       imports = [ ./desktop.nix ./hypr.nix ];
     };
   };
