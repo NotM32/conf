@@ -157,6 +157,7 @@
         "$mainMod, F10, focusworkspaceoncurrentmonitor, 10"
         # Example special workspace (scratchpad)
         "$mainMod, Backslash, togglespecialworkspace, magic"
+
         "$mainMod SHIFT, Backslash, movetoworkspace, special:magic"
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
