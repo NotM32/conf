@@ -85,15 +85,17 @@
 
       misc = { force_default_wallpaper = -1; };
 
-      device = [
-        {
-          name = "mx-mchncl-m-keyboard";
+      device = let
           kb_options = "altwin:swap_alt_win";
+      in [
+        { name = "mx-mchncl-m-keyboard";
+          inherit kb_options;
         }
-
-        {
-          name = "mx-mchncl@--keyboard";
-          kb_options = "altwin:swap_alt_win";
+        { name = "mx-mchncl@--keyboard";
+          inherit kb_options;
+        }
+        { name = "logitech-usb-receiver";
+          inherit kb_options;
         }
       ];
 
