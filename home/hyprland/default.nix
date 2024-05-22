@@ -85,10 +85,17 @@
 
       misc = { force_default_wallpaper = -1; };
 
-      device = {
-        name = "mx-mchncl-m-keyboard";
-        kb_options = "altwin:swap_alt_win";
-      };
+      device = [
+        {
+          name = "mx-mchncl-m-keyboard";
+          kb_options = "altwin:swap_alt_win";
+        }
+
+        {
+          name = "mx-mchncl@--keyboard";
+          kb_options = "altwin:swap_alt_win";
+        }
+      ];
 
       windowrulev2 =
         "suppressevent maximize, class:.*"; # You'll probably like this.
@@ -96,7 +103,7 @@
       "$mainMod" = "SUPER";
 
       bind = [
-        "mainMod SHIFT, Q, exit"
+        "$mainMod SHIFT, Q, exit"
         "$mainMod, Return, exec, $terminal"
         "CTRL, Tab, exec, $menu"
         "$mainMod, Q, killactive"
@@ -177,4 +184,6 @@
 
     };
   };
+
+  programs.wofi = { enable = true; };
 }
