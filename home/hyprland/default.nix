@@ -1,4 +1,5 @@
 { ... }: {
+  imports = [ ./hyprlock.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -35,7 +36,6 @@
 
         layout = "dwindle";
 
-        # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
         allow_tearing = false;
       };
 
@@ -61,7 +61,7 @@
           "overshot, 0.05, 0.9, 0.1, 1.08"
           "inslow,  0.62, 0.51, 0.03, 1.00"
           "inquick,  0.14, 0.49, 0.03, 1.00"
-          ];
+        ];
 
         animation = [
           "windows, 1, 5, overshot"
@@ -174,17 +174,6 @@
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
 
-    };
-  };
-
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      background = [{
-        path = "screenshot";
-        blur_passes = 3;
-        blur_size = 8;
-      }];
     };
   };
 }

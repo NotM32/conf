@@ -28,7 +28,7 @@ in {
     /** Desktop app configurations with tiling manager config */
     desktop-tiling = {
       nixpkgs.overlays = [ emacs-overlay.overlay ];
-      imports = [ ./desktop.nix ./modules/hyprland.nix ];
+      imports = [ ./desktop.nix ./hyprland ];
     };
   };
 
