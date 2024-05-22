@@ -1,4 +1,8 @@
 { ... }: {
+
+
+  wayland.windowManager.hyprland.settings.exec-once = ["wpaperd"];
+
   programs.wpaperd.enable = true;
 
   programs.wpaperd.settings = {
