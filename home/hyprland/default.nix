@@ -1,5 +1,9 @@
 { ... }: {
-  imports = [ ./hyprlock.nix ];
+  imports = [
+    ./hyprlock.nix
+    ./wofi.nix
+    ./wpaperd.nix
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -85,16 +89,18 @@
 
       misc = { force_default_wallpaper = -1; };
 
-      device = let
-          kb_options = "altwin:swap_alt_win";
+      device = let kb_options = "altwin:swap_alt_win";
       in [
-        { name = "mx-mchncl-m-keyboard";
+        {
+          name = "mx-mchncl-m-keyboard";
           inherit kb_options;
         }
-        { name = "mx-mchncl@--keyboard";
+        {
+          name = "mx-mchncl@--keyboard";
           inherit kb_options;
         }
-        { name = "logitech-usb-receiver";
+        {
+          name = "logitech-usb-receiver";
           inherit kb_options;
         }
       ];
@@ -186,6 +192,4 @@
 
     };
   };
-
-  programs.wofi = { enable = true; };
 }
