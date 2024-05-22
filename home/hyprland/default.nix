@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+
   imports = [
     ./hyprlock.nix
     ./wofi.nix
@@ -193,6 +194,16 @@
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
 
+    };
+  };
+
+  services.hypridle = {
+    enable = true;
+
+    settings = {
+      general = {
+        lock_cmd = "hyprlock";
+      };
     };
   };
 }
