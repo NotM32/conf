@@ -14,12 +14,6 @@ in {
     protonvpn-gui
     filezilla
 
-    # # Nix Utilities
-    nurl # nix-prefetch but more useful
-    nixos-option # command line search of nixos option declarations
-    nil # nil is a better nix lsp
-    nixfmt # formatter for nix
-
     # # Games
     steam
     lutris
@@ -88,10 +82,6 @@ in {
     libreoffice
     unoconv
 
-    # # Utilities
-    htop
-    minicom # connecting to devices over serial modem connection (router/switch consoles)
-    mosh # mobile shell, for latent/spotty ssh connections
     ddcutil # cli tool for controlling digital monitors without using their OSDs
     ddcui # GUI for ddcutil
 
