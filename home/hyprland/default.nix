@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./hyprlock.nix
     ./wofi.nix
@@ -18,6 +18,8 @@
         "XCURSOR_SIZE,24"
         "QT_QPA_PLATFORMTHEME,qt5ct"
       ]; # change to qt6ct if you have that
+
+      exec-once = [ "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &" ];
 
       input = {
         kb_layout = "us";
