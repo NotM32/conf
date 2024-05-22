@@ -203,32 +203,7 @@ in {
         bold = { family = font; };
         size = 10;
       };
-      colors = {
-        primary = {
-          background = "0x1f1f1f";
-          foreground = "0xededed";
-        };
-        normal = {
-          black = "0x4a3637";
-          red = "0xd14951";
-          green = "0x7b8748";
-          yellow = "0xaf865a";
-          blue = "0x535c5c";
-          magenta = "0x775759";
-          cyan = "0x6d715e";
-          white = "0xc0b18b";
-        };
-        bright = {
-          black = "0x402e2e";
-          red = "0x98353b";
-          green = "0x647035";
-          yellow = "0x8f673e";
-          blue = "0x324b4b";
-          magenta = "0x614445";
-          cyan = "0x585c49";
-          white = "0x978965";
-        };
-      };
+      colors = (lib.importTOML ./alacritty/colors.toml).colors;
       shell = { program = "fish"; };
       keyboard.bindings = [
         {
