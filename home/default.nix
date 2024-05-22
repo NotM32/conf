@@ -1,4 +1,7 @@
 { pkgs, config, ... }: {
+
+  imports = [ ./gpg ];
+
   home.packages = with pkgs; [
 
     # Nix Utilities
@@ -76,11 +79,6 @@
 
     # Additional configuration not defined in modules
     includes = [{ contents = { safe.directory = [ "/etc/nixos" ]; }; }];
-  };
-
-  programs.gpg = {
-    enable = true;
-    publicKeys = [{ source = ./gpg/pubkey.asc; }];
   };
 
   programs.ssh = {
