@@ -2,7 +2,9 @@
   services.mako.enable = true;
 
   services.mako = {
-
+    maxVisible = 3;
+    defaultTimeout = 5000;
+    ignoreTimeout = true;
   };
 
   wayland.windowManager.hyprland.settings.exec-once =
