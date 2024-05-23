@@ -21,7 +21,12 @@
     imports = [ self.homeModules.desktop-tiling ];
 
     wayland.windowManager.hyprland.settings = {
-      monitor = [ ",preferred,auto,auto" ];
+      monitor = [
+        "HDMI-A-1, 1920x1080x74.97, 0x0, 1"
+        "HDMI-A-2, 1920x1080@200, 1920x0, 1"
+        "DP-3, 1920x1080@60, 3840x0, 1"
+        "Unknown-1,disable"
+      ];
     };
   };
 
