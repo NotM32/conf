@@ -91,7 +91,7 @@
 
       gestures = { workspace_swipe = "off"; };
 
-      misc = { force_default_wallpaper = -1; };
+      misc = { force_default_wallpaper = 0; };
 
       device = let kb_options = "altwin:swap_alt_win";
       in [
@@ -110,7 +110,7 @@
       ];
 
       windowrulev2 =
-        "suppressevent maximize, class:.*"; # You'll probably like this.
+        "suppressevent maximize, class:.*";
 
       "$mainMod" = "SUPER";
 
