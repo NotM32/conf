@@ -7,10 +7,6 @@ in {
   home.packages = with pkgs; [
     home-manager
 
-    # File Management
-    kdePackages.dolphin
-    kdePackages.dolphin-plugins
-
     # # Internet
     signal-desktop
     hexchat
