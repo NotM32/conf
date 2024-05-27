@@ -22,9 +22,10 @@
 
     wayland.windowManager.hyprland.settings = {
       monitor = [
-        "HDMI-A-1, 1920x1080x74.97, 0x0, 1"
-        "HDMI-A-2, 1920x1080@200, 1920x0, 1"
-        "DP-3, 1920x1080@60, 3840x0, 1"
+        "desc:Sceptre Tech Inc E24 0x01010101, 1920x1080x74.97, 0x0, 1"
+        "desc:Dell Inc. DELL S2721HS CXFN7P3, 1920x1080@74.97, 1920x0, 1"
+        "desc:Lenovo Group Limited Y25-25 U4HDVK7C, 1920x1080@239.96, 3840x0, 1"
+        "desc:Ancor Communications Inc MX279 G8LMRS025036,disable"
         "Unknown-1,disable"
       ];
     };
