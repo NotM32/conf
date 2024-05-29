@@ -3,7 +3,6 @@
   imports = [ ./gpg ];
 
   home.packages = with pkgs; [
-
     # Nix Utilities
     nurl # nix-prefetch but more useful
     nixos-option # command line search of nixos option declarations
@@ -11,6 +10,7 @@
     nixfmt # formatter for nix
 
     # Utilities
+    freeipmi
     htop
     minicom # connecting to devices over serial modem connection (router/switch consoles)
     mosh # mobile shell, for latent/spotty ssh connections
