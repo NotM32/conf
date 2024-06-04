@@ -94,6 +94,7 @@ This function should only modify configuration layer settings."
 				 typescript-fmt-tool 'prettier)
      zig
      nim
+	 perl5
 
      ;; webdev
      html
