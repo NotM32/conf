@@ -66,10 +66,14 @@ in {
     spotify
     psst
     vlc
+
+    # Video/Photo
     obs-studio
     gimp
     inkscape
     krita
+    blender
+    kdenlive
 
     # # Virt / Containers
     podman
