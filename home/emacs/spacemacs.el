@@ -155,7 +155,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '( pinentry
 									   direnv
 									   nix-buffer
-									   gilab-ci-mode
+									   gitlab-ci-mode
 									   pretty-sha-path
                                        )
 
