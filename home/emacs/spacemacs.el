@@ -94,7 +94,8 @@ This function should only modify configuration layer settings."
 				 typescript-fmt-tool 'prettier)
      zig
      nim
-	 perl5
+	 (perl5 :variables
+			perl5-backend 'lsp)
 
      ;; webdev
      html
@@ -151,9 +152,12 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(
-                                      pinentry
-                                      )
+   dotspacemacs-additional-packages '( pinentry
+									   direnv
+									   nix-buffer
+									   gilab-ci-mode
+									   pretty-sha-path
+                                       )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -393,7 +397,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil then the last auto saved layouts are resumed automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
 
    ;; If non-nil, auto-generate layout name when creating new layouts. Only has
    ;; effect when using the "jump to layout by number" commands. (default nil)
