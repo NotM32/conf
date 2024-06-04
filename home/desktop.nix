@@ -43,6 +43,7 @@ in {
     texlab # texlab
     hadolint
     dockerfile-language-server-nodejs
+    perlPackages.PerlLanguageServer
 
     # ## Extra dev tools
     direnv
