@@ -44,6 +44,10 @@ in {
     hadolint
     dockerfile-language-server-nodejs
     perlPackages.PerlLanguageServer
+    clippy
+    rustfmt
+    cargo-edit
+    cargo-outdated
 
     # ## Extra dev tools
     direnv
