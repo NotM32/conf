@@ -48,6 +48,12 @@ in {
     rustfmt
     cargo-edit
     cargo-outdated
+    rubyPackages.solargraph
+    rubyPackages.pry
+    rubyPackages.pry-doc
+    rubyPackages.ruby_parser
+    rubyPackages.rubocop
+    rubyPackages.prettier
 
     # ## Extra dev tools
     direnv
@@ -60,6 +66,7 @@ in {
     gcc
     rustc
     cargo
+    ruby
 
     # ## Latex
     git-latexdiff # More helpful diffs for latex files in git
