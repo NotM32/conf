@@ -54,6 +54,7 @@ in {
     rubyPackages.ruby_parser
     rubyPackages.rubocop
     rubyPackages.prettier
+    sops
 
     # ## Extra dev tools
     direnv
