@@ -157,6 +157,7 @@ This function should only modify configuration layer settings."
 									   nix-buffer
 									   gitlab-ci-mode
 									   pretty-sha-path
+									   sops
                                        )
 
    ;; A list of packages that cannot be updated.
