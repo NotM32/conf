@@ -53,7 +53,8 @@ let
     ./modules/workstation.nix
     ./modules/desktop
     ./modules/backup
-    ./modules/containers.nix
+    ./modules/virtualisation/containers.nix
+    ./modules/virtualisation/libvirtd.nix
   ];
 
   serverModules = [ { home-manager.users.m32 = self.homeModules.default; }
