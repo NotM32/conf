@@ -2,7 +2,10 @@
 let
   font = "Hack Nerd Font";
 in {
-  imports = [ ./default.nix ];
+  imports = [
+    ./default.nix
+    ./emacs.nix
+  ];
 
   home.packages = with pkgs; [
     home-manager
@@ -35,30 +38,11 @@ in {
     pomerium-cli
     docker-compose # for use with podman compose
 
-    # ## Language Servers
-    tflint # terraform linter
-    terraform-ls # terraform language server
-    helm-ls # helm (kubernetes package manager) language server
-    gopls # gopls
-    texlab # texlab
-    hadolint
-    dockerfile-language-server-nodejs
-    perlPackages.PerlLanguageServer
-    clippy
-    rustfmt
-    cargo-edit
-    cargo-outdated
-    rubyPackages.solargraph
-    rubyPackages.pry
-    rubyPackages.pry-doc
-    rubyPackages.ruby_parser
-    rubyPackages.rubocop
-    rubyPackages.prettier
-    sops
 
     # ## Extra dev tools
     direnv
     asdf-vm
+    sops
 
     # ## Languages
     elixir
@@ -103,7 +87,6 @@ in {
     ddcui # GUI for ddcutil
 
     # For emacs
-    libvterm
   ];
 
   # Program Configs
@@ -261,30 +244,8 @@ in {
     ];
   };
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacs-pgtk;
-  };
-  home.file.".spacemacs".source = ./emacs/spacemacs.el;
-  home.file.".emacs.d" = {
-    source = spacemacs;
-    recursive = true;
-  };
-
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-    startWithUserSession = true;
-  };
-
   programs.keychain = {
     enableXsessionIntegration = true;
-  };
-
-  services.mbsync = {
-    enable = true;
-    preExec = "mkdir -p ~/mail/protonmail/";
-    configFile = ./mail/mbsyncrc;
   };
 
   programs.go = {
