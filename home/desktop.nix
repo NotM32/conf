@@ -4,7 +4,7 @@ let
 in {
   imports = [
     ./default.nix
-    ./emacs.nix
+    ./emacs
   ];
 
   home.packages = with pkgs; [

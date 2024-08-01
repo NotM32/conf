@@ -1,7 +1,5 @@
-{ pkgs, spacemacs, lib, ... }:
-let
-
-in {
+{ pkgs, spacemacs, ... }:
+{
   imports = [ ../mail ];
 
   home.packages = with pkgs; [
@@ -36,7 +34,7 @@ in {
   };
 
   # spacemacs installation
-  home.file.".spacemacs".source = ./emacs/spacemacs.el;
+  home.file.".spacemacs".source = ./spacemacs.el;
   home.file.".emacs.d" = {
     source = spacemacs;
     recursive = true;
@@ -48,6 +46,6 @@ in {
     startWithUserSession = true;
   };
 
-  mail.mbsync.enable = true;
+  mail.mbSync.enable = true;
 
 }
