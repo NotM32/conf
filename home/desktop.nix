@@ -263,4 +263,5 @@ in {
   };
 
   services.kdeconnect.enable = true;
+
 }
