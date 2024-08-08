@@ -682,11 +682,17 @@ before packages are loaded."
    web-mode-code-indent-offset 4
    web-mode-attr-indent-offset 4)
 
+  (setq
+
+   web-mode-script-padding 4
+   web-mode-code-indent-offset 2)
+
   (setq gnus-secondary-select-methods
 		'((nnimap "protonmail"
 				  (nnimap-address "127.0.0.1")
 				  (nnimap-server-port 1143)
 				  (nnimap-stream ssl))
+		  ;; usenet
 		  (nntp "news.eweka.nl"
 				(nntp-address "news.eweka.nl"))))
 
@@ -694,8 +700,6 @@ before packages are loaded."
   (setq openai-user "m32")
   (setq magit-repository-directories
 		'(("~/projects" . 2) ("~/conf" . 1)))
-
-
   )
 
 
