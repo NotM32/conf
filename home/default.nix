@@ -1,6 +1,6 @@
 { pkgs, config, ... }: {
 
-  imports = [ ./gpg ];
+  imports = [ ./gpg ./ssh ];
 
   home.packages = with pkgs; [
     # Nix Utilities
@@ -17,15 +17,14 @@
 
     # Containers
     podman
-
   ];
-
-  programs.home-manager.enable = true;
 
   home = {
     stateVersion = "23.11";
     username = "m32";
   };
+
+  programs.home-manager.enable = true;
 
   # Home Structure
   xdg = {
@@ -42,10 +41,10 @@
       publicShare = "${config.home.homeDirectory}/public";
       templates = "${config.home.homeDirectory}/docs/templates";
       videos = "${config.home.homeDirectory}/media/videos";
-    };
-    userDirs.extraConfig = {
-      XDG_MISC_DIR = "${config.home.homeDirectory}/docs/misc";
-      XDG_GIT_DIR = "${config.home.homeDirectory}/projects";
+      extraConfig = {
+        XDG_MISC_DIR = "${config.home.homeDirectory}/docs/misc";
+        XDG_GIT_DIR = "${config.home.homeDirectory}/projects";
+      };
     };
   };
 
@@ -79,49 +78,6 @@
 
     # Additional configuration not defined in modules
     includes = [{ contents = { safe.directory = [ "/etc/nixos" ]; }; }];
-  };
-
-  programs.ssh = {
-    enable = true;
-    controlMaster = "auto";
-    controlPersist = "10m";
-    # forwardAgent   = true;
-    # Host Level configuration
-    matchBlocks = {
-      # Personal
-      "maple" = {
-        hostname = "10.127.1.1";
-        forwardAgent = true;
-      };
-      "phoenix" = {
-        hostname = "10.127.0.66";
-        forwardAgent = true;
-      };
-      "momentum" = {
-        hostname = "10.127.0.2";
-        forwardAgent = true;
-      };
-      "router1.m32.me" = {
-        hostname = "10.127.0.1";
-        forwardAgent = true;
-      };
-    };
-  };
-
-  programs.keychain = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    agents = [ "ssh" "gpg" ];
-    keys = [
-      # General
-      "id_ed25519"
-      "id_rsa"
-      "id_rsa_secondary"
-
-      # Clients
-      "id_ed25519_churchill"
-    ];
   };
 
 }
