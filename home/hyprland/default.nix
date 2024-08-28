@@ -87,8 +87,6 @@
         preserve_split = "yes";
       };
 
-      master = { new_is_master = true; };
-
       gestures = { workspace_swipe = "off"; };
 
       misc = { force_default_wallpaper = 0; };
@@ -125,7 +123,6 @@
         "$mainMod, U, togglesplit"
         "$mainMod, P, pseudo"
         "$mainMod, F, fullscreen"
-        "$mainMod, M, fakefullscreen"
         # Move focus with mainMod + arrow keys
         "$mainMod, H, movefocus, l"
         "$mainMod, L, movefocus, r"
