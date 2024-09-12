@@ -76,13 +76,14 @@ This function should only modify configuration layer settings."
 	 ;; language layers
 	 emacs-lisp
 	 rust
-	 (elixir :variables elixir-backend 'alchemist)
+	 (elixir :variables
+			 elixir-backend 'lsp
+			 elixir-ls-path "~/projects/repos/elixir-ls/release")
 	 ruby
 	 ruby-on-rails
 	 python
 	 ;; ocaml
-	 (nixos :variables
-			nix-backend 'lsp)
+	 (nixos :variables nix-backend 'lsp)
 	 erlang
 	 scheme
 	 racket
@@ -140,8 +141,7 @@ This function should only modify configuration layer settings."
 	 notmuch
 	 search-engine
 	 finance
-	 openai
-	 )
+	 openai)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -152,19 +152,22 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '( pinentry
-									   direnv
-									   nix-buffer
-									   gitlab-ci-mode
-									   pretty-sha-path
-									   sops
-									   )
+   dotspacemacs-additional-packages '(pinentry
+									  direnv
+									  nix-buffer
+									  gitlab-ci-mode
+									  pretty-sha-path
+									  sops
+									  eglot
+									  lsp-elixir.el
+									  exunit
+									  elixir-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(alchemist)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -670,6 +673,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (spacemacs/set-leader-keys "fed" (lambda () (interactive) (find-file "~/conf/home/emacs/spacemacs.el")))
+
   (setq-default
    ;; use tabs
    indent-tabs-mode t
@@ -681,12 +685,11 @@ before packages are loaded."
    web-mode-css-indent-offset 4
    web-mode-code-indent-offset 4
    web-mode-attr-indent-offset 4)
-
   (setq
-
    web-mode-script-padding 4
    web-mode-code-indent-offset 2)
 
+  ;; Mail / GNUS
   (setq gnus-secondary-select-methods
 		'((nnimap "protonmail"
 				  (nnimap-address "127.0.0.1")
@@ -696,36 +699,49 @@ before packages are loaded."
 		  (nntp "news.eweka.nl"
 				(nntp-address "news.eweka.nl"))))
 
-  (setq openai-key (getenv "OPENAI_API_KEY"))
-  (setq openai-user "m32")
+
+  ;; Magit Repos
   (setq magit-repository-directories
 		'(("~/projects" . 2) ("~/conf" . 1)))
+
+  ;; AI
+  (setq openai-key (getenv "OPENAI_API_KEY"))
+  (setq openai-user "m32")
+
+  ;; Elixir
+  (add-hook 'elixir-mode-hook #'lsp)
+
+  ;; TODO: eglot support (needs to be configured outside of layer)
+  (require 'eglot)
+  ;; run 'M-x eglot' when in elixir-mode
+  (add-hook 'elixir-mode-hook 'eglot-ensure)
+  (add-to-list 'eglot-server-programs '(elixir-mode "~/projects/repos/elixir-ls/release"))
+
+  ;; lsp-mode
+  (use-package lsp-mode
+	:commands lsp
+	:ensure t
+	:diminish lsp-mode
+	:hook
+	(elixir-mode . lsp)
+	:init
+	(add-to-list 'exec-path "~/projects/repos/elixir-ls/release"))
+
+  (defvar lsp-elixir--config-options(make-hash-table))
+  (add-hook 'lsp-after-initialize-hook
+			(lambda ()
+			  (lsp--set-configuration '(:elixirLS, lsp-elixir--config-options))))
   )
-
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
+Calls to include file '.emacs.d/custom.el' so it may be held separate from
+the read-only '.spacemacs' file.
 This function is called at the very end of Spacemacs initialization."
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(evil-want-Y-yank-to-eol nil)
-   '(notmuch-hello-mode-hook nil)
-   '(package-selected-packages
-	 '(pdf-view-restore pdf-tools afternoon-theme alect-themes ample-theme ample-zen-theme anti-zenburn-theme apropospriate-theme badwolf-theme birds-of-paradise-plus-theme bubbleberry-theme busybee-theme cherry-blossom-theme chocolate-theme clues-theme color-theme-sanityinc-solarized color-theme-sanityinc-tomorrow cyberpunk-theme dakrone-theme darkmine-theme darkokai-theme darktooth-theme django-theme doom-themes dracula-theme espresso-theme exotica-theme flatland-theme flatui-theme gandalf-theme gotham-theme grandshell-theme gruber-darker-theme gruvbox-theme hc-zenburn-theme hemisu-theme heroku-theme inkpot-theme ir-black-theme jazz-theme jbeans-theme kaolin-themes light-soap-theme lush-theme madhat2r-theme majapahit-theme material-theme minimal-theme modus-themes moe-theme molokai-theme monochrome-theme monokai-theme mustang-theme naquadah-theme noctilux-theme obsidian-theme occidental-theme oldlace-theme omtose-phellack-theme organic-green-theme phoenix-dark-mono-theme phoenix-dark-pink-theme planet-theme professional-theme purple-haze-theme railscasts-theme rebecca-theme reverse-theme seti-theme smyx-theme soft-charcoal-theme soft-morning-theme soft-stone-theme solarized-theme soothe-theme autothemer spacegray-theme subatomic-theme subatomic256-theme sublime-themes sunny-day-theme tango-2-theme tango-plus-theme tangotango-theme tao-theme toxi-theme twilight-anti-bright-theme twilight-bright-theme twilight-theme ujelly-theme underwater-theme white-sand-theme zen-and-art-theme zenburn-theme zonokai-emacs ansible ansible-doc company-ansible jinja2-mode kubernetes-evil kubernetes magit-popup kubernetes-tramp helm-notmuch notmuch company-terraform helm-mu mu4e-alert mu4e-maildirs-extension terraform-mode hcl-mode yaml-mode company-web web-completion-data emmet-mode helm-css-scss impatient-mode js-doc js2-refactor multiple-cursors json-navigator hierarchy json-reformat livid-mode nodejs-repl npm-mode prettier-js pug-mode sass-mode haml-mode scss-mode skewer-mode js2-mode simple-httpd slim-mode tagedit tide typescript-mode web-beautify web-mode alchemist attrap cmm-mode company-cabal company-go company-plsense dante lcr dune elixir-mode elm-mode reformatter elm-test-runner erlang flycheck-credo flycheck-elm flycheck-haskell flycheck-ocaml go-eldoc go-fill-struct go-gen-test go-guru go-impl go-rename go-tag go-mode godoctor haskell-mode haskell-snippets helm-hoogle hindent hlint-refactor lsp-haskell merlin-company merlin-eldoc merlin-iedit merlin ob-elixir ocamlformat ocp-indent racket-mode utop tuareg caml lsp-docker graphviz-dot-mode dap-mode bui yasnippet-snippets yapfify treemacs-magit toml-mode sql-indent sphinx-doc smeargle rust-mode ron-mode pytest pylookup pyenv-mode pydoc py-isort poetry pippel pipenv load-env-vars pyvenv pip-requirements orgit-forge orgit org-rich-yank org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-contrib org-cliplink org nose nix-mode mmm-mode markdown-toc lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami origami live-py-mode importmagic epc ctable concurrent deferred htmlize helm-pydoc helm-org-rifle helm-nixos-options helm-lsp lsp-mode helm-ls-git helm-git-grep helm-company helm-c-yasnippet hackernews graphql-mode gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link gh-md fuzzy forge yaml magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor flyspell-correct-helm flyspell-correct flycheck-rust flycheck-pos-tip pos-tip evil-org dockerfile-mode docker transient tablist json-mode docker-tramp aio json-snatcher cython-mode csv-mode company-nixos-options nixos-options company-anaconda company code-cells cargo markdown-mode blacken auto-yasnippet yasnippet auto-dictionary anaconda-mode pythonic adoc-mode markup-faces ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))
-   '(warning-suppress-log-types '((use-package)))
-   '(warning-suppress-types '((lsp-mode) (use-package))))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t))
+  ;; change the custom-file directory
+  (setq custom-file "~/.emacs.d/custom.el")
+  ;; load the custom file
+  (load custom-file)
   )
