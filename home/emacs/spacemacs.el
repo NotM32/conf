@@ -161,7 +161,8 @@ This function should only modify configuration layer settings."
 									  eglot
 									  lsp-elixir.el
 									  exunit
-									  elixir-mode)
+									  elixir-mode
+									  polymode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -727,10 +728,31 @@ before packages are loaded."
 	:init
 	(add-to-list 'exec-path "~/projects/repos/elixir-ls/release"))
 
+  ;; configuration sample
   (defvar lsp-elixir--config-options(make-hash-table))
   (add-hook 'lsp-after-initialize-hook
 			(lambda ()
 			  (lsp--set-configuration '(:elixirLS, lsp-elixir--config-options))))
+
+  ;; polymode for inline heex sigil support
+  (use-package polymode
+	:mode ("\.ex$" . poly-elixir-web-mode)
+	:config
+	(define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
+	(define-innermode poly-liveview-expr-elixir-innermode
+	  :mode 'web-mode
+	  :head-matcher (rx line-start (* space) "~H" (= 3 (char "\"'")) line-end)
+	  :tail-matcher (rx line-start (* space) (= 3 (char "\"'")) line-end)
+	  :head-mode 'host
+	  :tail-mode 'host
+	  :allow-nested nil
+	  :keep-in-mode 'host
+	  :fallback-mode 'host)
+	(define-polymode poly-elixir-web-mode
+	  :hostmode 'poly-elixir-hostmode
+	  :innermodes '(poly-liveview-expr-elixir-innermode))
+	)
+  (setq web-mode-engines-alist '(("elixir" . "\\.ex\\'")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
