@@ -15,6 +15,15 @@
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+  };
+
   services.sshd.enable = true;
 
   home-manager.users.m32 = {
