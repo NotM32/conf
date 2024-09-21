@@ -81,7 +81,9 @@ in {
     ddcutil # cli tool for controlling digital monitors without using their OSDs
     ddcui # GUI for ddcutil
 
-    # For emacs
+    # Cli tools
+    ledger
+    ledger-web
   ];
 
   # Program Configs
