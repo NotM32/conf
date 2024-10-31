@@ -87,5 +87,9 @@ in {
     maple = nixosSystem {
       modules = commonModules ++ serverModules ++ [ ./hosts/maple.nix ];
     };
+
+    nova = nixosSystem {
+      modules = commonModules ++ workstationModules ++ [ ./hosts/nova.nix ];
+    };
   };
 }
