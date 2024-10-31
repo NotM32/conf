@@ -1,4 +1,4 @@
-{ pkgs, self, ... }: {
+{ self, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "nova";
 
@@ -6,12 +6,11 @@
     ../modules/hardware/legion-slim-5.nix
     ../modules/boot/uefi.nix
 
-    ../modules/rgb.nix
-
     ../modules/desktop/hyprland.nix
   ];
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
+
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
