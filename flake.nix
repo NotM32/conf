@@ -30,6 +30,9 @@
       url = "github:NixOS/flake-registry";
       flake = false;
     };
+
+    # Extra packages
+    l5p-keyboard-rgb.url = "github:4JX/L5P-Keyboard-RGB";
   };
 
   outputs = inputs@{ self, flake-parts, home-manager, ... }:
