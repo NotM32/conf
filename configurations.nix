@@ -68,7 +68,7 @@ let
                     ./modules/backup
                     { backups.srv.enable = true; }
 
-                    ./modules/containers.nix
+                    ./modules/virtualisation/containers.nix
                     ./modules/web/nginx.nix
                     ./modules/web/letsencrypt.nix
                     ./modules/sshd.nix
