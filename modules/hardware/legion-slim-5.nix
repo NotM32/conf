@@ -10,12 +10,12 @@
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
   boot.kernelModules = [ "kvm-amd" "nct6775" ];
 
-  boot.initrd.secrets =
-    { "/persist/secrets/boot/pubkey.asc" =
-        ../../home/gpg/pubkey.asc;
-      "/persist/secrets/boot/cryptkey.gpg" =
-        /persist/secrets/boot/cryptkey.gpg;
-    };
+  # boot.initrd.secrets =
+  #   { "/persist/secrets/boot/pubkey.asc" =
+  #       ../../home/gpg/pubkey.asc;
+  #     "/persist/secrets/boot/cryptkey.gpg" =
+  #       /persist/secrets/boot/cryptkey.gpg;
+  #   };
 
   # Support for YubiKey PBA (two factor decryption)
   boot.initrd.luks.yubikeySupport = false;
@@ -123,9 +123,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # Hardware Temps
-  hardware.gkraken.enable = true;
 
   # Video Drivers / Hardware options
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
