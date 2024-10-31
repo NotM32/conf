@@ -3,7 +3,7 @@
   networking.hostName = "nova";
 
   imports = [
-    ../modules/hardware/legion-5-slim.nix
+    ../modules/hardware/legion-slim-5.nix
     ../modules/boot/uefi.nix
 
     ../modules/rgb.nix
