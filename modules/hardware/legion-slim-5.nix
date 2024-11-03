@@ -6,7 +6,7 @@
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  environment.systemPackages = [ self.inputs.l5p-keyboard-rgb ];
+  environment.systemPackages = [ self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
