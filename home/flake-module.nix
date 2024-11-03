@@ -21,14 +21,16 @@ in {
 
     /** Full workstation suite with graphical tools and development stuff */
     desktop = {
-      nixpkgs.overlays = [ emacs-overlay.overlay ];
       imports = [ ./desktop.nix ];
+
+      nixpkgs.overlays = [ emacs-overlay.overlay ];
     };
 
     /** Desktop app configurations with tiling manager config */
     desktop-tiling = {
-      nixpkgs.overlays = [ emacs-overlay.overlay ];
       imports = [ ./desktop.nix ./hyprland ];
+
+      nixpkgs.overlays = [ emacs-overlay.overlay ];
     };
   };
 
