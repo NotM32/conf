@@ -173,12 +173,13 @@
         "$mainMod, F10, focusworkspaceoncurrentmonitor, 10"
         # Example special workspace (scratchpad)
         "$mainMod, Backslash, togglespecialworkspace, magic"
-
         "$mainMod SHIFT, Backslash, movetoworkspace, special:magic"
+
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
         "CTRL ALT, Q, exec, hyprlock"
         ", XF86Battery, exec, hyprlock"
+
       ];
 
       bindm = [
@@ -189,6 +190,8 @@
       binde = [
         ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl s +5%"
+        ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-"
       ];
 
     };
@@ -199,7 +202,7 @@
 
     settings = {
       general = {
-        lock_cmd = "hyprlock";
+        lock_cmd = "pidof hyprlock || hyprlock";
       };
     };
   };
