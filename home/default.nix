@@ -47,6 +47,11 @@
 
   programs.fish = { enable = true; };
 
+  programs.broot = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   programs.git = {
     enable = true;
     userName = "m32";
