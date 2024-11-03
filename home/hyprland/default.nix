@@ -123,21 +123,25 @@
         "$mainMod, U, togglesplit"
         "$mainMod, P, pseudo"
         "$mainMod, F, fullscreen"
+
         # Move focus with mainMod + arrow keys
         "$mainMod, H, movefocus, l"
         "$mainMod, L, movefocus, r"
         "$mainMod, K, movefocus, u"
         "$mainMod, J, movefocus, d"
+
         # Shift window with mainMod + arrow keys
         "$mainMod SHIFT, H, movewindow, l"
         "$mainMod SHIFT, L, movewindow, r"
         "$mainMod SHIFT, K, movewindow, u"
         "$mainMod SHIFT, J, movewindow, d"
+
         # Alter window size
         "$mainMod ALT, H, resizeactive"
         "$mainMod ALT, L, resizeactive"
         "$mainMod ALT, K, resizeactive"
         "$mainMod ALT, J, resizeactive"
+
         # Switch workspaces with mainMod + [0-9]
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
@@ -149,6 +153,7 @@
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
+
         # Move active window to a workspace with mainMod + SHIFT + [0-9]
         "$mainMod SHIFT, 1, movetoworkspace, 1"
         "$mainMod SHIFT, 2, movetoworkspace, 2"
@@ -160,6 +165,7 @@
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
+
         # Alternate workspace on current monitor
         "$mainMod, F1, focusworkspaceoncurrentmonitor, 1"
         "$mainMod, F2, focusworkspaceoncurrentmonitor, 2"
@@ -171,6 +177,7 @@
         "$mainMod, F8, focusworkspaceoncurrentmonitor, 8"
         "$mainMod, F9, focusworkspaceoncurrentmonitor, 9"
         "$mainMod, F10, focusworkspaceoncurrentmonitor, 10"
+
         # Example special workspace (scratchpad)
         "$mainMod, Backslash, togglespecialworkspace, magic"
         "$mainMod SHIFT, Backslash, movetoworkspace, special:magic"
@@ -203,7 +210,26 @@
     settings = {
       general = {
         lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
       };
+
+      listener = [
+        { timeout = 240;
+          on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10";
+          on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+        }
+        { timeout = 270;
+          on-timeout = "loginctl lock-session";
+        }
+        { timeout = 300;
+          on-timeout = "hyprctl set dpms off";
+          on-resume = "hyprctl set dpms on";
+        }
+        { timeout = 600;
+          on-timeout = "systemctl suspend";
+        }
+      ];
     };
   };
 
