@@ -1,4 +1,4 @@
-{ self, ... }: {
+{ self, config, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "nova";
 
@@ -34,6 +34,19 @@
         "desc:Ancor Communications Inc MX279 G8LMRS025036,disable"
         "Unknown-1,disable"
       ];
+    };
+  };
+
+  systemd.services.legion-keyboard-rgb = {
+    description = "Set Legion Keyboard RGB";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
+    before = [ "display-manager.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
+      Restart = "no";
     };
   };
 

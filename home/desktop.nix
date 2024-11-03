@@ -28,7 +28,7 @@ in {
     kubectl
     kubernetes-helm
     terraform
-    pulumi
+    # pulumi
     ansible
     buildah
     pomerium-cli
@@ -102,7 +102,7 @@ in {
         size = 10;
       };
       colors = (lib.importTOML ./alacritty/colors.toml).colors;
-      shell = { program = "fish"; };
+      terminal.shell = { program = "fish"; };
       keyboard.bindings = [
         {
           key = "Key0";
