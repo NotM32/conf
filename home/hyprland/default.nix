@@ -4,7 +4,7 @@
     ./hyprlock.nix
     ./wofi.nix
     ./wpaperd.nix
-    ../mako
+    ./mako.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -204,6 +204,7 @@
     };
   };
 
+  # Hypridle
   services.hypridle = {
     enable = true;
 
@@ -233,6 +234,7 @@
     };
   };
 
+  # QT/GTK Applications
   qt.enable = true;
   qt.style.name = "adwaita-dark";
   gtk.enable = true;

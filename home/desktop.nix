@@ -1,7 +1,6 @@
-{ pkgs, lib, ... }:
-let font = "Hack Nerd Font";
-in {
-  imports = [ ./default.nix ./emacs ./firefox ];
+{ pkgs, ... }:
+{
+  imports = [ ./default.nix ./alacritty ./emacs ./firefox ];
 
   home.packages = with pkgs; [
     home-manager
@@ -87,41 +86,6 @@ in {
   ];
 
   # Program Configs
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      env = { TERM = "alacritty"; };
-      window = {
-        title = "terminal";
-        dynamic_title = true;
-      };
-      scrolling = { history = 10000; };
-      font = {
-        normal = { family = font; };
-        bold = { family = font; };
-        size = 10;
-      };
-      colors = (lib.importTOML ./alacritty/colors.toml).colors;
-      terminal.shell = { program = "fish"; };
-      keyboard.bindings = [
-        {
-          key = "Key0";
-          mods = "Control";
-          action = "ResetFontSize";
-        }
-        {
-          key = "Plus";
-          mods = "Control";
-          action = "IncreaseFontSize";
-        }
-        {
-          key = "Minus";
-          mods = "Control";
-          action = "DecreaseFontSize";
-        }
-      ];
-    };
-  };
 
   services.syncthing = { enable = true; };
 
@@ -169,5 +133,4 @@ in {
   };
 
   services.kdeconnect.enable = true;
-
 }

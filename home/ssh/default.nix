@@ -1,5 +1,4 @@
 { config, ... }: {
-
   programs.ssh = {
     enable = true;
     controlMaster = "auto";
@@ -22,6 +21,10 @@
       };
       "router1.m32.me" = {
         hostname = "10.127.0.1";
+        forwardAgent = true;
+      };
+      "nova" = {
+        hostname = "10.127.0.3";
         forwardAgent = true;
       };
     };
