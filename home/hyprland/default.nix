@@ -7,6 +7,14 @@
     ./mako.nix
   ];
 
+  home.packages = with pkgs; [
+    kdePackages.dolphin
+    kdePackages.qtwayland
+    kdePackages.qtsvg
+    kdePackages.kio-fuse
+    kdePackages.kio-extras
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
 
