@@ -75,7 +75,8 @@ This function should only modify configuration layer settings."
 
 	 ;; language layers
 	 emacs-lisp
-	 rust
+	 (rust :variables
+		   lsp-rust-analyzer-cargo-auto-reload t)
 	 (elixir :variables
 			 elixir-backend 'lsp
 			 elixir-ls-path "~/projects/repos/elixir-ls/release")
