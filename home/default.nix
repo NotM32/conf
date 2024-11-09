@@ -19,6 +19,8 @@
   home = {
     stateVersion = "23.11";
     username = "m32";
+
+    preferXdgDirectories = true;
   };
 
   programs.home-manager.enable = true;
