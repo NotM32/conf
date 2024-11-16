@@ -70,6 +70,7 @@
     podman
     virt-manager
     virt-manager-qt
+    virtualbox # for GNS3
 
     # # Office
     obsidian
@@ -84,6 +85,11 @@
     # Cli tools
     ledger
     ledger-web
+
+    # Networking
+    gns3-gui
+    ubridge
+    dynamips
   ];
 
   # Program Configs

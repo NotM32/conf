@@ -28,7 +28,7 @@
 
 
     wayland.windowManager.hyprland.settings = {
-      env = [ "GDK_SCALE,1" ];
+      env = [ "GDK_SCALE,2" ];
 
       monitor = [
         "desc:California Institute of Technology 0x161D 0x00006001, 2560x1600@165.02Hz, auto, 1.6"
