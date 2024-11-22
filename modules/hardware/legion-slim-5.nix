@@ -1,5 +1,4 @@
 { config, lib, modulesPath, self, ... }:
-
 {
   imports =
     [
@@ -109,8 +108,23 @@
       fsType = "vfat";
     };
 
+  fileSystems."/swap" =
+    { device = "/dev/mapper/ucrypt";
+      fsType = "btrfs";
+      options = [ "subvol=@swap" ];
+      neededForBoot = true;
+    };
+
   swapDevices = [
+    { device = "/swap/swapfile"; }
   ];
+
+  boot.resumeDevice = "/dev/disk/by-uuid/6ac3d6fb-a96e-4b38-8a92-99918d3d266b";
+  boot.kernelParams = [ "resume_offset=56141094" "nvidia-drm.modeset=1" ];
+  systemd.sleep.extraConfig = ''
+                               [Sleep]
+                               HibernateMode=shutdown
+                              '';
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -128,6 +142,11 @@
 
   # Video Drivers / Hardware options
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
-  hardware.nvidia.modesetting.enable = true;
+
+  hardware.nvidia = {
+    modesetting.enable = false;
+    open = false;
+    nvidiaSettings = true;
+  };
 
 }
