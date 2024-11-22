@@ -1,6 +1,6 @@
 { self, ... }:
 let
-  inherit (self.inputs) nixpkgs nur home-manager sops-nix disko flake-registry emacs-overlay;
+  inherit (self.inputs) nixpkgs nur home-manager sops-nix disko lanzaboote flake-registry emacs-overlay;
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
 
   commonModules = [
@@ -8,6 +8,8 @@ let
 
     disko.nixosModules.disko
     sops-nix.nixosModules.sops
+    lanzaboote.nixosModules.lanzaboote
+
     self.nixosModules.home-manager
 
     ({ pkgs, config, lib, ... }:
@@ -21,8 +23,6 @@ let
           "home-manager=${home-manager}"
         ];
 
-        sops.secrets = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
-
         nix.extraOptions = ''
           flake-registry = ${flake-registry}/flake-registry.json
         '';
@@ -34,7 +34,9 @@ let
           #TODO: mur
         };
 
-        time.timeZone = "America/Denver";
+        sops.secrets = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
+
+        time.timeZone = lib.mkDefault "America/Denver";
       })
 
     ./modules/nix.nix
@@ -63,7 +65,7 @@ let
   ];
 
   serverModules = [ { home-manager.users.m32 = self.homeModules.default; }
-                    { networking.domain = "cubit.sh"; }
+                    { networking.domain = "m32.io"; }
 
                     ./modules/backup
                     { backups.srv.enable = true; }
