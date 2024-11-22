@@ -4,6 +4,7 @@ let
   nixosSystem = nixpkgs.lib.makeOverridable nixpkgs.lib.nixosSystem;
 
   commonModules = [
+    # make flake 'self' and 'inputs' attributes available to configuration modules
     { _module.args = { inherit self; } // self.inputs; }
 
     disko.nixosModules.disko
@@ -13,7 +14,9 @@ let
     self.nixosModules.home-manager
 
     ({ pkgs, config, lib, ... }:
-      let sopsFile = ./. + "hosts/${config.networking.hostName}.yml";
+      let
+        # host specific secrets file
+        sopsFile = ./. + "hosts/${config.networking.hostName}.yml";
       in {
         nixpkgs.overlays = [ emacs-overlay.overlay ];
 
@@ -31,7 +34,6 @@ let
           home-manager.flake = home-manager;
           nixpkgs.flake = nixpkgs;
           nur.flake = nur;
-          #TODO: mur
         };
 
         sops.secrets = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
@@ -57,11 +59,17 @@ let
     { backups.home.enable = true; }
     { backups.podman.enable = true; }
 
-    ./modules/workstation.nix
     ./modules/desktop
     ./modules/backup
     ./modules/virtualisation/containers.nix
     ./modules/virtualisation/libvirtd.nix
+
+    ./modules/devices/printers.nix
+    ./modules/devices/sdr.nix
+
+    { console.earlySetup = true;
+      networking.networkmanager.enable = true;
+    }
   ];
 
   serverModules = [ { home-manager.users.m32 = self.homeModules.default; }
