@@ -4,7 +4,7 @@
 
   imports = [
     ../modules/hardware/legion-slim-5.nix
-    ../modules/boot/uefi.nix
+    ../modules/boot/secureboot.nix
 
     ../modules/desktop/hyprland.nix
   ];
