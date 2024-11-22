@@ -44,7 +44,7 @@ let
       };
       "/@var/log" = {
         mountpoint = "/var/log";
-        mountOptions = [ "compress=zstd" "noatime" ];
+        mountOptions = [ "compress=zstd" "noatime" "noexec" ];
       };
       "@swap" = mkIf cfg.system.enableSwap {
         mountpoint = "/.swapvol";
