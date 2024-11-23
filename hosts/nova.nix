@@ -1,8 +1,10 @@
-{ self, config, ... }: {
+{ self, specialArgs, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "nova";
 
   imports = [
+    specialArgs.self.nixosModules.workstation
+
     ../modules/hardware/legion-slim-5.nix
     ../modules/boot/secureboot.nix
 
@@ -14,11 +16,8 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
-  services.sshd.enable = true;
-
   home-manager.users.m32 = {
     imports = [ self.homeModules.desktop-tiling ];
-
 
     wayland.windowManager.hyprland.settings = {
       env = [ "GDK_SCALE,2" ];
@@ -44,7 +43,8 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
+      ExecStart =
+        "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
       Restart = "no";
     };
   };

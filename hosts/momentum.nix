@@ -1,8 +1,10 @@
-{ self, ... }: {
+{ self, specialArgs, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "momentum";
 
   imports = [
+    specialArgs.self.nixosModules.workstation
+
     ../modules/hardware/t430.nix
     ../modules/boot/legacyboot.nix
 
