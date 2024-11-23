@@ -7,17 +7,20 @@ creation_rules:
     key_groups:
     - pgp:
         - *admin_m32
+      age:
+      - *host_phoenix
+      - *host_nova
   - path_regex: modules/users/[^/]+\.yml$
     key_groups:
     - pgp:
       - *admin_m32
-  - path_regex: modules/hosts/phoenix\.yml$
+  - path_regex: hosts/phoenix\.yml$
     key_groups:
     - pgp:
       - *admin_m32
       age:
       - *host_phoenix
-  - path_regex: modules/hosts/nova\.yml$
+  - path_regex: hosts/nova\.yml$
     key_groups:
     - pgp:
       - *admin_m32
