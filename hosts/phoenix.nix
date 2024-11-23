@@ -1,8 +1,10 @@
-{ pkgs, self, ... }: {
+{ pkgs, self, specialArgs, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "phoenix";
 
   imports = [
+    specialArgs.self.nixosModules.workstation
+
     ../modules/hardware/ryzen-desktop.nix
     ../modules/boot/uefi.nix
 
