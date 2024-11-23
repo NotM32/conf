@@ -1,11 +1,12 @@
 keys:
   - &admin_m32 DE0FE946DDA34B3BD1F92D59E017B967AC29E321
   - &host_phoenix age1wnxruyg2pvwcmfuqfqy0r4s7u39y98jpma7rkt26hguxu5pfj5eqx687f3
+  - &host_nova age1c2ehej2xaxut8mgmggjnzaze0zprgcg9pp9z9czcf8mca4c03eas0x8umd
 creation_rules:
   - path_regex: secrets/[^/]+\.yml$
     key_groups:
     - pgp:
-        - *admin_m32_pgp
+        - *admin_m32
   - path_regex: modules/users/[^/]+\.yml$
     key_groups:
     - pgp:
@@ -16,3 +17,9 @@ creation_rules:
       - *admin_m32
       age:
       - *host_phoenix
+  - path_regex: modules/hosts/nova\.yml$
+    key_groups:
+    - pgp:
+      - *admin_m32
+      age:
+      - *host_nova
