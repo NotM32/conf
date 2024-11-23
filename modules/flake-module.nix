@@ -100,7 +100,14 @@ in {
       in {
         imports = [ sops-nix.nixosModules.sops ];
 
-        sops.secrets = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
+        sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+        sops.secrets.host = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
+        sops.secrets.backup = lib.mkIf (builtins.hasAttr "backups" config) ../secrets/backup.yml;
       };
+
+    backup = { ... } : {
+      imports = [ ./backup ];
+    };
   };
 }
