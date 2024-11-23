@@ -1,23 +1,35 @@
-{ pkgs, lib, config, ... }: {
+{ lib, config, ... }:
+with lib;
+let
+  repoConfig = {
+    repositoryFile = config.sops.secrets."backup_repo/repository".path;
+    passwordFile = config.sops.secrets."backup_repo/password".path;
+    initialize = false;
+
+    extraOptions = [
+      ''sftp.command="/bin/sh -c 'ssh $(cat ${config.sops.secrets."backup_repo/connection".path}) -i ${config.sops.secrets."backup_repo/ssh_id".path} -o UserKnownHostsFile=${config.sops.secrets."backup_repo/known_hosts".path} -s sftp'" ''
+    ];
+  };
+in {
   options = {
     backups = {
-      home.enable = lib.mkOption {
+      home.enable = mkOption {
         description = "Backup user home directories";
-        type = lib.types.bool;
+        type = types.bool;
         default = false;
         example = true;
       };
 
-      srv.enable = lib.mkOption {
-        description = "Backup user home directories";
-        type = lib.types.bool;
+      srv.enable = mkOption {
+        description = "Backup server data directories";
+        type = types.bool;
         default = true;
         example = true;
       };
 
-      podman.enable = lib.mkOption {
+      podman.enable = mkOption {
         description = "Backup user podman data";
-        type = lib.types.bool;
+        type = types.bool;
         default = false;
         example = true;
       };
@@ -25,18 +37,10 @@
   };
 
   config = {
-    services.restic.backups = rec {
-      # 
-      rsyncnet = {
-        repository = "sftp:fm1383@fm1383.rsync.net:backups/srv/";
-        passwordFile = "/etc/nixos/secrets/r_pass";
-        initialize = false;
-
+    services.restic.backups = {
+      # Server data
+      srv = repoConfig // {
         paths = [ "/srv/" ];
-
-        extraOptions = [
-          "sftp.command='ssh fm1383@fm1383.rsync.net -i /etc/nixos/secrets/id_backup -s sftp'"
-        ];
 
         extraBackupArgs = [ "--option read-concurrency=10" "--tag automatic" ];
 
@@ -47,7 +51,7 @@
       };
 
       # * General backup of home directory hosts.
-      home = lib.mkIf (config.backups.home.enable) rsyncnet // {
+      home = mkIf (config.backups.home.enable) (repoConfig // {
         paths = [
           "/home/m32/media"
           "/home/m32/docs"
@@ -56,33 +60,33 @@
         ];
         exclude = [ "/home/m32/games/*" ];
 
-        extraOptions = [
-          "sftp.command='ssh fm1383@fm1383.rsync.net -i /home/m32/.ssh/id_rsa -o UserKnownHostsFile=/home/m32/.ssh/known_hosts -s sftp'"
-        ];
+        extraBackupArgs = [ "--option read-concurrency=10" "--tag automatic" "--tag home" ];
 
         timerConfig = {
-          OnCalendar = "00,04,08,12,16,20:00:00";
+          OnCalendar = "hourly";
+          Persistent = true;
           RandomizedDelaySec = "15m";
         };
 
         createWrapper = false;
-      };
+      });
 
-      # This backup instance is required if storing podman dev container data in the home directory
-      # the above configuration should be setup not to fail when the backup system can't access a file.
-      podman = lib.mkIf (config.backups.home.enable) rsyncnet // {
-        # Create a wrapper package that uses the podman unshare thing
-        package = pkgs.writeShellScriptBin "restic" ''
-          # Call restic within podman unsahre
-          exec ${pkgs.podman}/bin/podman unshare ${pkgs.restic}/bin/restic "$@"
-        '';
-        paths = [ ];
-        dynamicFilesFrom =
-          "find /home/m32 -type d ! -readable -a ! -executable -a ! -user m32 -print 2>/dev/null; exit 0;";
-        extraBackupArgs = home.extraBackupArgs ++ [ "--tag podman" ];
+      homeFull = mkIf (config.backups.home.enable) (repoConfig // {
+        paths = [
+          "/home/m32"
+        ];
+        exclude = [ "/home/m32/games/*" ];
+
+        extraBackupArgs = [ "--option read-concurrency=10" "--tag automatic" "--tag home" "--tag full" ];
+
+        timerConfig = {
+          OnCalendar = "00,12:00:00";
+          Persistent = true;
+          RandomizedDelaySec = "15m";
+        };
 
         createWrapper = false;
-      };
+      });
     };
   };
 }
