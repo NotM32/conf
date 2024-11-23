@@ -71,6 +71,8 @@ in {
 
       # Networking
       networking.networkmanager.enable = true;
+
+      time.timeZone = nixpkgs.lib.mkDefault "America/Denver";
     };
 
     # Modules common to a server
@@ -102,10 +104,29 @@ in {
 
         sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-        sops.defaultSopsFile = sopsFile;
+        sops.defaultSopsFile = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
+        sops.defaultSopsFormat = "yaml";
 
-        sops.secrets.host = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
-        sops.secrets.backup = lib.mkIf (builtins.hasAttr "backups" config) ../secrets/backup.yml;
+        sops.secrets."backup_repo/repository" = lib.mkIf (builtins.hasAttr "backups" config) {
+          sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
+        sops.secrets."backup_repo/connection" = lib.mkIf (builtins.hasAttr "backups" config) {
+          sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
+        sops.secrets."backup_repo/password" = lib.mkIf (builtins.hasAttr "backups" config) {
+          sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
+        sops.secrets."backup_repo/ssh_id" = lib.mkIf (builtins.hasAttr "backups" config) {
+          sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
+        sops.secrets."backup_repo/known_hosts" = lib.mkIf (builtins.hasAttr "backups" config) {
+          sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
       };
 
     backup = { ... } : {
