@@ -131,22 +131,38 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp7s0f3u3u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
-
   hardware.bluetooth.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Video Drivers / Hardware options
+  allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
+
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
 
   hardware.nvidia = {
     modesetting.enable = false;
     open = false;
     nvidiaSettings = true;
+  };
+
+  # RGB Lighting Service
+  systemd.services.legion-keyboard-rgb = {
+    description = "Set Legion Keyboard RGB";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
+    before = [ "display-manager.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart =
+        "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
+      Restart = "no";
+    };
   };
 
 }

@@ -11,11 +11,6 @@
     ../modules/desktop/hyprland.nix
   ];
 
-  allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
-
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
-
   home-manager.users.m32 = {
     imports = [ self.homeModules.desktop-tiling ];
 
@@ -32,20 +27,6 @@
       ];
 
       xwayland.force_zero_scaling = true;
-    };
-  };
-
-  systemd.services.legion-keyboard-rgb = {
-    description = "Set Legion Keyboard RGB";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "systemd-udev-settle.service" ];
-    before = [ "display-manager.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart =
-        "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
-      Restart = "no";
     };
   };
 
