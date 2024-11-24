@@ -54,7 +54,6 @@
     alacritty # fast terminal emulator
 
     # # Media
-    spotify
     psst
     vlc
 
