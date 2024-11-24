@@ -54,6 +54,7 @@ in {
 
         ./devices/printers.nix
         ./devices/sdr.nix
+        ./security/firejail.nix
         ./virtualisation/containers.nix
         ./virtualisation/libvirtd.nix
       ];
