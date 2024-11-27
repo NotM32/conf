@@ -37,7 +37,7 @@
 
   outputs = inputs@{ self, flake-parts, home-manager, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      systems = [ "x86_64-linux" "aarch64-linux" ];
 
       imports = [
         ./configurations.nix
