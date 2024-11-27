@@ -85,7 +85,7 @@ in {
 
         ./web/letsencrypt.nix
         ./web/nginx.nix
-        ./sshd.nix
+        ./security/sshd.nix
         ./virtualisation/containers.nix
       ];
 
