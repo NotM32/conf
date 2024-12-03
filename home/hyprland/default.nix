@@ -26,6 +26,7 @@
       env = [
         "XCURSOR_SIZE,24"
         "QT_QPA_PLATFORMTHEME,qt5ct"
+        "WLR_DRM_NO_ATOMIC,1"
       ]; # change to qt6ct if you have that
 
       exec-once = [ "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &" ];
@@ -231,7 +232,7 @@
           on-resume = "hyprctl dispatch dpms on";
         }
         { timeout = 600;
-          on-timeout = "systemctl sleep";
+          on-timeout = "systemctl suspend";
         }
       ];
     };
