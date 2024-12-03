@@ -120,11 +120,7 @@
   ];
 
   boot.resumeDevice = "/dev/disk/by-uuid/6ac3d6fb-a96e-4b38-8a92-99918d3d266b";
-  boot.kernelParams = [ "resume_offset=56141094" "nvidia-drm.modeset=1" ];
-  systemd.sleep.extraConfig = ''
-                               [Sleep]
-                               HibernateMode=shutdown
-                              '';
+  boot.kernelParams = [ "resume_offset=56141094" "nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -139,15 +135,17 @@
   # Video Drivers / Hardware options
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
-  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
   hardware.nvidia = {
-    modesetting.enable = false;
+    powerManagement.enable = true;
+    modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # RGB Lighting Service
