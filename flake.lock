@@ -96,6 +96,22 @@
         "type": "github"
       }
     },
+    "doomemacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733086132,
+        "narHash": "sha256-0dZLv7ombTTn52iNXHYOCB8oWAhjlcckPHEfcQu2CsI=",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "ec645b83818d0d691493b944b03ffeab70b112bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "type": "github"
+      }
+    },
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": "nixpkgs_3",
@@ -689,6 +705,7 @@
       "inputs": {
         "deploy": "deploy",
         "disko": "disko",
+        "doomemacs": "doomemacs",
         "emacs-overlay": "emacs-overlay",
         "flake-parts": "flake-parts",
         "flake-registry": "flake-registry",
