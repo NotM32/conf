@@ -19,10 +19,16 @@
     impermanence.url = "github:nix-community/impermanence";
     lanzaboote.url = "github:nix-community/lanzaboote";
 
-    # Spacemacs
+    # Emacs
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+
     spacemacs = {
       url = "github:syl20bnr/spacemacs";
+      flake = false;
+    };
+
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
       flake = false;
     };
 
