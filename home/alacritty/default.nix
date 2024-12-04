@@ -14,7 +14,7 @@
         size = 10;
       };
       colors = (lib.importTOML ./colors.toml).colors;
-      terminal.shell = { program = "fish"; };
+      terminal.shell = { program = "nu"; };
       keyboard.bindings = [
         {
           key = "Key0";
