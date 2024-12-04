@@ -122,7 +122,10 @@
     ];
   };
 
-  programs.keychain = { enableXsessionIntegration = true; };
+  programs.keychain = {
+    enableXsessionIntegration = true;
+    enableNushellIntegration = true;
+  };
 
   programs.go = {
     enable = true;
