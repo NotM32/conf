@@ -1,7 +1,9 @@
-{ config, lib, ... }:
+{ config, lib, pkgs,  ... }:
 let
   cfg = config.mail;
 in {
+  home.packages = [ pkgs.protonmail-bridge ];
+
   options.mail = {
     mbSync.enable = lib.mkEnableOption "enable mbsync for mail sync";
   };
