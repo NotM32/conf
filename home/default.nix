@@ -57,6 +57,12 @@
     enableNushellIntegration = true;
   };
 
+  programs.carapace = {
+    enable = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
