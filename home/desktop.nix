@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ./default.nix ./alacritty ./emacs ./firefox ];
+  imports = [ ./default.nix ./alacritty ./emacs ./firefox ./mail ];
 
   home.packages = with pkgs; [
     home-manager
