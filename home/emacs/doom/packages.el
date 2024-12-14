@@ -48,7 +48,17 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+;; AI
+(package! gptel)
+
+;; Modes
+(package! nushell-mode);
+(package! nushell-ts-mode);
+(package! sops)
+
+;; Themes
 (package! kaolin-themes)
 (package! all-the-icons)
 
-(package! gptel)
+;; Utilities
+(package! gnus)

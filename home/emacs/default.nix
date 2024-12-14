@@ -1,9 +1,11 @@
-{ config, pkgs, doomemacs, ... }:
+{ config, pkgs, ... }:
 let
   emacs = with pkgs; (emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs: with epkgs; [
     treesit-grammars.with-all-grammars
     vterm
-    mu4e
+    notmuch
+    mbsync
+    offlineimap
   ]);
 
   doomReloadScript = with pkgs; writeScript "doom-reload"
@@ -14,86 +16,54 @@ let
     ${config.home.homeDirectory}/.emacs.d/bin/doom -y sync -u
     '';
 in {
- home.packages = with pkgs; [
-    tflint # terraform linter
-    terraform-ls # terraform language server
-    helm-ls # helm (kubernetes package manager) language server
-    texlab # texlab
-    hadolint
-    dockerfile-language-server-nodejs
-
-    # shell
-    shellcheck
-
-    # perl
-    perlPackages.PerlLanguageServer
-
-    # rust
-    clippy
-    rustfmt
+  home.packages = with pkgs; [
     cargo-edit
     cargo-outdated
-    rust-analyzer
-
-    # nim
+    clippy
+    dockerfile-language-server-nodejs
+    elixir-ls
+    fd
+    hadolint
+    helm-ls # helm (kubernetes package manager) language server
+    html-tidy
+    ispell
+    libvterm
     nim
     nimlangserver
-
-    # zig
-    zig
-
-    # ruby
-    rubyPackages.solargraph
+    notmuch
+    perlPackages.PerlLanguageServer
+    ripgrep
+    rubyPackages.prettier
     rubyPackages.pry
     rubyPackages.pry-doc
-    rubyPackages.ruby_parser
     rubyPackages.rubocop
-    rubyPackages.prettier
-
-    # web
-    html-tidy
+    rubyPackages.ruby_parser
+    rubyPackages.solargraph
+    rust-analyzer
+    rustfmt
+    shellcheck
     stylelint
-
-    # elixir
-    elixir-ls
-
-    # Virtual Term support lib
-    libvterm
-
-    # faster file searches
-    ripgrep
-    fd
-
-    # spell
-    ispell
+    terraform-ls
+    texlab
+    tflint
+    zig
   ];
 
- home = {
-   sessionPath = [ "${config.xdg.configHome}/doom/bin" ];
-   sessionVariables = {
-     DOOMDIR = "${config.xdg.configHome}/doom";
-     DOOMLOCALDIR = "${config.xdg.stateHome}/doom";
-   };
+  home = {
+    sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ];
  };
 
-  programs.emacs = {
+ programs.emacs = {
     enable = true;
     package = emacs;
   };
 
-  # spacemacs installation
-  # home.file.".spacemacs".source = ./spacemacs.el;
-  # home.file.".emacs.d" = {
-  #   source = spacemacs;
-  #   recursive = true;
-  # };
-
    # doom-emacs configuration
-   home.file.".doom.d/" = {
-     source = ./doom/.;
-     recursive = true;
-     onChange = "${doomReloadScript}";
-   };
+   # home.file.".doom.d" = {
+   #   source = ./doom/.;
+   #   recursive = true;
+   #   onChange = "${doomReloadScript}";
+   # };
 
    services.emacs = {
      enable = true;

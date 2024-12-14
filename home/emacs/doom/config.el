@@ -87,25 +87,60 @@
 ;; they are implemented.
 ;;
 
-;; eglot hooks
 (after! eglot
+  "Setup hooks to call `eglot` for certain modes "
+  (set-eglot-client! 'elixir-mode '("elixir-ls"))
   (add-hook! 'elixir-mode-hook 'eglot-ensure)
-  (add-to-list 'eglot-server-programs `(elixir-mode "elixir-ls"))
-  (add-hook! nix-mode 'eglot-ensure)
-  (add-to-list 'eglot-server-programs `(nix-mode "nil")))
+  (set-eglot-client! 'nix-mode '("nil"))
+  (add-hook! 'nix-mode-hook 'eglot-ensure))
 
 ;; magit
 (after! magit
+  "Configure"
   (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1))))
 
 ;; markdown
 (setq-hook! 'markdown-mode-hook
   line-spacing 2)
 
-;; gpt setup
+;; LLM
 (use-package! gptel
  :config
- (setq! gptel-api-key "")
+ (setq! gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
  (setq! gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
-  gptel-backend (gptel-make-anthropic "Claude"
-                  :stream t :key "")))
+        gptel-backend (gptel-make-anthropic "Claude"
+                        :stream t
+                        :key (auth-source-pick-first-password :host "api.anthropic.com")))
+ (setq! gptel-directives
+        '((default . "You are a large language model integrated into Emacs. Be concise in your response, provide a intelligent response. Your role includes assisting with programming, writing and general knowledge")
+          (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
+                          - Check code comments for lines that prompt a response from you.
+                          - Assume your response will be inserted into the provided code at a location marked <HERE>.
+                          - Assume the cursor for the buffer is placed at the '<' character.
+                          - Provide intelligent responses.
+                          - When <HERE> is present, only respond with code. If you need to explain, do so a syntax-valid way using code comments.
+                          - Your code style should match the style of provided context code."))))
+;; SOPS
+(use-package sops
+  :bind
+  (("C-c C-c" . sops-save-file)
+   ("C-c C-k" . sops-cancel)
+   ("C-c C-d" . sops-edit-file))
+  :init
+  (global-sops-mode 1))
+
+(use-package! gnus
+  :config
+  (setq! gnus-select-method
+         '(nntp "Usenet Eweka"
+           (nntp-address "news.eweka.nl")
+           (nntp-authinfo-file "~/.authinfo.gpg"))))
+
+;; Configure Search Providers
+(setq! lookup-provider-url-alist
+       '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
+         ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
+
+(setq +notmuch-sync-backend 'mbsync)
+
+(auth-source-forget-all-cached)
