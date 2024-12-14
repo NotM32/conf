@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  schedule:
+    cron: '30 1 * * *'
+jobs:
+  check:
+    name: Update flake lock
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        id: install-nix
+        uses: cachix/install-nix-action@v30
+      - name: Run Flake Update
+        id: flake-update
+        run: nix flake update
+      - name: Create Pull Request
+        id: pull-request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: actions/auto-update
+          title: "flake-update: update flake inputs"
+          commit-message: "flake-update: automatic flake lock bump"

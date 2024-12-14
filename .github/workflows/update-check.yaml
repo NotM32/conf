@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - actions/auto-update
     paths:
       - 'flake.lock'
 jobs:
@@ -78,6 +79,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          branch: ai-flake-update-fixes
+          branch: actions/flake-update-fixes
           title: "flake-update: Fix options changed during flake update"
           commit-message: "flake-update: Fix options changed in flake update"
