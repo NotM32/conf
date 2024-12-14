@@ -1,5 +1,7 @@
 on:
   push:
+    branches:
+      - master
     paths:
       - 'flake.lock'
 jobs:
@@ -66,12 +68,11 @@ jobs:
         with:
           cmd: |
             promptr --model "gpt-4o" \
-            --prompt "Please make changes to fix any evaluation warnings, deprecated, missing, or removed options in the repo.
+            --prompt "Please make changes to fix any evaluation warnings, deprecated, missing, or removed option settings in the repo.
 
             For example, if an option has been removed, or replaced by a new one, remove that option declartion or update it. Earlier you classified and recommended resolutions to the issues found in flake-check-stderr.txt
 
-            $(cat flake-changes.txt)
-            "
+            $(cat flake-changes.txt)"
       - name: Cleanup
         run: rm flake-changes.txt flake-check-stderr.txt
       - name: Create Pull Request
