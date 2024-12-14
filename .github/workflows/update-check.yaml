@@ -1,0 +1,45 @@
+on:
+  push:
+    paths:
+      - 'flake.lock'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    name: Check Flake outputs after flake update
+    outputs:
+      check-log: ${{ steps.flake-check.outputs.log }}
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        id: install-nix
+        uses: cachix/install-nix-action@v30
+      - name: Check Flake
+        id: flake-check
+        run: |
+          output=$(nix flake check)
+          echo "log=$output" >> $GITHUB_OUTPUT
+  maybe_repair:
+    needs: check
+    permissions:
+      content: read
+      pull-request: write
+    name: Check for deprecated/renamed options in flake check and submit a pull request to fix if found
+    steps:
+      - name: Run GPT Prompt
+        uses: DukeLuo/gpt-runner@v1.0.0
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          cmd: |
+            promptr --model "gpt-4o" \
+            --prompt "Please make fixes to any of the following issues with the flake check output included: [option renamed, option deprecated, option removed]. \n Flake Output: \n ${{ jobs.check.outputs.check-log }}"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: ai-flake-update-fixes
+          title: "flake-update: Fix options changed during flake update"
+          commit-message: "flake-update: Fix options changed in flake update"
