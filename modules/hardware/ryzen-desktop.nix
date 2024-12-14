@@ -143,7 +143,7 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Hardware Temps
-  programs.coolercontrol.enable = true;
+  hardware.gkraken.enable = true;
 
   # Video Drivers / Hardware options
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
