@@ -8,5 +8,5 @@
     };
   };
 
-  security.pam.sshAgentAuth.enable = true;
+  security.pam.enableSSHAgentAuth = true;
 }
