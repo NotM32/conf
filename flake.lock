@@ -118,11 +118,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1734142553,
-        "narHash": "sha256-wUwnp29WpaUc1xRNpmHOVT4QhfkJZ5QPijzjn1Y+1bk=",
+        "lastModified": 1734153822,
+        "narHash": "sha256-QdNvB+YprYBDdEoiZ6CH8wCOO/v2T5FROVjOWiIV/fs=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "4310724e208e868521b0f34795d42668bd8f9cdb",
+        "rev": "7b68c5b041f0dc12d45470e66418a706464bf79d",
         "type": "github"
       },
       "original": {
@@ -703,11 +703,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1734142061,
-        "narHash": "sha256-Ty/noNHJEnuz+7vl4U/8aIiBsFlmLSkMw0Me6xKSRTA=",
+        "lastModified": 1734161914,
+        "narHash": "sha256-ExfXU3QblJezWnfHSxKSe5k4zC08jfuNvwZxDOtKSOY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "790ba51f04ffd55a391903408afde3790b472334",
+        "rev": "3a6a25e030e226a50877d6b9bd64f6743c4ebb0a",
         "type": "github"
       },
       "original": {
@@ -830,11 +830,11 @@
     "spacemacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1734064269,
-        "narHash": "sha256-fdSnpQvltn3LohW4MP+xptiGzox1T+q7uQ+Q6odnxDM=",
+        "lastModified": 1734151060,
+        "narHash": "sha256-piOtCkUXXa1wnHgdPMAXib0SfFS+zsiuCNPVQqONaeo=",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "80e15c893673409b1ff237f79bdaba89599fa0d2",
+        "rev": "77c3fa54c64b8bda8760a6b007116b0f42560808",
         "type": "github"
       },
       "original": {
