@@ -25,8 +25,8 @@ jobs:
   maybe_repair:
     needs: check
     permissions:
-      content: read
-      pull-request: write
+      contents: read
+      pull-requests: write
     name: Check for deprecated/renamed options in flake check and submit a pull request to fix if found
     steps:
       - name: Run GPT Prompt
@@ -36,7 +36,7 @@ jobs:
         with:
           cmd: |
             promptr --model "gpt-4o" \
-            --prompt "Please make fixes to any of the following issues with the flake check output included: [option renamed, option deprecated, option removed]. \n Flake Output: \n ${{ jobs.check.outputs.check-log }}"
+            --prompt "Please make fixes to any of the following issues with the flake check output included: [option renamed, option deprecated, option removed]. \n Flake Output: \n ${{ needs.jobs.check.outputs.check-log }}"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
