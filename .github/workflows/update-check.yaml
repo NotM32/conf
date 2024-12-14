@@ -61,7 +61,9 @@ jobs:
 
             For example, if an option has been removed, or replaced by a new one, remove that option declartion or update it.
 
-            If an option has been deprecated, handle it in a way that doesn't introduce change. Either remove or replace it as recommended in the output. Create a new file flake-changes.txt for your recommendations and findings. include the relative path to the file in the source repo (exclude the /nix/store/.../ part and assume it is relative to the repo root), the original error message, and a decided action in the file. Write in a way that you will be able to process and understand easily in the future."
+            If an option has been deprecated, handle it in a way that doesn't introduce change. Either remove or replace it as recommended in the output. Create a new file flake-changes.txt for your recommendations and findings. include the relative path to the file in the source repo (exclude the /nix/store/.../ part and assume it is relative to the repo root), the original error message, and a decided action in the file. Write in a way that you will be able to process and understand easily in the future.
+
+            Remember, if your paths include the '/nix/store/.../' part, the job will fail. Make sure this is excluded from your response, only include the part that comes after"
       - name: Run GPT Solution Prompt
         uses: DukeLuo/gpt-runner@v1.0.0
         env:
