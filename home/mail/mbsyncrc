@@ -20,7 +20,7 @@ MaildirStore protonmail-local
 # The trailing "/" is important
 Path ~/.mail/protonmail/
 Inbox ~/.mail/protonmail/Inbox
-Subfolders Legacy
+Subfolders Verbatim
 
 Channel protonmail
 Far :protonmail-remote:
