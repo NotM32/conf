@@ -162,8 +162,4 @@
       Restart = "no";
     };
   };
-
-  # Run lighting service on resume from hibernate
-  boot.resumeService.enable = true;
-  boot.resumeService.services = [ "legion-keyboard-rgb" ];
 }
