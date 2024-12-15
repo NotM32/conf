@@ -111,7 +111,7 @@
   fileSystems."/swap" =
     { device = "/dev/mapper/ucrypt";
       fsType = "btrfs";
-      options = [ "subvol=@swap" ];
+      options = [ "subvol=@swap" "noatime" ];
       neededForBoot = true;
     };
 
@@ -120,7 +120,7 @@
   ];
 
   boot.resumeDevice = "/dev/disk/by-uuid/6ac3d6fb-a96e-4b38-8a92-99918d3d266b";
-  boot.kernelParams = [ "resume_offset=56141094" "nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
+  boot.kernelParams = [ "resume_offset=56140256" "nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -158,9 +158,12 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart =
-        "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 32,32,32,32,32,32,32,32,32,32,32,32 --effect Static -b Low";
+        "${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low";
       Restart = "no";
     };
   };
 
+  # Run lighting service on resume from hibernate
+  boot.resumeService.enable = true;
+  boot.resumeService.services = [ "legion-keyboard-rgb" ];
 }
