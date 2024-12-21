@@ -43,9 +43,11 @@ in {
     rustfmt
     shellcheck
     stylelint
+    svelte-language-server
     terraform-ls
     texlab
     tflint
+    typescript-language-server
     zig
   ];
 
