@@ -35,6 +35,7 @@ in {
         ./backup
         ./desktop
 
+        ./devices/iphone.nix
         ./devices/printers.nix
         ./devices/sdr.nix
         ./security/firejail.nix
