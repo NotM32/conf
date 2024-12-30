@@ -162,4 +162,6 @@
       Restart = "no";
     };
   };
+
+  services.logind.lidSwitch = "lock";
 }
