@@ -29,7 +29,7 @@ Secrets are managed with sops-nix. The yubikey is involved in this process. I ha
 
 ## Deployment
 
-Most machines have been deployed with nixos-anywhere. Some were installed with custom generated ISO images. I am no longer using this workflow. For my business, I have built a netboot derivation that helps to quickly install hosts. This is great if you have a lot of hosts to install. I may make those configuration modules available here in the future. Keep an eye out for an article about this workflow on [website](https://m32.io)
+Most machines have been deployed with nixos-anywhere. Some were installed with custom generated ISO images. I am no longer using this workflow. For my business, I have built a netboot derivation that helps to quickly install hosts. This is great if you have a lot of hosts to install. I may make those configuration modules available here in the future. Keep an eye out for an article about this workflow on [my website](https://m32.io)
 
 In general, I build the system closures locally when hacking on this config. That means working with the `nixos-rebuild` development loop. Some features I test with the `nixos-rebuild build-vm` functionality. 
 

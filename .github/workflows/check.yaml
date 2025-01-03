@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - master
+      - prod
+jobs:
+  check:
+    name: Check Flake outputs
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    outputs:
+      flake-check-stderr: ${{ steps.flake-check.outputs.OUT }}
+    steps:
+      - name: Checkout Repo
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        id: install-nix
+        uses: cachix/install-nix-action@v30
+      - name: Run Flake Check
+        id: flake-check
+        run: nix flake check
