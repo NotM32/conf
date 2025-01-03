@@ -1,12 +1,16 @@
-{ ... }:
+{ config, pkgs, ... }:
+
 {
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
+  options = {
+    security.pam.sshAgentAuth.enable = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable SSH Agent Authentication for PAM.";
     };
   };
 
-  security.pam.enableSSHAgentAuth = true;
+  config = {
+    # Update the option name to the new one
+    security.pam.sshAgentAuth.enable = true;
+  };
 }
