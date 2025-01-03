@@ -238,6 +238,13 @@
     };
   };
 
+  # Eww (status bar)
+  programs.eww = {
+    enable = true;
+    enableBashIntegration = true;
+    configDir = ./eww;
+  };
+
   # QT/GTK Applications
   qt.enable = true;
   qt.style.name = "adwaita-dark";
