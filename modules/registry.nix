@@ -8,7 +8,7 @@
 
       to = {
         type = "git";
-        url = "ssh://git@github.com/notm32.git";
+        url = "ssh://git@github.com/notm32/conf.git";
       };
     };
   };
