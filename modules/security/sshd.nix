@@ -1,4 +1,5 @@
 { ... }:
+
 {
   services.openssh = {
     enable = true;
@@ -8,5 +9,5 @@
     };
   };
 
-  security.pam.enableSSHAgentAuth = true;
+  security.pam.sshAgentAuth.enable = true;
 }
