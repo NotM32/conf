@@ -22,11 +22,6 @@
     # Emacs
     emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-    spacemacs = {
-      url = "github:syl20bnr/spacemacs";
-      flake = false;
-    };
-
     doomemacs = {
       url = "github:doomemacs/doomemacs";
       flake = false;
