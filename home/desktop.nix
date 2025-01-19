@@ -18,7 +18,6 @@
     ArchiSteamFarm
 
     # # Development
-    insomnia
     ansible
     yarn
     zeal
@@ -27,7 +26,6 @@
     kubectl
     kubernetes-helm
     terraform
-    # pulumi
     ansible
     buildah
     pomerium-cli
@@ -51,9 +49,10 @@
     git-latexdiff # More helpful diffs for latex files in git
 
     # # Environment
-    alacritty # fast terminal emulator
+    alacritty
 
     # # Media
+    pavucontrol
     psst
     vlc
 
@@ -78,12 +77,11 @@
     unoconv
     okular
 
-    ddcutil # cli tool for controlling digital monitors without using their OSDs
-    ddcui # GUI for ddcutil
+    ddcutil
+    ddcui
 
     # Cli tools
     ledger
-    ledger-web
 
     # Networking
     gns3-gui

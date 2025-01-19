@@ -8,6 +8,8 @@
   ];
 
   home.packages = with pkgs; [
+    wayshot
+
     kdePackages.dolphin
     kdePackages.qtwayland
     kdePackages.qtsvg
