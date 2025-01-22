@@ -1,6 +1,6 @@
 { pkgs, config, ... }: {
 
-  imports = [ ./gpg ./ssh ./pam ];
+  imports = [ ./gpg ./ssh ./pam ./shell/nu.nix ];
 
   home.packages = with pkgs; [
     # Nix Utilities
