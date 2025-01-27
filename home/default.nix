@@ -4,16 +4,17 @@
 
   home.packages = with pkgs; [
     # Nix Utilities
-    nurl # nix-prefetch but more useful
-    nixos-option # command line search of nixos option declarations
-    nil # nil is a better nix lsp
-    nixfmt # formatter for nix
+    nurl
+    nixos-option
+    nil
+    nixfmt
 
     # Utilities
     freeipmi
     htop
-    minicom # connecting to devices over serial modem connection (router/switch consoles)
-    mosh # mobile shell, for latent/spotty ssh connections
+    minicom
+    mosh
+    aria2c
   ];
 
   home = {
