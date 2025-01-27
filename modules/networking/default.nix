@@ -1,5 +1,8 @@
 { lib, ... }: {
-  imports = [ ./zerotier.nix ];
+  imports = [
+    ./firewall.nix
+    ./zerotier.nix
+  ];
 
   networking.domain = lib.mkDefault "m32.io";
 }
