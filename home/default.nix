@@ -53,13 +53,11 @@
 
   programs.broot = {
     enable = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 
   programs.carapace = {
     enable = true;
-    enableFishIntegration = true;
     enableNushellIntegration = true;
   };
 

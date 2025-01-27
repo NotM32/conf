@@ -5,6 +5,7 @@
     controlPersist = "10m";
 
     # Host Level configuration
+    # TODO: Pull this in from ZeroTier somehow
     matchBlocks = {
       # Personal
       "maple" = {
