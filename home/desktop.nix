@@ -79,6 +79,7 @@
 
     ddcutil
     ddcui
+    input-leap
 
     # Cli tools
     ledger
