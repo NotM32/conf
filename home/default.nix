@@ -14,7 +14,7 @@
     htop
     minicom
     mosh
-    aria2c
+    aria2
   ];
 
   home = {
