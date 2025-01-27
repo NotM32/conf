@@ -79,7 +79,6 @@
 
     ddcutil
     ddcui
-    input-leap
 
     # Cli tools
     ledger
@@ -141,4 +140,6 @@
   };
 
   services.kdeconnect.enable = true;
+
+  programs.lan-mouse.enable = true;
 }

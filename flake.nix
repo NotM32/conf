@@ -34,6 +34,8 @@
 
     # Extra packages
     l5p-keyboard-rgb.url = "github:4JX/L5P-Keyboard-RGB";
+
+    lan-mouse.url = "github:feschber/lan-mouse";
   };
 
   outputs = inputs@{ self, flake-parts, home-manager, ... }:

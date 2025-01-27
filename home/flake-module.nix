@@ -21,14 +21,23 @@ in {
 
     /** Full workstation suite with graphical tools and development stuff */
     desktop = {
-      imports = [ ./desktop.nix ];
+      imports = [
+        inputs.lan-mouse.homeManagerModules.default
+
+        ./desktop.nix
+      ];
 
       nixpkgs.overlays = [ emacs-overlay.overlay ];
     };
 
     /** Desktop app configurations with tiling manager config */
     desktop-tiling = {
-      imports = [ ./desktop.nix ./hyprland ];
+      imports = [
+        inputs.lan-mouse.homeManagerModules.default
+
+        ./desktop.nix
+        ./hyprland
+      ];
 
       nixpkgs.overlays = [ emacs-overlay.overlay ];
     };
