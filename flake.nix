@@ -49,5 +49,11 @@
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
+
+      formatter = {
+        nixfmt-classic = {
+          enable = true;
+        };
+      };
     };
 }
