@@ -50,15 +50,24 @@
 
 ;; AI
 (package! gptel)
+(package! elysium)
+
+;; Infra
+(package! kubernetes)
+(package! kubernetes-evil)
+(package! kubedoc)
+(package! k8s-mode)
 
 ;; Modes
 (package! nushell-mode);
 (package! nushell-ts-mode);
 (package! sops)
+(package! yang-mode)
+(package! flycheck-yang)
 
 ;; Themes
-(package! kaolin-themes)
 (package! all-the-icons)
+(package! kaolin-themes)
 
 ;; Utilities
 (package! gnus)
