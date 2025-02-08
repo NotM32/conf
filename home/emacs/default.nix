@@ -48,6 +48,7 @@ in {
     texlab
     tflint
     typescript-language-server
+    yaml-language-server
     zig
   ];
 
