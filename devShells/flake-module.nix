@@ -22,7 +22,7 @@
         pkgs.gnused
         pkgs.sops
         pkgs.jq
-        pkgs.terraform
+        pkgs.opentofu
       ] ++ pkgs.lib.optional (pkgs.stdenv.isLinux) pkgs.mkpasswd;
 
       shellHook = ''

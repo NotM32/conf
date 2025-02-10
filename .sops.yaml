@@ -26,3 +26,7 @@ creation_rules:
       - *admin_m32
       age:
       - *host_nova
+  - path_regex: terraform/[^/]+.yml$
+    key_groups:
+    - pgp:
+      - *admin_m32

@@ -26,5 +26,19 @@
     };
   };
 
+  conf.network.zerotier = {
+    enable = true;
+    networks = {
+      "35c192ce9b255366" = {
+        memberId = "1a284bc36f";
+        ipAssignments = [ "172.16.7.40" ];
+      };
+      "233ccaac27077fe3" = {
+        memberId = "1a284bc36f";
+        ipAssignments = [ "10.127.0.3" ];
+      };
+    };
+  };
+
   system.stateVersion = "24.05";
 }
