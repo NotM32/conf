@@ -22,11 +22,11 @@
 
        :completion
        ;; company          ; the ultimate code completion backend
-       (corfu +orderless)  ; complete with cap(f), cape and a flying feather!
+       (corfu +icons +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
-       vertico             ; the search engine of the future
+       (vertico +icons)             ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -114,7 +114,7 @@
        :lang
        ;;agda              ; types of types of types of types...
        ;;beancount         ; mind the GAAP
-       ;;(cc +lsp)         ; C > C++ == 1
+       (cc +lsp +tree-sitter)         ; C > C++ == 1
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -126,7 +126,7 @@
        (elixir +lsp +tree-sitter)      ; erlang done right
        elm                 ; care for a cup of TEA?
        emacs-lisp          ; drown in parentheses
-       (erlang +tree-sitter)            ; an elegant language for a more civilized age
+       (erlang +lsp +tree-sitter)            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
        ;;factor
        ;;faust             ; dsp, but you get to keep your soul
@@ -139,9 +139,9 @@
        ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       json                ; At least it ain't XML
+       (json +lsp +tree-sitter)                ; At least it ain't XML
        ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
-       javascript          ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp +tree-sitter)          ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        latex               ; writing papers in Emacs has never been so fun
@@ -150,20 +150,20 @@
        ;;lua               ; one-based indices? one-based indices
        markdown            ; writing docs for people to ignore
        nim                 ; python + lisp at the speed of c
-       (nix +tree-sitter)  ; I hereby declare "nix geht mehr!"
+       (nix +lsp +tree-sitter)  ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        org                 ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
        ;;purescript        ; javascript, but functional
-       python              ; beautiful is better than ugly
+       (python +lsp +tree-sitter +pyenv)              ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        racket              ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        rest                ; Emacs as a REST client
        ;;rst               ; ReST in peace
-       (ruby +rails +lsp + tree-sitter)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (ruby +rails +lsp +tree-sitter)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp +tree-sitter)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        (scheme +guile)     ; a fully conniving family of lisps
@@ -172,7 +172,7 @@
        solidity            ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       (web +tree-sitter)  ; the tubes
+       (web +lsp +tree-sitter)  ; the tubes
        (yaml +lsp +tree-sitter)         ; JSON, but readable
        zig                 ; C, but simpler
 
