@@ -112,8 +112,9 @@
 
       windowrulev2 = "suppressevent maximize, class:.*";
 
-      "$mainMod" = "SUPER";
+      binds = { movefocus_cycles_fullscreen = false; };
 
+      "$mainMod" = "SUPER";
       bind = [
         "$mainMod SHIFT, X, exit"
         "$mainMod, Return, exec, $terminal"
