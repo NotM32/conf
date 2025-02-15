@@ -1,6 +1,12 @@
-{ pkgs, ... }:
-{
-  imports = [ ./default.nix ./alacritty ./emacs ./firefox ./mail ];
+{ pkgs, ... }: {
+  imports = [
+    ./default.nix
+    ./alacritty
+    ./emacs
+    ./firefox
+    ./mail
+    ./desktop/lan-mouse.nix
+  ];
 
   home.packages = with pkgs; [
     home-manager
@@ -140,6 +146,4 @@
   };
 
   services.kdeconnect.enable = true;
-
-  programs.lan-mouse.enable = true;
 }
