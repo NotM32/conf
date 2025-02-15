@@ -1,6 +1,6 @@
 [colors.primary]
 # Henna Dark Alacritty Color Scheme
-background = "#21272e"
+background = "#14191e"
 foreground = "#f8f8f0"
 
 # Normal colors
@@ -16,7 +16,7 @@ white   = "#f8f8f0"
 
 # Bright colors
 [colors.bright]
-black   = "#181A1F"
+black   = "#3a3a4c"
 red     = "#e74c3c"
 green   = "#53df83"
 yellow  = "#9cd230"

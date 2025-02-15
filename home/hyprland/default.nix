@@ -1,11 +1,6 @@
 { pkgs, ... }: {
 
-  imports = [
-    ./hyprlock.nix
-    ./wofi.nix
-    ./wpaperd.nix
-    ./mako.nix
-  ];
+  imports = [ ./hyprlock.nix ./wofi.nix ./wpaperd.nix ./mako.nix ];
 
   home.packages = with pkgs; [
     wayshot
@@ -31,7 +26,9 @@
         "WLR_DRM_NO_ATOMIC,1"
       ]; # change to qt6ct if you have that
 
-      exec-once = [ "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &" ];
+      exec-once = [
+        "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &"
+      ];
 
       input = {
         kb_layout = "us";
@@ -48,9 +45,9 @@
 
       general = {
         gaps_in = 5;
-        gaps_out = 20;
-        border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        gaps_out = 15;
+        border_size = 1;
+        "col.active_border" = "rgba(ff6600ee) rgba(8f381aee) 45deg";
         "col.inactive_border" = "rgba(595959aa)";
 
         layout = "dwindle";
@@ -59,7 +56,7 @@
       };
 
       decoration = {
-        rounding = 4;
+        rounding = 0;
 
         blur = {
           enabled = true;
@@ -93,7 +90,7 @@
         preserve_split = "yes";
       };
 
-      gestures = { workspace_swipe = "off"; };
+      gestures = { workspace_swipe = "on"; };
 
       misc = { force_default_wallpaper = 0; };
 
@@ -113,8 +110,7 @@
         }
       ];
 
-      windowrulev2 =
-        "suppressevent maximize, class:.*";
+      windowrulev2 = "suppressevent maximize, class:.*";
 
       "$mainMod" = "SUPER";
 
@@ -222,18 +218,22 @@
       };
 
       listener = [
-        { timeout = 240;
+        {
+          timeout = 240;
           on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10";
           on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
         }
-        { timeout = 270;
+        {
+          timeout = 270;
           on-timeout = "loginctl lock-session";
         }
-        { timeout = 300;
+        {
+          timeout = 300;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
-        { timeout = 600;
+        {
+          timeout = 600;
           on-timeout = "systemctl suspend";
         }
       ];
@@ -254,8 +254,6 @@
   gtk.theme.name = "Adwaita-dark";
 
   dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
+    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
   };
 }

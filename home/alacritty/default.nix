@@ -11,7 +11,7 @@
       font = {
         normal = { family = "Hack Nerd Font"; };
         bold = { family = "Hack Nerd Font"; };
-        size = 8;
+        size = 9;
       };
       colors = (lib.importTOML ./colors.toml).colors;
       terminal.shell = { program = "nu"; };
