@@ -26,6 +26,8 @@
     };
   };
 
+  services.sshd.enable = true;
+
   conf.network.zerotier = {
     enable = true;
     networks = {
