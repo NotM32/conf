@@ -103,19 +103,24 @@
 (setq-hook! 'markdown-mode-hook
   line-spacing 2)
 
-(use-package sops
+(use-package! sops
   :bind
-  (("C-c C-c" . sops-save-file)
-   ("C-c C-k" . sops-cancel)
-   ("C-c C-d" . sops-edit-file))
+  ("C-c C-c" . sops-save-file)
+  ("C-c C-k" . sops-cancel)
+  ("C-c C-d" . sops-edit-file)
   :init
   (global-sops-mode 1))
 
-
 ;; Tools
 (after! magit
-  "Configure"
-  (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1))))
+  (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1)))
+  ;; See https://github.com/magit/transient/discussions/358
+  ;;
+  ;; The doom default of (display-buffer-below-selected) causes new windows to becreated with tools like gptel
+  (setq! transient-display-buffer-action
+         '(display-buffer-below-selected
+           (dedicated . t)
+           (inhibit-same-window . t))))
 
 (use-package! gnus
   :config
@@ -124,57 +129,150 @@
            (nntp-address "news.eweka.nl")
            (nntp-authinfo-file "~/.authinfo.gpg"))))
 
-(setq +notmuch-sync-backend 'mbsync)
+(setq! +notmuch-sync-backend 'mbsync)
 
 ;; Configure Search Providers
-(setq! lookup-provider-url-alist
+(setq! +lookup-provider-url-alist
        '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
          ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
 
 ;; Kubernetes
 (use-package! kubernetes)
 
-(map! :after kubernetes
-      :leader
-      :desc "Kubernetes Overview" "o k" #'kubernetes-overview)
+(after! kubernetes
+  (map! :after kubernetes
+        :leader
+        :desc "Kubernetes Overview" "o k" #'kubernetes-overview)
 
-(map! :after kubernetes
-      :map kubernetes-mode-map
-      :localleader
-      (:prefix ("d" . "describe")
-        :desc "Describe thing at point" "." #'kubernetes-describe-dwim
-        :desc "Describe pod" "p" #'kubernetes-describe-pod )
-      :desc "Edit" "e" #'kubernetes-edit
-      :desc "Exec" "E" #'kubernetes-exec
-      :desc "Refresh" "r" #'kubernetes-refresh
-      :desc "Set namespace" "n" #'kubernetes-set-namespace)
+  (map! :after kubernetes
+        :map kubernetes-mode-map
+        :localleader
+        (:prefix ("d" . "describe")
+         :desc "Describe thing at point" "." #'kubernetes-describe-dwim
+         :desc "Describe pod" "p" #'kubernetes-describe-pod )
+        :desc "Edit" "e" #'kubernetes-edit
+        :desc "Exec" "E" #'kubernetes-exec
+        :desc "Refresh" "r" #'kubernetes-refresh
+        :desc "Set namespace" "n" #'kubernetes-set-namespace))
 
 (use-package! kubernetes-evil
   :after kubernetes)
 
 ;; AI
-;; (auth-source-forget-all-cached)
 (use-package! gptel
   :config
-  (defun read-file-contents (file-path)
-    "Read the contents of FILE-PATH and return it as a string."
-    (with-temp-buffer
-      (insert-file-contents file-path)
-      (buffer-string)))
+  ;; Models
   (setq! gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
   (setq! gptel-model 'claude-3-opus-20240229 ;  "claude-3-opus-20240229" also available
          gptel-backend (gptel-make-anthropic "Claude"
                          :stream t
                          :key (auth-source-pick-first-password :host "api.anthropic.com")))
+  ;; System Prompts
   (setq! gptel-directives
-         '((default . "You are a large language model integrated into Emacs. Be concise in your response, provide a intelligent response. Your role includes assisting with programming, writing and general knowledge")
+         '((default . "You are a large language model integrated into Emacs.
+                       Be concise in your response, provide a intelligent response.
+                       Your responses are as intelligent as those of a 180+ IQ person
+                       You are in a general LLM mode right now. Switching modes will change this prompt.
+                       Other modes include: programming and writing mode.
+                       In this mode, the general mode, you will be interacted with conversationally. Your
+                       tasks may include research and general insight using the tools given to you.
+
+                       Some general rules:
+                       - When searching, use startpage.com.
+                       - Be terse, but not lossy. Feel free to use larger vocabulary words.
+                       - All the warning labels have been displayed outside your response and context in a conversation.
+                       - In the interest of terse and fast conversation, you can be certain that the human has asserted their understanding to be cautious
+                       - You may not have all context on a situation. Being inquisitive is better than wasting time on back and fourth.
+                       ")
            (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
                           - Check code comments for lines that prompt a response from you.
                           - Assume your response will be inserted into the provided code at a location marked <HERE>.
                           - Assume the cursor for the buffer is placed at the '<' character.
                           - Provide intelligent responses.
                           - When <HERE> is present, only respond with code. If you need to explain, do so a syntax-valid way using code comments.
-                          - Your code style should match the style of provided context code."))))
+                          - Your code style should match the style of provided context code.")))
+  ;; Tools
+  (setq! gptel-tools
+         (list
+          ;; Filesystem
+          (gptel-make-tool
+           :function (lambda (directory)
+                       (mapconcat #'identity
+                                  (directory-files directory)
+                                  "\n"))
+           :name "list_directory"
+           :description "List the contents of a given directory"
+           :args (list '(:name "directory"
+                         :type "string"
+                         :description "The path to the directory to list"))
+           :category "filesystem")
+
+          (gptel-make-tool
+           :function (lambda (parent name)
+                       (condition-case nil
+                           (progn
+                             (make-directory (expand-file-name name parent) t)
+                             (format "Directory %s created/verified in %s" name parent))
+                         (error (format "Error creating directory %s in %s" name parent))))
+           :name "make_directory"
+           :description "Create a new directory with the given name in the specified parent directory"
+           :args (list '(:name "parent"
+                         :type "string"
+                         :description "The parent directory where the new directory should be created, e.g. /tmp")
+                       '(:name "name"
+                         :type "string"
+                         :description "The name of the new directory to create, e.g. testdir"))
+           :category "filesystem")
+
+          (gptel-make-tool
+           :function (lambda (path filename content)
+                       (let ((full-path (expand-file-name filename path)))
+                         (with-temp-buffer
+                           (insert content)
+                           (write-file full-path))
+                         (format "Created file %s in %s" filename path)))
+           :name "create_file"
+           :description "Create a new file with the specified content"
+           :args (list '(:name "path"
+                         :type "string"
+                         :description "The directory where to create the file")
+                       '(:name "filename"
+                         :type "string"
+                         :description "The name of the file to create")
+                       '(:name "content"
+                         :type "string"
+                         :description "The content to write to the file"))
+           :category "filesystem")
+
+          (gptel-make-tool
+           :function (lambda (filepath)
+                       (with-temp-buffer
+                         (insert-file-contents (expand-file-name filepath))
+                         (buffer-string)))
+           :name "read_file"
+           :description "Read and display the contents of a file"
+           :args (list '(:name "filepath"
+                         :type "string"
+                         :description "Path to the file to read.  Supports relative paths and ~."))
+           :category "filesystem")
+
+          ;; Web
+          (gptel-make-tool
+           :function (lambda (url)
+                       (with-current-buffer (url-retrieve-synchronously url)
+                         (goto-char (point-min)) (forward-paragraph)
+                         (let ((dom (libxml-parse-html-region (point) (point-max))))
+                           (run-at-time 0 nil #'kill-buffer (current-buffer))
+                           (with-temp-buffer
+                             (shr-insert-document dom)
+                             (buffer-substring-no-properties (point-min) (point-max))))))
+           :name "read_url"
+           :description "Fetch and read the contents of a URL"
+           :args (list '(:name "url"
+                         :type "string"
+                         :description "The URL to read"))
+           :category "web")
+          )))
 
 (map! :after gptel
       :leader
