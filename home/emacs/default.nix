@@ -34,6 +34,7 @@ in {
     libvterm
     nim
     nimlangserver
+    nimlsp
     notmuch
     perlPackages.PerlLanguageServer
     racket-minimal

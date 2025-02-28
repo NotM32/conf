@@ -93,6 +93,13 @@
   ;; elixir
   (set-eglot-client! 'elixir-mode '("elixir-ls"))
   (add-hook! 'elixir-mode-hook 'eglot-ensure)
+  ;; nim
+  (defclass eglot-nim (eglot-lsp-server) ()
+    :documentation "A custom class for Nim's LSP.")
+  (add-to-list 'eglot-server-programs '((nim-mode) . (eglot-nim "nimlangserver")))
+  (cl-defmethod eglot-initialization-options ((server eglot-nim))
+    "Passes through required initialization options"
+    (list :enable t :lint t))
   ;; nix
   (set-eglot-client! 'nix-mode '("nil"))
   (add-hook! 'nix-mode-hook 'eglot-ensure)
