@@ -96,7 +96,7 @@
   ;; nim
   (defclass eglot-nim (eglot-lsp-server) ()
     :documentation "A custom class for Nim's LSP.")
-  (add-to-list 'eglot-server-programs '((nim-mode) . (eglot-nim "nimlangserver")))
+  (add-to-list 'eglot-server-programs '((nim-mode) . (eglot-nim "nimlsp")))
   (cl-defmethod eglot-initialization-options ((server eglot-nim))
     "Passes through required initialization options"
     (list :enable t :lint t))

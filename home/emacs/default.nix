@@ -54,6 +54,7 @@ in {
     svelte-language-server
     terraform-ls
     texlab
+    texliveMinimal
     tflint
     typescript-language-server
     yaml-language-server
