@@ -1,9 +1,9 @@
 { ... }: {
   wayland.windowManager.hyprland.settings.exec-once = ["wpaperd &"];
 
-  programs.wpaperd.enable = true;
+  services.wpaperd.enable = true;
 
-  programs.wpaperd.settings = {
+  services.wpaperd.settings = {
     default = {
       duration = "30m";
       mode = "center";

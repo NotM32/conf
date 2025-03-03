@@ -68,7 +68,7 @@
     inkscape
     krita
     blender
-    kdenlive
+    kdePackages.kdenlive
 
     # # Virt / Containers
     podman
@@ -81,7 +81,7 @@
     onlyoffice-bin
     libreoffice
     unoconv
-    okular
+    kdePackages.okular
 
     ddcutil
     ddcui
@@ -102,7 +102,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       apollographql.vscode-apollo
       b4dm4n.vscode-nixpkgs-fmt
       bbenoist.nix

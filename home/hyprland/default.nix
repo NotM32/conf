@@ -27,7 +27,7 @@
       ]; # change to qt6ct if you have that
 
       exec-once = [
-        "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1 &"
+        "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1 &"
       ];
 
       input = {
