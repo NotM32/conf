@@ -12,7 +12,7 @@
   ];
 
   home-manager.users.m32 = {
-    imports = [ self.homeModules.desktop-tiling ];
+    imports = [ self.homeModules.desktop ];
 
     wayland.windowManager.hyprland.settings = {
       env = [ "GDK_SCALE,2" ];

@@ -41,4 +41,18 @@ in {
       # units
     ]);
   };
+
+  # * Additional shell utils
+  programs.broot = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
+
+  programs.direnv.enableNushellIntegration = true;
+  programs.keychain.enableNushellIntegration = true;
 }

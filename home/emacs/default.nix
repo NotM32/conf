@@ -43,6 +43,7 @@ in {
     html-tidy
     ispell
     libvterm
+    nil
     nim
     nimlangserver
     nimlsp

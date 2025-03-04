@@ -2,21 +2,6 @@
 
   imports = [ ./gpg ./ssh ./pam ./shell/nu.nix ];
 
-  home.packages = with pkgs; [
-    # Nix Utilities
-    nurl
-    nixos-option
-    nil
-    nixfmt
-
-    # Utilities
-    freeipmi
-    htop
-    minicom
-    mosh
-    aria2
-  ];
-
   home = {
     stateVersion = "23.11";
     username = "m32";
@@ -24,9 +9,9 @@
     preferXdgDirectories = true;
   };
 
-  programs.home-manager.enable = true;
+  home.packages = with pkgs; [ home-manager ];
 
-  # Home Structure
+  programs.home-manager.enable = true;
   xdg = {
     enable = true;
     userDirs.enable = true;
@@ -46,44 +31,6 @@
         XDG_GIT_DIR = "${config.home.homeDirectory}/projects";
       };
     };
-  };
-
-  programs.nushell.enable = true;
-
-  programs.fish = { enable = true; };
-
-  programs.broot = {
-    enable = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.carapace = {
-    enable = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-
-    enableNushellIntegration = true;
-  };
-
-  programs.git = {
-    enable = true;
-    userName = "m32";
-    userEmail = "m32@m32.io";
-
-    signing.signByDefault = true;
-    signing.key = "EF5FDF7F8EAC7878";
-
-    difftastic = {
-      enable = true;
-      color = "auto";
-    };
-
-    # Additional configuration not defined in modules
-    includes = [{ contents = { safe.directory = [ "/etc/nixos" ]; }; }];
   };
 
 }
