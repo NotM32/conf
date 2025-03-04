@@ -91,6 +91,7 @@ in {
         sops.defaultSopsFile = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
         sops.defaultSopsFormat = "yaml";
 
+        # -- BACKUP --
         sops.secrets."backup_repo/repository" = lib.mkIf (builtins.hasAttr "backups" config) {
           sopsFile = ../secrets/backup.yml;
           format = "yaml";
@@ -109,6 +110,24 @@ in {
         };
         sops.secrets."backup_repo/known_hosts" = lib.mkIf (builtins.hasAttr "backups" config) {
           sopsFile = ../secrets/backup.yml;
+          format = "yaml";
+        };
+
+        # -- DEPLOYMENT --
+
+        # public ssh deploy key for repo
+        sops.secrets."deploy/deploy_pub" = {
+          sopsFile = ../secrets/deploy.yml;
+          format = "yaml";
+        };
+        # private ssh deploy key for repo
+        sops.secrets."deploy/deploy_private" = {
+          sopsFile = ../secrets/deploy.yml;
+          format = "yaml";
+        };
+        # authorized keys file for repo
+        sops.secrets."deploy/authorized_keys" = {
+          sopsFile = ../secrets/deploy.yml;
           format = "yaml";
         };
       };
