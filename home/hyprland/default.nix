@@ -15,6 +15,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
 
+    # home-manager's systemd integration conflicts with the nixos stadard for UWSM
+    systemd.enable = false;
+
     settings = {
       "$terminal" = "alacritty";
       "$fileManager" = "dolphin";
