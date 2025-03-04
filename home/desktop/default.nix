@@ -8,7 +8,7 @@
     self.homeModules.hyprland
     self.homeModules.mail
     self.homeModules.nushell
-    self.homeModuels.ssh
+    self.homeModules.ssh
 
     ./packages.nix
     ./lan-mouse.nix

@@ -1,6 +1,12 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, self, ... }: {
 
-  imports = [ ./gpg ./ssh ./pam ./shell/nu.nix ];
+  imports = [
+    self.homeModules.gpg
+    self.homeModules.ssh
+    self.homeModules.nushell
+
+    ./pam
+  ];
 
   home = {
     stateVersion = "23.11";
