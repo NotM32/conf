@@ -1,4 +1,4 @@
-{ pkgs, nur, home-manager, flake-registry, nixpkgs, ... }: {
+{ pkgs, nur, home-manager, flake-registry, nixpkgs, self, ... }: {
   nix.settings = {
     system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
     experimental-features = [ "nix-command" "flakes" "recursive-nix" ];
@@ -8,12 +8,12 @@
   nix.gc = {
     automatic = true;
     dates = "08:00";
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 3d";
   };
 
   nix.optimise = {
     automatic = true;
-    dates = [ "weekly" ];
+    dates = [ "daily" ];
   };
 
   nix.nixPath = [
@@ -27,6 +27,7 @@
                      '';
 
   nix.registry = {
+    self.flake = self;
     home-manager.flake = home-manager;
     nixpkgs.flake = nixpkgs;
     nur.flake = nur;

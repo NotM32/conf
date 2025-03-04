@@ -12,10 +12,8 @@ in {
         self.nixosModules.home-manager
         self.nixosModules.secrets
 
-        ./auto-upgrade.nix
         ./nix.nix
         ./packages.nix
-        ./registry.nix
         ./system.nix
 
         ./networking

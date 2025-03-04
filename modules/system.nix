@@ -2,6 +2,7 @@
   # Store commit data in generation label
   system.nixos.label =
     lib.mkIf (self ? rev)
+    # a8vqhj80       -system,test,etc
     "${self.shortRev}-${lib.concatStringsSep "-" ((lib.sort (x: y: x < y) config.system.nixos.tags))}";
 
   # Also store commit revision where it can be accessed with `nixos-version`
@@ -13,5 +14,12 @@
     "nixos" = {
       source = "${self.sourceInfo.outPath}/**";
     };
+  };
+
+  # Automatic Upgrades / Configuration sync
+  system.autoUpgrade = lib.mkIf (self ? rev) {
+    enable = true;
+    flake = "self";
+    flags = [ ];
   };
 }
