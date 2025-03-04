@@ -40,7 +40,6 @@ in {
         ./devices/sdr.nix
         ./security/firejail.nix
         ./virtualisation/containers.nix
-        ./virtualisation/libvirtd.nix
       ];
 
       # Home-manager users

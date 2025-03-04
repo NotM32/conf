@@ -1,4 +1,0 @@
-{ ... }:
-{
-  virtualisation.libvirtd.enable = true;
-}
