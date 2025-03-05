@@ -1,6 +1,7 @@
 { self, pkgs, ... }: {
   imports = [
     self.homeModules.default
+    self.homeModules.development
 
     self.homeModules.alacritty
     self.homeModules.emacs
