@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./audio.nix ./fonts.nix ./keyboard.nix ];
+  imports = [ ./audio.nix ./fonts.nix ];
 
   services.xserver.enable = true;
   programs.xwayland.enable = true;
@@ -11,7 +11,6 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   environment.systemPackages = with pkgs; [
-    # Utils
     glxinfo
     clinfo
     wayland-utils

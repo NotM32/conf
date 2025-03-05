@@ -7,7 +7,7 @@
     [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules =
     [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
-  boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" "nct6775" ];
+  boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" "nct6775" "i2c-dev" "i2c-piix4" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     liquidtux
     asus-ec-sensors
@@ -130,7 +130,6 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp7s0f3u3u4.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
@@ -148,4 +147,12 @@
   services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
   hardware.nvidia.modesetting.enable = true;
 
+  # rgb
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
+
+  # see i2c kernel modules enabled above
+  hardware.i2c.enable = true;
 }
