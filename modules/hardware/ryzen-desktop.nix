@@ -8,10 +8,6 @@
   boot.initrd.kernelModules =
     [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
   boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" "nct6775" "i2c-dev" "i2c-piix4" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    liquidtux
-    asus-ec-sensors
-  ];
 
   boot.initrd.secrets = {
     "/persist/secrets/boot/pubkey.asc" = ../../home/gpg/pubkey.asc;
