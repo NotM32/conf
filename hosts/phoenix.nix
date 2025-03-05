@@ -8,8 +8,6 @@
     ../modules/hardware/ryzen-desktop.nix
     ../modules/boot/uefi.nix
 
-    ../modules/devices/rgb.nix
-
     ../modules/desktop/hyprland.nix
   ];
 
