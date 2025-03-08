@@ -5,6 +5,8 @@
     self.homeModules.ssh
     self.homeModules.nushell
 
+    ./packages.nix
+
     ./pam
   ];
 

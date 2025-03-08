@@ -5,11 +5,14 @@
     nixos-option
     nurl
 
+    # * utilities
     aria2
     dig
     freeipmi
+    btop
     htop
     minicom
     mosh
+    btdu
   ];
 }
