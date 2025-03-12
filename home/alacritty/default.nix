@@ -13,7 +13,7 @@
         bold = { family = "Hack Nerd Font"; };
         size = 9;
       };
-      colors = (lib.importTOML ./colors.toml).colors;
+      colors = (lib.importTOML ./kaolin_dark.toml).colors;
       terminal.shell = { program = "nu"; };
       keyboard.bindings = [
         {
