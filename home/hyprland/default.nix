@@ -10,6 +10,8 @@
     kdePackages.qtsvg
     kdePackages.kio-fuse
     kdePackages.kio-extras
+
+    hyprpolkitagent
   ];
 
   wayland.windowManager.hyprland = {
@@ -19,9 +21,11 @@
     systemd.enable = false;
 
     settings = {
-      "$terminal" = "alacritty";
-      "$fileManager" = "dolphin";
-      "$menu" = "wofi --show drun";
+      "$terminal" = "uwsm-app -- alacritty";
+      "$fileManager" = "uwsm-app -- dolphin";
+      "$menu" = "uwsm-app -- wofi --show drun --define=drun-print_desktop_file=true";
+      "$emacs" = "uwsm-app -- emacs";
+      "$lockcmd" = "uwsm-app -- hyprlock";
 
       env = [
         "XCURSOR_SIZE,24"
@@ -30,7 +34,7 @@
       ]; # change to qt6ct if you have that
 
       exec-once = [
-        "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1 &"
+        "systemctl --user start hyprpolkitagent"
       ];
 
       input = {
@@ -119,12 +123,12 @@
 
       "$mainMod" = "SUPER";
       bind = [
-        "$mainMod SHIFT, X, exit"
+        "$mainMod SHIFT, Q, exit"
         "$mainMod, Return, exec, $terminal"
         "CTRL, Tab, exec, $menu"
         "$mainMod, Q, killactive"
         "$mainMod, W, exec, $fileManager"
-        "$mainMod, E, exec, emacs"
+        "$mainMod, E, exec, $emacs"
         "$mainMod, Space, togglefloating"
         "$mainMod, U, togglesplit"
         "$mainMod, P, pseudo"
@@ -190,8 +194,8 @@
 
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
-        "CTRL ALT, Q, exec, hyprlock"
-        ", XF86Battery, exec, hyprlock"
+        "$mainMod CTRL, L, exec, $lockcmd"
+        ", XF86Battery, exec, $lockcmd"
 
       ];
 
@@ -237,7 +241,7 @@
           on-resume = "hyprctl dispatch dpms on";
         }
         {
-          timeout = 600;
+          timeout = 900;
           on-timeout = "systemctl suspend";
         }
       ];
