@@ -395,18 +395,3 @@
        :desc "Send to LLM" "s" #'gptel-send
        :desc "Select tools" "t" #'gptel-tools))
 
-(use-package! tree-sitter
-  :config
-  (add-to-list 'tree-sitter-major-mode-language-alist '(arista-mode . arista))
-
-  (define-derived-mode arista-mode fundamental-mode "Arista EOS"
-    "Major mode for editing Arista switch configurations."
-    (setq-local comment-start "!")
-    (setq-local comment-end "")
-    (when (fboundp 'tree-sitter-mode)
-      (tree-sitter-mode)))
-
-  (add-to-list 'auto-mode-alist '("\\startup-config\\'" . arista-mode))
-  (add-to-list 'auto-mode-alist '("\\.eos\\'" . arista-mode))
-
-  (add-to-list 'tree-sitter-load-path "/home/m32/projects/github/tree-sitter-arista/"))
