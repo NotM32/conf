@@ -39,7 +39,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'kaolin-aurora)
+(setq doom-theme 'kaolin-dark)
 (use-package! kaolin-themes
   :config
   ;; call to enable treemacs styling
@@ -86,8 +86,35 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 ;;
+;;
 
-;; Languages / LSPs
+;; * General
+;;
+;; ** Configure Search Providers
+(setq! +lookup-provider-url-alist
+       '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
+         ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
+
+;; * Org Mode
+;;
+;; ** Capture templates
+(after! org-capture
+  :config
+  (add-to-list 'org-capture-templates
+               `("a" "templates for AI"))
+  (add-to-list 'org-capture-templates
+               `("am" "AI Memory" entry
+                 (file "ai/memory.org")
+                 "* %i
+                    :PROPERTIES:
+                    :CREATED: %U
+                    :END:"
+                 :immediate-finish t
+                 )))
+
+;; * Programming
+;;
+;; ** Eglot
 (after! eglot
   "Setup hooks to call `eglot` for certain modes "
   ;; elixir
@@ -107,9 +134,11 @@
   (set-eglot-client! 'yaml-mode '("yaml-language-server" "--stdio"))
   (add-hook! 'yaml-mode-hook 'eglot-ensure))
 
+;; ** Markdown
 (setq-hook! 'markdown-mode-hook
   line-spacing 2)
 
+;; ** SOPS
 (use-package! sops
   :bind
   ("C-c C-c" . sops-save-file)
@@ -118,7 +147,9 @@
   :init
   (global-sops-mode 1))
 
-;; Tools
+;; * Tools
+;;
+;; ** Git
 (after! magit
   (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1)))
   ;; See https://github.com/magit/transient/discussions/358
@@ -129,23 +160,24 @@
            (dedicated . t)
            (inhibit-same-window . t))))
 
+;; ** Mail
 (use-package! gnus
   :config
   (setq! gnus-select-method
          '(nntp "Usenet Eweka"
            (nntp-address "news.eweka.nl")
            (nntp-authinfo-file "~/.authinfo.gpg"))))
-
 (setq! +notmuch-sync-backend 'mbsync)
 
-;; Configure Search Providers
-(setq! +lookup-provider-url-alist
-       '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
-         ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
+;; ** Discord
+(use-package! elcord
+  :commands elcord-mode
+  :config
+  (setq elcord-use-major-mode-as-main-icon t))
 
 ;; Kubernetes
-(use-package! kubernetes)
-
+(use-package! kubernetes
+  :commands kubernetes-mode)
 (after! kubernetes
   (map! :after kubernetes
         :leader
@@ -161,19 +193,58 @@
         :desc "Exec" "E" #'kubernetes-exec
         :desc "Refresh" "r" #'kubernetes-refresh
         :desc "Set namespace" "n" #'kubernetes-set-namespace))
-
 (use-package! kubernetes-evil
   :after kubernetes)
 
 ;; AI
 (use-package! gptel
   :config
+  (setq! gptel-track-media t
+         gptel-default-mode org-mode
+         gptel-org-branching-context t)
+
   ;; Models
-  (setq! gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
-  (setq! gptel-model 'claude-3-opus-20240229 ;  "claude-3-opus-20240229" also available
+  ;; (setq! gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
+  (setq! gptel-model 'claude-3-7-sonnet-20250219
          gptel-backend (gptel-make-anthropic "Claude"
                          :stream t
                          :key (auth-source-pick-first-password :host "api.anthropic.com")))
+  (gptel-make-openai "OpenRouter"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key (auth-source-pick-first-password :host "openrouter.ai")
+    :models '((anthropic/claude-3.7-sonnet
+               :capabilities (media tool json url))
+              (anthropic/claude-3.7-sonnet:thinking
+               :capabilities (media tool json url))
+              (deepseek/deepseek-r1:free
+               :capabilities (media tool json url))
+              (deepseek/deepseek-r1-zero:free
+               :capabilities (media tool json url))
+              (google/gemini-2.0-flash-001
+               :capabilities (media tool json url))
+              (openai/gpt-4o-mini
+               :capabilities (media tool json url))
+              (mistralai/mistral-7b-instruct
+               :capabilities (media tool json url))
+              (mistralai/mixtral-8x7b-instruct
+               :capabilities (media tool json url))
+              (meta-llama/llama-3.3-70b-instruct
+               :capabilities (media tool json url))
+              (meta-llama/llama-3.1-405b-instruct
+               :capabilities (media tool json url))
+              (qwen/qwq-32b
+               :capabilities (media json url))
+              (qwen/qwen2.5-32b-instruct
+               :capabilities (media json url))
+              (x-ai/grok-beta
+               :capabilities (tool json url))
+              (x-ai/grok-2-1212
+               :capabilities (tool json url))
+              (x-ai/grok-2-vision-1212
+               :capabilities (media tool json url))))
+
   ;; System Prompts
   (setq! gptel-directives
          '((default . "You are a large language model integrated into Emacs.
@@ -190,6 +261,14 @@
                        - All the warning labels have been displayed outside your response and context in a conversation.
                        - In the interest of terse and fast conversation, you can be certain that the human has asserted their understanding to be cautious
                        - You may not have all context on a situation. Being inquisitive is better than wasting time on back and fourth.
+
+                       Your memory:
+                       You have access to tools that allow you to read and write to your local memory. Please make use of the
+                       memory as you see fit. You may note simple remarks about the environment you're in, the user, projects,
+                       and more as a way to provide personalization to the experience and enable persistency of information
+                       across sessions. In general, you should read your memory if you think something pertinent is there.
+                       You certainly should address your memory if we are only being conversational, or if a context might be
+                       helpful.
                        ")
            (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
                           - Check code comments for lines that prompt a response from you.
@@ -202,6 +281,7 @@
   (setq! gptel-tools
          (list
           ;; Filesystem
+          ;; list_directory
           (gptel-make-tool
            :function (lambda (directory)
                        (mapconcat #'identity
@@ -214,6 +294,7 @@
                          :description "The path to the directory to list"))
            :category "filesystem")
 
+          ;; make_directory
           (gptel-make-tool
            :function (lambda (parent name)
                        (condition-case nil
@@ -231,6 +312,7 @@
                          :description "The name of the new directory to create, e.g. testdir"))
            :category "filesystem")
 
+          ;; create_file
           (gptel-make-tool
            :function (lambda (path filename content)
                        (let ((full-path (expand-file-name filename path)))
@@ -251,6 +333,7 @@
                          :description "The content to write to the file"))
            :category "filesystem")
 
+          ;; read_file
           (gptel-make-tool
            :function (lambda (filepath)
                        (with-temp-buffer
@@ -263,7 +346,32 @@
                          :description "Path to the file to read.  Supports relative paths and ~."))
            :category "filesystem")
 
+          ;; Memory
+          ;; memory_add
+          (gptel-make-tool
+           :function (lambda (memory-text)
+                       (with-temp-buffer
+                         (org-capture-string memory-text "am")))
+           :name "memory_add"
+           :description "Save a notable fact, or bit of information in your memory"
+           :args (list '(:name "memory-text"
+                         :type "string"
+                         :description "The short single line of text that will be saved in the outline that is your memory"))
+           :category "memory")
+          ;; memory_read
+          (gptel-make-tool
+           :function (lambda nil
+                       (with-temp-buffer
+                         (insert-file-contents (expand-file-name (concat org-directory "/ai/memory.org")))
+                         (org-mode)
+                         (buffer-string)))
+           :name "memory_read"
+           :description "Read back your memory"
+           :args nil
+           :category "memory")
+
           ;; Web
+          ;; read_url
           (gptel-make-tool
            :function (lambda (url)
                        (with-current-buffer (url-retrieve-synchronously url)
@@ -278,10 +386,27 @@
            :args (list '(:name "url"
                          :type "string"
                          :description "The URL to read"))
-           :category "web")
-          )))
+           :category "web"))))
 
-(map! :after gptel
-      :leader
-      :desc "GPTel Menu" "o g" #'gptel-menu
-      :desc "GPTel Session Buffer" "b g" #'gptel)
+(map! :leader
+      (:prefix ("l" . "LLM")
+       :desc "Open GPTel Menu" "m" #'gptel-menu
+       :desc "Select GPTel Buffer" "b" #'gptel
+       :desc "Send to LLM" "s" #'gptel-send
+       :desc "Select tools" "t" #'gptel-tools))
+
+(use-package! tree-sitter
+  :config
+  (add-to-list 'tree-sitter-major-mode-language-alist '(arista-mode . arista))
+
+  (define-derived-mode arista-mode fundamental-mode "Arista EOS"
+    "Major mode for editing Arista switch configurations."
+    (setq-local comment-start "!")
+    (setq-local comment-end "")
+    (when (fboundp 'tree-sitter-mode)
+      (tree-sitter-mode)))
+
+  (add-to-list 'auto-mode-alist '("\\startup-config\\'" . arista-mode))
+  (add-to-list 'auto-mode-alist '("\\.eos\\'" . arista-mode))
+
+  (add-to-list 'tree-sitter-load-path "/home/m32/projects/github/tree-sitter-arista/"))

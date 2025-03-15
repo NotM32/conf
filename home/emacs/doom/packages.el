@@ -51,6 +51,7 @@
 ;; AI
 (package! gptel)
 (package! elysium)
+(package! evedel)
 
 ;; Infra
 (package! kubernetes)
@@ -70,4 +71,5 @@
 (package! kaolin-themes)
 
 ;; Utilities
+(package! elcord)
 (package! gnus)
