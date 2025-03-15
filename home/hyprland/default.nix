@@ -23,7 +23,7 @@
     settings = {
       "$terminal" = "uwsm-app -- alacritty";
       "$fileManager" = "uwsm-app -- dolphin";
-      "$menu" = "uwsm-app -- wofi --show drun --define=drun-print_desktop_file=true";
+      "$menu" = "uwsm-app -- $(wofi --show drun --define=drun-print_desktop_file=true)";
       "$emacs" = "uwsm-app -- emacs";
       "$lockcmd" = "uwsm-app -- hyprlock";
 
