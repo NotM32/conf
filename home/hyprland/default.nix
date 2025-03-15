@@ -205,10 +205,12 @@
       ];
 
       binde = [
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl s +5%"
-        ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-"
+        ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise --max-volume 125"
+        ", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower --max-volume 125"
+        ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+        ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
+        ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
+        ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
       ];
 
     };
@@ -254,6 +256,8 @@
     enableBashIntegration = true;
     configDir = ./eww;
   };
+
+  services.swayosd.enable = true;
 
   # QT/GTK Applications
   qt.enable = true;
