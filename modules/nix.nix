@@ -26,6 +26,17 @@ with lib; {
 
   nix.registry = {
     self.flake = self;
+    self-latest = {
+      from = {
+        id = "self-latest";
+        type = "indirect";
+      };
+      to = {
+        type = "github";
+        owner = "NotM32";
+        repo = "conf";
+      };
+    };
     home-manager.flake = home-manager;
     nixpkgs.flake = nixpkgs;
     nur.flake = nur;
@@ -34,7 +45,7 @@ with lib; {
   # The below generates a list of build hosts from the hosts in this flake
   nix.buildMachines = let
     maxJobs = 4;
-    speedFactor = 2; #TODO: document this per host
+    speedFactor = 2; # TODO: document this per host
   in attrsets.mapAttrsToList (hostName: cfg: {
     inherit hostName maxJobs speedFactor;
     # Support the hostPlatform and any emulated systems
@@ -42,7 +53,9 @@ with lib; {
       ++ cfg.config.boot.binfmt.emulatedSystems;
     # Support teh features from that machine's own configurations
     supportedFeatures = cfg.config.nix.settings.system-features;
-  }) (attrsets.filterAttrs (n: v: n != config.networking.hostName) # Filter out the same host, TODO: exclude certain hosts
+  }) (attrsets.filterAttrs (n: v:
+    n
+    != config.networking.hostName) # Filter out the same host, TODO: exclude certain hosts
     self.nixosConfigurations);
   nix.distributedBuilds = true;
 
