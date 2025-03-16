@@ -140,15 +140,20 @@
 
 ;; ** SOPS
 (use-package! sops
+  :init
+  (global-sops-mode 1)
   :bind
   ("C-c C-c" . sops-save-file)
   ("C-c C-k" . sops-cancel)
-  ("C-c C-d" . sops-edit-file)
-  :init
-  (global-sops-mode 1))
+  ("C-c C-d" . sops-edit-file))
 
 ;; * Tools
 ;;
+;; ** Projects
+(use-package! projectile
+  :config
+  (setq! projectile-project-search-path '(("~/projects/" . 2))))
+
 ;; ** Git
 (after! magit
   (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1)))
@@ -177,38 +182,35 @@
 
 ;; Kubernetes
 (use-package! kubernetes
-  :commands kubernetes-mode)
-(after! kubernetes
-  (map! :after kubernetes
-        :leader
-        :desc "Kubernetes Overview" "o k" #'kubernetes-overview)
+  :config
+  (map! (:leader
+         :desc "Kubernetes Overview" "o k" #'kubernetes-overview)
+        (:map kubernetes-mode-map
+         :localleader
+         (:prefix ("d" . "describe")
+          :desc "Describe thing at point" "." #'kubernetes-describe-dwim
+          :desc "Describe pod" "p" #'kubernetes-describe-pod )
+         :desc "Edit" "e" #'kubernetes-edit
+         :desc "Exec" "E" #'kubernetes-exec
+         :desc "Refresh" "r" #'kubernetes-refresh
+         :desc "Set namespace" "n" #'kubernetes-set-namespace)))
 
-  (map! :after kubernetes
-        :map kubernetes-mode-map
-        :localleader
-        (:prefix ("d" . "describe")
-         :desc "Describe thing at point" "." #'kubernetes-describe-dwim
-         :desc "Describe pod" "p" #'kubernetes-describe-pod )
-        :desc "Edit" "e" #'kubernetes-edit
-        :desc "Exec" "E" #'kubernetes-exec
-        :desc "Refresh" "r" #'kubernetes-refresh
-        :desc "Set namespace" "n" #'kubernetes-set-namespace))
 (use-package! kubernetes-evil
   :after kubernetes)
 
 ;; AI
 (use-package! gptel
+  :defer t
   :config
-  (setq! gptel-track-media t
-         gptel-default-mode org-mode
-         gptel-org-branching-context t)
+  (setq! gptel-track-media t)
+  (setq! gptel-default-mode 'org-mode)
 
   ;; Models
-  ;; (setq! gptel-api-key (auth-source-pick-first-password :host "api.openai.com"))
   (setq! gptel-model 'claude-3-7-sonnet-20250219
          gptel-backend (gptel-make-anthropic "Claude"
                          :stream t
                          :key (auth-source-pick-first-password :host "api.anthropic.com")))
+
   (gptel-make-openai "OpenRouter"
     :host "openrouter.ai"
     :endpoint "/api/v1/chat/completions"
@@ -273,10 +275,10 @@
            (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
                           - Check code comments for lines that prompt a response from you.
                           - Assume your response will be inserted into the provided code at a location marked <HERE>.
-                          - Assume the cursor for the buffer is placed at the '<' character.
                           - Provide intelligent responses.
                           - When <HERE> is present, only respond with code. If you need to explain, do so a syntax-valid way using code comments.
                           - Your code style should match the style of provided context code.")))
+
   ;; Tools
   (setq! gptel-tools
          (list
@@ -388,10 +390,35 @@
                          :description "The URL to read"))
            :category "web"))))
 
-(map! :leader
-      (:prefix ("l" . "LLM")
-       :desc "Open GPTel Menu" "m" #'gptel-menu
-       :desc "Select GPTel Buffer" "b" #'gptel
-       :desc "Send to LLM" "s" #'gptel-send
-       :desc "Select tools" "t" #'gptel-tools))
+(map!
+ :leader
+ (:prefix ("l" . "LLM")
+  :desc "Open GPTel Menu" "m" #'gptel-menu
+  :desc "Select GPTel Buffer" "b" #'gptel
+  :desc "Send to LLM" "s" #'gptel-send
+  :desc "Select tools" "t" #'gptel-tools))
 
+(use-package! evedel
+  :defer t
+  :config
+  (setq! 'evedel-empty-tag-query-matches-all nil)
+  :bind (("C-c e r" . evedel-create-reference)
+         ("C-c e d" . evedel-create-directive)
+         ("C-c e s" . evedel-save-instructions)
+         ("C-c e l" . evedel-load-instructions)
+         ("C-c e p" . evedel-process-directives)
+         ("C-c e m" . evedel-modify-directive)
+         ("C-c e C" . evedel-modify-reference-commentary)
+         ("C-c e k" . evedel-delete-instructions)
+         ("C-c e c" . evedel-convert-instructions)
+         ("C->"     . evedel-next-instruction)
+         ("C-<"     . evedel-previous-instruction)
+         ("C-."     . evedel-cycle-instructions-at-point)
+         ("C-c e t" . evedel-add-tags)
+         ("C-c e T" . evedel-remove-tags)
+         ("C-c e D" . evedel-modify-directive-tag-query)
+         ("C-c e P" . evedel-preview-directive-prompt)
+         ("C-c e /" . evedel-directive-undo)
+         ("C-c e ?" . (lambda ()
+                        (interactive)
+                        (evedel-directive-undo t)))))

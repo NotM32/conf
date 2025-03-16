@@ -49,13 +49,13 @@
 ;; (unpin! t)
 
 ;; AI
-(package! gptel)
-(package! elysium)
-(package! evedel)
+(when  (package! gptel)
+  (package! elysium)
+  (package! evedel))
 
 ;; Infra
-(package! kubernetes)
-(package! kubernetes-evil)
+(when (package! kubernetes)
+  (package! kubernetes-evil))
 (package! kubedoc)
 (package! k8s-mode)
 
