@@ -1,4 +1,4 @@
-{ pkgs, self, specialArgs, ... }: {
+{ pkgs, self, specialArgs, lib, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "phoenix";
 
@@ -36,6 +36,18 @@
         "desc:Lenovo Group Limited Y25-25 U4HDVK7C, 1920x1080@239.96, 3840x0, 1"
         "desc:Ancor Communications Inc MX279 G8LMRS025036,disable"
         "Unknown-1,disable"
+      ];
+    };
+
+    services.hypridle.settings = {
+      listener = lib.mkForce [
+        { timeout = 240;
+          on-timeout = "loginctl lock-session";
+        }
+        { timeout = 300;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
       ];
     };
   };
