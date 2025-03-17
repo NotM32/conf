@@ -38,6 +38,9 @@ in {
     elixir-ls
     erlfmt
     fd
+    gomodifytags
+    gopls
+    gore
     hadolint
     helm-ls # helm (kubernetes package manager) language server
     html-tidy
