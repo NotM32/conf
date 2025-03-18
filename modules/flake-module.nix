@@ -33,6 +33,7 @@ in {
         ./backup
         ./desktop
 
+        ./devices/android.nix
         ./devices/iphone.nix
         ./devices/printers.nix
         ./devices/sdr.nix
