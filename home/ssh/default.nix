@@ -34,7 +34,6 @@
   programs.keychain = {
     enable = true;
     enableBashIntegration = true;
-    enableFishIntegration = config.programs.fish.enable;
     agents = [ "ssh" "gpg" ];
     keys = [
       # General
