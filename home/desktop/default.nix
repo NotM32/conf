@@ -12,7 +12,7 @@
     self.homeModules.ssh
 
     ./packages.nix
-    ./lan-mouse.nix
+    ../lan-mouse
   ];
 
   programs.keychain.enableXsessionIntegration = true;
