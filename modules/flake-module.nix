@@ -58,26 +58,6 @@ in {
       time.timeZone = nixpkgs.lib.mkDefault "America/Denver";
     };
 
-    # Modules common to a server
-    server = { ... }: {
-      imports = [
-        self.nixosModules.common
-
-        ./backup
-
-        ./web/letsencrypt.nix
-        ./web/nginx.nix
-        ./security/sshd.nix
-        ./virtualisation/containers.nix
-      ];
-
-      # Home-manager users
-      home-manager.users.m32 = nixpkgs.lib.mkDefault self.homeModules.default;
-
-      # Backups
-      backups.srv.enable = true;
-    };
-
     # Module for handling secrets
     secrets = { pkgs, config, lib, ... }:
       let
