@@ -393,32 +393,53 @@
 (map!
  :leader
  (:prefix ("l" . "LLM")
-  :desc "Open GPTel Menu" "m" #'gptel-menu
+  :desc "Open GPTel Menu"     "m" #'gptel-menu
   :desc "Select GPTel Buffer" "b" #'gptel
-  :desc "Send to LLM" "s" #'gptel-send
-  :desc "Select tools" "t" #'gptel-tools))
+  :desc "Send to LLM"         "s" #'gptel-send
+  :desc "Select tools"        "t" #'gptel-tools
 
-(use-package! evedel
-  :defer t
+  (:prefix ("e" . "Evedel")
+   :desc "Create reference"     "r" #'evedel-create-reference
+   :desc "Create directive"     "d" #'evedel-create-directive
+   :desc "Save instructions"    "s" #'evedel-save-instructions
+   :desc "Load instructions"    "l" #'evedel-load-instructions
+   :desc "Process directives"   "p" #'evedel-process-directives
+   :desc "Modify directive"     "m" #'evedel-modify-directive
+   :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
+   :desc "Delete instructions"  "k" #'evedel-delete-instructions
+   :desc "Convert instructions" "c" #'evedel-convert-instructions
+   :desc "Add tags"             "t" #'evedel-add-tags
+   :desc "Remove tags"          "T" #'evedel-remove-tags)))
+
+(use-package! mcp
   :config
-  (setq! 'evedel-empty-tag-query-matches-all nil)
-  :bind (("C-c e r" . evedel-create-reference)
-         ("C-c e d" . evedel-create-directive)
-         ("C-c e s" . evedel-save-instructions)
-         ("C-c e l" . evedel-load-instructions)
-         ("C-c e p" . evedel-process-directives)
-         ("C-c e m" . evedel-modify-directive)
-         ("C-c e C" . evedel-modify-reference-commentary)
-         ("C-c e k" . evedel-delete-instructions)
-         ("C-c e c" . evedel-convert-instructions)
-         ("C->"     . evedel-next-instruction)
-         ("C-<"     . evedel-previous-instruction)
-         ("C-."     . evedel-cycle-instructions-at-point)
-         ("C-c e t" . evedel-add-tags)
-         ("C-c e T" . evedel-remove-tags)
-         ("C-c e D" . evedel-modify-directive-tag-query)
-         ("C-c e P" . evedel-preview-directive-prompt)
-         ("C-c e /" . evedel-directive-undo)
-         ("C-c e ?" . (lambda ()
-                        (interactive)
-                        (evedel-directive-undo t)))))
+
+  (defun gptel-mcp-register-tool ()
+    (interactive)
+    (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
+      (mapcar #'(lambda (tool)
+                  (apply #'gptel-make-tool
+                         tool))
+              tools)))
+  (defun gptel-mcp-use-tool ()
+    (interactive)
+    (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
+      (mapcar #'(lambda (tool)
+                  (let ((path (list (plist-get tool :category)
+                                    (plist-get tool :name))))
+                    (push (gptel-get-tool path)
+                          gptel-tools)))
+              tools)))
+  (defun gptel-mcp-close-use-tool ()
+    (interactive)
+    (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
+      (mapcar #'(lambda (tool)
+                  (let ((path (list (plist-get tool :category)
+                                    (plist-get tool :name))))
+                    (setq gptel-tools
+                          (cl-remove-if #'(lambda (tool)
+                                            (equal path
+                                                   (list (gptel-tool-category tool)
+                                                         (gptel-tool-name tool))))
+                                        gptel-tools))))
+              tools))))

@@ -50,6 +50,7 @@ in {
     nim
     nimlangserver
     nimlsp
+    nodejs
     notmuch
     perlPackages.PerlLanguageServer
     racket-minimal

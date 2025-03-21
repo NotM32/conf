@@ -49,9 +49,12 @@
 ;; (unpin! t)
 
 ;; AI
-(when  (package! gptel)
+(when (package! gptel)
   (package! elysium)
-  (package! evedel))
+  (package! evedel)
+  (package! mcp
+    :recipe (:host github :repo "lizqwerscott/mcp.el"
+             :files ("mcp.el" "mcp-hub.el"))))
 
 ;; Infra
 (when (package! kubernetes)
