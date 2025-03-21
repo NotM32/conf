@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -43,6 +44,8 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
 
       imports = [
+        home-manager.flakeModules.home-manager
+
         ./configurations.nix
         ./home/flake-module.nix
         ./devShells/flake-module.nix
