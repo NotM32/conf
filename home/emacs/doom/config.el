@@ -141,11 +141,11 @@
 ;; ** SOPS
 (use-package! sops
   :init
-  (global-sops-mode 1)
-  :bind
-  ("C-c C-c" . sops-save-file)
-  ("C-c C-k" . sops-cancel)
-  ("C-c C-d" . sops-edit-file))
+  (global-sops-mode 1))
+
+(map! :after sops
+      :leader
+      :desc "Open SOPS file" "o s" #'sops-edit-file)
 
 ;; * Tools
 ;;
@@ -182,18 +182,20 @@
 
 ;; Kubernetes
 (use-package! kubernetes
+  :defer t
+
   :config
-  (map! (:leader
-         :desc "Kubernetes Overview" "o k" #'kubernetes-overview)
-        (:map kubernetes-mode-map
-         :localleader
-         (:prefix ("d" . "describe")
-          :desc "Describe thing at point" "." #'kubernetes-describe-dwim
-          :desc "Describe pod" "p" #'kubernetes-describe-pod )
-         :desc "Edit" "e" #'kubernetes-edit
-         :desc "Exec" "E" #'kubernetes-exec
-         :desc "Refresh" "r" #'kubernetes-refresh
-         :desc "Set namespace" "n" #'kubernetes-set-namespace)))
+  (setq! kubernetes-json-mode #'json-mode))
+
+(map! :leader
+      :desc "Kubernetes Overview" "o k" #'kubernetes-overview
+
+      :mode kubernetes-mode
+      :localleader
+      :desc "Edit"           "e" #'kubernetes-edit
+      :desc "Exec"           "E" #'kubernetes-exec
+      :desc "Refresh"        "r" #'kubernetes-refresh
+      :desc "Set namespace"  "n" #'kubernetes-set-namespace)
 
 (use-package! kubernetes-evil
   :after kubernetes)
