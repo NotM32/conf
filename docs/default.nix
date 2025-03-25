@@ -1,8 +1,8 @@
 { self ? { }, pkgs, stdenvNoCC, ... }:
 stdenvNoCC.mkDerivation rec {
-  pname = "configuration-docs";
+  pname = "docs";
   version = self.lastModifiedDate or "master";
-  src = self or "./.";
+  src = ./.;
 
   doCheck = true;
 
@@ -12,11 +12,11 @@ stdenvNoCC.mkDerivation rec {
   buildPhase = ''
     export PATH="${pkgs.lib.makeBinPath buildInputs}";
     # cargo install mdbook-nix-eval
-    mdbook build ./docs/
+    mdbook build ./
   '';
 
   installPhase = ''
     mkdir -p $out
-    cp -r ./docs/book/* $out
+    cp -r ./book/* $out
   '';
 }
