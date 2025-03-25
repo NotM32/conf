@@ -3,7 +3,7 @@
   perSystem = { inputs', self', pkgs, system, ... }: {
     devShells.default = pkgs.mkShell {
       buildInputs = [
-        self.packages.${system}.configuration-docs
+        self.packages.${system}.docs
 
         pkgs.ipmitool
         pkgs.python3.pkgs.invoke
