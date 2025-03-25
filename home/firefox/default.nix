@@ -85,6 +85,9 @@
         "signon.autofillForms" = false;
         "network.prefetch-next" = false;
         "network.predictor.enabled" = false;
+
+        # disable keybindiings
+        "ui.key.menuAccessKeyFocuses" = false;
       };
     };
   };
