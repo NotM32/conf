@@ -52,6 +52,7 @@
 
     # Cli tools
     ledger
+    stripe-cli
 
     # Networking
     gns3-gui
