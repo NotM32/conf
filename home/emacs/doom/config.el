@@ -415,7 +415,10 @@
 
 (use-package! mcp
   :config
-
+  (setq mcp-hub-servers
+        '(("knowledge" . (:command "podman" :args ("run" "-i" "-v" "emacs-mcp-memory:/app/dist" "--rm" "mcp/memory")))
+          ("puppeteer" . (:command "podman" :args ("run" "-i" "--rm" "--init" "-e DOCKER_CONTAINER=true" "mcp/puppeteer")))
+          ))
   (defun gptel-mcp-register-tool ()
     (interactive)
     (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
