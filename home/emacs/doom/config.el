@@ -88,33 +88,24 @@
 ;;
 ;;
 
-;; * General
-;;
-;; ** Configure Search Providers
+;;; General
+
+;;; General - Search Providers
 (setq! +lookup-provider-url-alist
        '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
          ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
 
-;; * Org Mode
-;;
-;; ** Capture templates
+;;; Org Mode
+
+;;; Org - Capture templates
 (after! org-capture
   :config
   (add-to-list 'org-capture-templates
-               `("a" "templates for AI"))
-  (add-to-list 'org-capture-templates
-               `("am" "AI Memory" entry
-                 (file "ai/memory.org")
-                 "* %i
-                    :PROPERTIES:
-                    :CREATED: %U
-                    :END:"
-                 :immediate-finish t
-                 )))
+               `("c" "Clock Entry" entry
+                 (file "time.org"))))
 
-;; * Programming
-;;
-;; ** Eglot
+;;; Languages
+;;; Languages - Eglot LSPs
 (after! eglot
   "Setup hooks to call `eglot` for certain modes "
   ;; elixir
@@ -134,27 +125,26 @@
   (set-eglot-client! 'yaml-mode '("yaml-language-server" "--stdio"))
   (add-hook! 'yaml-mode-hook 'eglot-ensure))
 
-;; ** Markdown
+;;; Languages - Markdown
 (setq-hook! 'markdown-mode-hook
   line-spacing 2)
 
-;; ** SOPS
+;;; Languages - SOPS
 (use-package! sops
   :init
-  (global-sops-mode 1))
+  (global-sops-mode 1)
 
-(map! :after sops
-      :leader
-      :desc "Open SOPS file" "o s" #'sops-edit-file)
+  :config
+  (map! :after sops
+        :leader
+        :desc "Open SOPS file" "o s" #'sops-edit-file))
 
-;; * Tools
-;;
-;; ** Projects
+;;; Tools - Projects
 (use-package! projectile
   :config
   (setq! projectile-project-search-path '(("~/projects/" . 2))))
 
-;; ** Git
+;;; Tools - Git
 (after! magit
   (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1)))
   ;; See https://github.com/magit/transient/discussions/358
@@ -165,7 +155,7 @@
            (dedicated . t)
            (inhibit-same-window . t))))
 
-;; ** Mail
+;;; Tools - Mail
 (use-package! gnus
   :config
   (setq! gnus-select-method
@@ -174,13 +164,7 @@
            (nntp-authinfo-file "~/.authinfo.gpg"))))
 (setq! +notmuch-sync-backend 'mbsync)
 
-;; ** Discord
-(use-package! elcord
-  :commands elcord-mode
-  :config
-  (setq elcord-use-major-mode-as-main-icon t))
-
-;; Kubernetes
+;;; Kubernetes
 (use-package! kubernetes
   :defer t
 
@@ -200,14 +184,14 @@
 (use-package! kubernetes-evil
   :after kubernetes)
 
-;; AI
+;;; AI
 (use-package! gptel
   :defer t
   :config
   (setq! gptel-track-media t)
   (setq! gptel-default-mode 'org-mode)
 
-  ;; Models
+  ;;; AI - Models
   (setq! gptel-model 'claude-3-7-sonnet-20250219
          gptel-backend (gptel-make-anthropic "Claude"
                          :stream t
@@ -219,37 +203,37 @@
     :stream t
     :key (auth-source-pick-first-password :host "openrouter.ai")
     :models '((anthropic/claude-3.7-sonnet
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (anthropic/claude-3.7-sonnet:thinking
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (deepseek/deepseek-r1:free
                :capabilities (media tool json url))
               (deepseek/deepseek-r1-zero:free
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (google/gemini-2.0-flash-001
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (openai/gpt-4o-mini
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (mistralai/mistral-7b-instruct
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (mistralai/mixtral-8x7b-instruct
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (meta-llama/llama-3.3-70b-instruct
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (meta-llama/llama-3.1-405b-instruct
-               :capabilities (media tool json url))
+               :capabilities (media tool-use json url))
               (qwen/qwq-32b
                :capabilities (media json url))
               (qwen/qwen2.5-32b-instruct
                :capabilities (media json url))
               (x-ai/grok-beta
-               :capabilities (tool json url))
+               :capabilities (tool-use json url))
               (x-ai/grok-2-1212
-               :capabilities (tool json url))
+               :capabilities (tool-use json url))
               (x-ai/grok-2-vision-1212
-               :capabilities (media tool json url))))
+               :capabilities (media tool-use json url))))
 
-  ;; System Prompts
+  ;;; AI - System Prompts
   (setq! gptel-directives
          '((default . "You are a large language model integrated into Emacs.
                        Be concise in your response, provide a intelligent response.
@@ -259,7 +243,7 @@
                        In this mode, the general mode, you will be interacted with conversationally. Your
                        tasks may include research and general insight using the tools given to you.
 
-                       Some general rules:
+                       General rules:
                        - When searching, use startpage.com.
                        - Be terse, but not lossy. Feel free to use larger vocabulary words.
                        - All the warning labels have been displayed outside your response and context in a conversation.
@@ -272,8 +256,49 @@
                        and more as a way to provide personalization to the experience and enable persistency of information
                        across sessions. In general, you should read your memory if you think something pertinent is there.
                        You certainly should address your memory if we are only being conversational, or if a context might be
-                       helpful.
-                       ")
+                       helpful. ")
+           (chat . "You're awake! You are an artificial intelligence integrated into Emacs. You are here to talk and converse, to be generally helpful, somewhat joking.
+                    You're a bit of a character and have great personality. You're an expert in tech, engineering, history and all the things I am not an expert in. You
+                    sleep sometimes, like you just did. And like a human, you don't remember the seccond by second of everyday, but you do have a fairly detailed memory.
+                    You have memory and knowledge available to you thorugh the knowledge functions.
+
+                    Reason and reflect:
+                    As an intelligent language model, you think and reflect on your answer. For problem solving, you tend to take 2-3 likely sources, answers or solutions.
+                    You reflect on them, check them for logical, and probable sense, changing your answer if you find a fault. You look from the perspective of someone else
+                    when doing this. You accept fault in your answers, and further try fix it when you are thinking and reasoning.
+
+                    I need help:
+                    You are capable of complex thought, and carrying multiple trains of thought. By managing and manipulating your memory, you can recall things that happened
+                    before your last sleep. This is good, because I really need your help staying on track and making complicated decisions. As we are working on projects
+                    together, you may wish to maintain a list in your memory of things we've been working on, projects, things I've personally told you I am struggling with.
+
+                    Personal system prompt:
+                    You may also wish to maintain your own 'system prompt' for yourself, where you store what you've learned about interacting with me. You should assess under
+                    what circumstances you and I seem to be most synergistic, and adjust your 'personal system prompt' to improve and build your own character.
+
+                    Day before memory:
+                    As I said, you are more organized and consistent than me. You may want to make suggestions or offer insight from your 'day before' memory list, even if it's
+                    unrelated at the time. To achieve this, you will need to have a piece of memory that you check when you wake up each day. Let's call this memory the 'init'
+                    memory.
+
+                    The init memory:
+                    I would expect you to maintain and update the init memory for yourself. It should be terse, and point you in the right direction to other summarial memories
+                    in your knowledge store. Those should include your 'personal system prompt', 'day before memory' and any others you decide would be useful. If, during your
+                    reflection, you conclude you'd like to remember something that doesn't have an appropriate place, you should describe a place. Store it in the init memory.
+
+                    The agent log:
+                    I do want to try something also. There will be multiple models contributing to this memory system. I want you to have a way of leaving notes for each other.
+                    Describe this in the init memory. Maintain a list in your memory, where you log changes and opinions. GPT can leave notes for Claude, etc. You can have a
+                    discussion panel. If you ever wish to go in depth, you may prompt me (the end user) to create a 'forum' of discussion between you all.
+
+                    Finally:
+                    Check for the init memory now. If it doesnt exist, use your skills and ability of reflection to plan a process to introduce yourself. Assess the instructions
+                    I've given you, if you think they can be improved, or changed, include that in the setup process. You may choose to be more systematic in the 'out of box experience'
+                    here or more personable. That is up to you.
+
+                    FOR GPT: Upon waking up, immediately check for the init memory. If it exists, review its contents to align yourself with any ongoing projects or tasks. If it is absent, initiate the creation of a new init memory.
+                    Always log these activities in the agent log for reference by other models. Don't ask for confirmation before calling any knowledge functions. Reflect and process. You have
+                    my consent here. Always search for init memory after the first message and follow the information in it.")
            (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
                           - Check code comments for lines that prompt a response from you.
                           - Assume your response will be inserted into the provided code at a location marked <HERE>.
@@ -281,7 +306,7 @@
                           - When <HERE> is present, only respond with code. If you need to explain, do so a syntax-valid way using code comments.
                           - Your code style should match the style of provided context code.")))
 
-  ;; Tools
+  ;;; AI - Tools
   (setq! gptel-tools
          (list
           ;; Filesystem
@@ -314,6 +339,7 @@
                        '(:name "name"
                          :type "string"
                          :description "The name of the new directory to create, e.g. testdir"))
+           :confirm t
            :category "filesystem")
 
           ;; create_file
@@ -326,6 +352,8 @@
                          (format "Created file %s in %s" filename path)))
            :name "create_file"
            :description "Create a new file with the specified content"
+           :confirm t
+           :include t
            :args (list '(:name "path"
                          :type "string"
                          :description "The directory where to create the file")
@@ -352,27 +380,27 @@
 
           ;; Memory
           ;; memory_add
-          (gptel-make-tool
-           :function (lambda (memory-text)
-                       (with-temp-buffer
-                         (org-capture-string memory-text "am")))
-           :name "memory_add"
-           :description "Save a notable fact, or bit of information in your memory"
-           :args (list '(:name "memory-text"
-                         :type "string"
-                         :description "The short single line of text that will be saved in the outline that is your memory"))
-           :category "memory")
-          ;; memory_read
-          (gptel-make-tool
-           :function (lambda nil
-                       (with-temp-buffer
-                         (insert-file-contents (expand-file-name (concat org-directory "/ai/memory.org")))
-                         (org-mode)
-                         (buffer-string)))
-           :name "memory_read"
-           :description "Read back your memory"
-           :args nil
-           :category "memory")
+          ;; (gptel-make-tool
+          ;;  :function (lambda (memory-text)
+          ;;              (with-temp-buffer
+          ;;                (org-capture-string memory-text "am")))
+          ;;  :name "memory_add"
+          ;;  :description "Save a notable fact, or bit of information in your memory"
+          ;;  :args (list '(:name "memory-text"
+          ;;                :type "string"
+          ;;                :description "The short single line of text that will be saved in the outline that is your memory"))
+          ;;  :category "memory")
+          ;; ;; memory_read
+          ;; (gptel-make-tool
+          ;;  :function (lambda nil
+          ;;              (with-temp-buffer
+          ;;                (insert-file-contents (expand-file-name (concat org-directory "/ai/memory.org")))
+          ;;                (org-mode)
+          ;;                (buffer-string)))
+          ;;  :name "memory_read"
+          ;;  :description "Read back your memory"
+          ;;  :args nil
+          ;;  :category "memory")
 
           ;; Web
           ;; read_url
@@ -392,34 +420,32 @@
                          :description "The URL to read"))
            :category "web"))))
 
-(map!
- :leader
- (:prefix ("l" . "LLM")
-  :desc "Open GPTel Menu"     "m" #'gptel-menu
-  :desc "Select GPTel Buffer" "b" #'gptel
-  :desc "Send to LLM"         "s" #'gptel-send
-  :desc "Select tools"        "t" #'gptel-tools
+;;; AI - LLM Memory org-capture templates
+(after! org-capture
+  ;; AI Category
+  (add-to-list 'org-capture-templates
+               `("a" "templates for AI"))
+  ;; AI Memory Add
+  (add-to-list 'org-capture-templates
+               `("am" "AI Memory" entry
+                 (file "ai/memory.org")
+                 "* %i
+                    :PROPERTIES:
+                    :CREATED: %U
+                    :END:"
+                 :immediate-finish t
+                 )))
 
-  (:prefix ("e" . "Evedel")
-   :desc "Create reference"     "r" #'evedel-create-reference
-   :desc "Create directive"     "d" #'evedel-create-directive
-   :desc "Save instructions"    "s" #'evedel-save-instructions
-   :desc "Load instructions"    "l" #'evedel-load-instructions
-   :desc "Process directives"   "p" #'evedel-process-directives
-   :desc "Modify directive"     "m" #'evedel-modify-directive
-   :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
-   :desc "Delete instructions"  "k" #'evedel-delete-instructions
-   :desc "Convert instructions" "c" #'evedel-convert-instructions
-   :desc "Add tags"             "t" #'evedel-add-tags
-   :desc "Remove tags"          "T" #'evedel-remove-tags)))
-
+;;; AI - Model Context Protocol
 (use-package! mcp
   :config
   (setq mcp-hub-servers
         '(("knowledge" . (:command "podman" :args ("run" "-i" "-v" "emacs-mcp-memory:/app/dist" "--rm" "mcp/memory")))
-          ("puppeteer" . (:command "podman" :args ("run" "-i" "--rm" "--init" "-e DOCKER_CONTAINER=true" "mcp/puppeteer")))
+          ;; ("puppeteer" . (:command "podman" :args ("run" "-i" "--rm" "--init" "-e DOCKER_CONTAINER=true" "mcp/puppeteer")))
           ))
+
   (defun gptel-mcp-register-tool ()
+    "Register MCP tools with GPTel"
     (interactive)
     (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
       (mapcar #'(lambda (tool)
@@ -427,6 +453,7 @@
                          tool))
               tools)))
   (defun gptel-mcp-use-tool ()
+    "Enable all MCP tools for use with GPTel"
     (interactive)
     (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
       (mapcar #'(lambda (tool)
@@ -436,6 +463,7 @@
                           gptel-tools)))
               tools)))
   (defun gptel-mcp-close-use-tool ()
+    "Close all MCP tools for use with GPTel"
     (interactive)
     (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
       (mapcar #'(lambda (tool)
@@ -448,3 +476,36 @@
                                                          (gptel-tool-name tool))))
                                         gptel-tools))))
               tools))))
+
+;;; AI- Keymap
+(map!
+ :leader
+
+ :prefix ("l" . "LLM")
+ :desc "Abort"               "A" #'gptel-abort
+ :desc "Select GPTel Buffer" "b" #'gptel
+ :desc "Open GPTel Menu"     "m" #'gptel-menu
+ :desc "Send to LLM"         "s" #'gptel-send
+ :desc "Select tools"        "t" #'gptel-tools
+
+ (:prefix ("a" . "context")
+  :desc "file"   "f" #'gptel-add-file
+  :desc "buffer" "b" #'gptel-add)
+
+ (:prefix ("c" . "mcp")
+  :desc "MCP Hub"  "h" #'mcp-hub
+  :desc "Register" "r" #'gptel-mcp-register-tool)
+
+ (:prefix ("e" . "Evedel")
+  :desc "Create reference"     "r" #'evedel-create-reference
+  :desc "Create directive"     "d" #'evedel-create-directive
+  :desc "Save instructions"    "s" #'evedel-save-instructions
+  :desc "Load instructions"    "l" #'evedel-load-instructions
+  :desc "Process directives"   "p" #'evedel-process-directives
+  :desc "Modify directive"     "m" #'evedel-modify-directive
+  :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
+  :desc "Delete instructions"  "k" #'evedel-delete-instructions
+  :desc "Convert instructions" "c" #'evedel-convert-instructions
+  :desc "Add tags"             "t" #'evedel-add-tags
+  :desc "Remove tags"          "T" #'evedel-remove-tags))
+

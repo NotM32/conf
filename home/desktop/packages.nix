@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     # # Internet
+    signal-cli
     signal-desktop
     element-desktop
     protonvpn-gui

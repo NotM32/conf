@@ -74,5 +74,4 @@
 (package! kaolin-themes)
 
 ;; Utilities
-(package! elcord)
 (package! gnus)
