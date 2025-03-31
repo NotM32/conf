@@ -190,6 +190,10 @@
   :config
   (setq! gptel-track-media t)
   (setq! gptel-default-mode 'org-mode)
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "@user\n")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "@assistant\n")
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
   ;;; AI - Models
   (setq! gptel-model 'claude-3-7-sonnet-20250219
@@ -402,6 +406,19 @@
           ;;  :args nil
           ;;  :category "memory")
 
+
+          ;; Utility
+          (gptel-make-tool
+           :function (lambda (&optional format)
+                       (format-time-string (or format "%Y-%m-%d %H:%M:%S")))
+           :name "get_datetime"
+           :description "Get the current date and time, optionally in a specified format"
+           :args (list '(:name "format"
+                         :type "string"
+                         :description "Optional strftime-style format string (e.g. %Y-%m-%d). Defaults to full datetime if not provided."
+                         :required nil))
+           :category "utility")
+
           ;; Web
           ;; read_url
           (gptel-make-tool
@@ -475,7 +492,10 @@
                                                    (list (gptel-tool-category tool)
                                                          (gptel-tool-name tool))))
                                         gptel-tools))))
-              tools))))
+              tools)))
+
+  (gptel-mcp-register-tool)
+  (gptel-mcp-use-tool))
 
 ;;; AI- Keymap
 (map!
