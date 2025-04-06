@@ -184,6 +184,13 @@
 (use-package! kubernetes-evil
   :after kubernetes)
 
+;;; Docker
+(use-package! docker
+  :config
+  (setq! docker-command "podman")
+  (setq! tramp-docker-method "podman")
+  (setq! tramp-docker-program "podman"))
+
 ;;; AI
 (use-package! gptel
   :defer t
