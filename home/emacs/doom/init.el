@@ -21,12 +21,12 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ;; company          ; the ultimate code completion backend
+       ;;company           ; the ultimate code completion backend
        (corfu +icons +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
-       (vertico +icons)             ; the search engine of the future
+       (vertico +icons)    ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -37,7 +37,7 @@
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        indent-guides       ; highlighted indent columns
        ligatures           ; ligatures and symbols to make your code pretty again
-       minimap             ; show a map of the code on the side
+       ;;minimap           ; show a map of the code on the side
        modeline            ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
@@ -62,16 +62,16 @@
        multiple-cursors    ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
-       ;;rotate-text       ; cycle region at point between text candidates
+       rotate-text         ; cycle region at point between text candidates
        snippets            ; my elves. They type so I don't have to
        word-wrap           ; soft wrapping with language-aware indent
 
        :emacs
        dired               ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
-       ;;eww               ; the internet is gross
-       ;;ibuffer           ; interactive buffer management
-       undo                ; persistent, smarter undo for your inevitable mistakes
+       eww                 ; the internet is gross
+       (ibuffer +icons)    ; interactive buffer management
+       (undo +tree)        ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
        :term
@@ -90,12 +90,12 @@
        ;;biblio            ; Writes a PhD for you (citation needed)
        ;;collab            ; buffers with friends
        ;;debugger          ; FIXME stepping through code, to help you add bugs
-       direnv
+       (direnv +dirvish +icons)
        docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
-       ;;ein               ; tame Jupyter notebooks with emacs
+       editorconfig        ; let someone else argue about tabs vs spaces
+       ein                 ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
-       lookup              ; navigate your code and its documentation
+       (lookup +dictionary)              ; navigate your code and its documentation
        (lsp +eglot)        ; M-x vscode
        magit               ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
@@ -124,7 +124,7 @@
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
        (elixir +lsp +tree-sitter)      ; erlang done right
-       elm                 ; care for a cup of TEA?
+       (elm +lsp +tree-sitter)                 ; care for a cup of TEA?
        emacs-lisp          ; drown in parentheses
        (erlang +lsp +tree-sitter)            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
@@ -136,7 +136,7 @@
        ;;gdscript          ; the language you waited for
        (go +lsp +tree-sitter)         ; does as designed. doesnt work by design
        (graphql +lsp)      ; Give queries a REST
-       ;;(haskell +lsp)    ; a language that's lazier than I am
+       (haskell +lsp +tree-sitter)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        (json +lsp +tree-sitter)                ; At least it ain't XML
@@ -144,7 +144,7 @@
        (javascript +lsp +tree-sitter)          ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       latex               ; writing papers in Emacs has never been so fun
+       (latex +lsp +fold)  ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove
        ledger              ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
@@ -153,13 +153,13 @@
        (nix +lsp +tree-sitter)  ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org +dragndrop +gnuplot +noter +present +pretty)                ; organize your plain life in plain text
-       ;;php               ; perl's insecure younger brother
+       (php +lsp +tree-sitter)               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
        ;;purescript        ; javascript, but functional
        (python +lsp +tree-sitter +pyenv)              ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
-       racket              ; a DSL for DSLs
+       (racket +lsp)       ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        rest                ; Emacs as a REST client
        ;;rst               ; ReST in peace
@@ -178,7 +178,7 @@
 
        :email
        ;;(mu4e +org +gmail)
-       notmuch
+       (notmuch +org)
        ;;(wanderlust +gmail)
 
        :app

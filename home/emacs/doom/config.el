@@ -104,6 +104,18 @@
                `("c" "Clock Entry" entry
                  (file "time.org"))))
 
+;;; Calendar
+(use-package! calfw
+  :config
+  (defun open-calendar ()
+    (interactive)
+    (cfw:open-calendar-buffer
+     :contents-sources
+     (list
+      (cfw:org-create-source "Green")
+      (cfw:org-create-file-source "cal" "~/docs/org/cal.org" "Cyan")
+      (cfw:ical-create-source "Proton" (auth-source-pick-first-password :host "calendar.proton.me") "IndianRed")))))
+
 ;;; Languages
 ;;; Languages - Eglot LSPs
 (after! eglot
@@ -121,6 +133,8 @@
   ;; nix
   (set-eglot-client! 'nix-mode '("nil"))
   (add-hook! 'nix-mode-hook 'eglot-ensure)
+  (set-eglot-client! 'svelte-mode '("svelteserver" "--stdio"))
+  (add-hook! 'svelte-mode-hook 'eglot-ensure)
   ;; yaml
   (set-eglot-client! 'yaml-mode '("yaml-language-server" "--stdio"))
   (add-hook! 'yaml-mode-hook 'eglot-ensure))
