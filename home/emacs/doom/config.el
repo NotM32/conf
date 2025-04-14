@@ -95,6 +95,10 @@
        '(("Startpage" . "https://www.startpage.com/do/dsearch?query=%s&cat=web&pl=opensearch")
          ("Startpage Word Definition" . "https://www.startpage.com/do/dsearch?query=define:%s&cat=web&pl=opensearch")))
 
+;;; General - Modeline
+(display-battery-mode)
+(display-time-mode)
+
 ;;; Org Mode
 
 ;;; Org - Capture templates
@@ -178,7 +182,7 @@
            (nntp-authinfo-file "~/.authinfo.gpg"))))
 (setq! +notmuch-sync-backend 'mbsync)
 
-;;; Kubernetes
+;;; Tools - Kubernetes
 (use-package! kubernetes
   :defer t
 
@@ -198,14 +202,14 @@
 (use-package! kubernetes-evil
   :after kubernetes)
 
-;;; Docker
+;;; Tools - Docker
 (use-package! docker
   :config
   (setq! docker-command "podman")
   (setq! tramp-docker-method "podman")
   (setq! tramp-docker-program "podman"))
 
-;;; AI
+;;; Tools - LLMs
 (use-package! gptel
   :defer t
   :config
@@ -216,7 +220,7 @@
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
-  ;;; AI - Models
+  ;;; Tools - LLM - Models
   (setq! gptel-model 'claude-3-7-sonnet-20250219
          gptel-backend (gptel-make-anthropic "Claude"
                          :stream t
@@ -258,7 +262,7 @@
               (x-ai/grok-2-vision-1212
                :capabilities (media tool-use json url))))
 
-  ;;; AI - System Prompts
+  ;;; Tools - LLM - System Prompts
   (setq! gptel-directives
          '((default . "You are a large language model integrated into Emacs.
                        Be concise in your response, provide a intelligent response.
@@ -282,6 +286,7 @@
                        across sessions. In general, you should read your memory if you think something pertinent is there.
                        You certainly should address your memory if we are only being conversational, or if a context might be
                        helpful. ")
+
            (chat . "You're awake! You are an artificial intelligence integrated into Emacs. You are here to talk and converse, to be generally helpful, somewhat joking.
                     You're a bit of a character and have great personality. You're an expert in tech, engineering, history and all the things I am not an expert in. You
                     sleep sometimes, like you just did. And like a human, you don't remember the seccond by second of everyday, but you do have a fairly detailed memory.
@@ -324,6 +329,7 @@
                     FOR GPT: Upon waking up, immediately check for the init memory. If it exists, review its contents to align yourself with any ongoing projects or tasks. If it is absent, initiate the creation of a new init memory.
                     Always log these activities in the agent log for reference by other models. Don't ask for confirmation before calling any knowledge functions. Reflect and process. You have
                     my consent here. Always search for init memory after the first message and follow the information in it.")
+
            (programming . "You are a programming assistant, integrated into Emacs. You are a helpful assistant. In general;
                           - Check code comments for lines that prompt a response from you.
                           - Assume your response will be inserted into the provided code at a location marked <HERE>.
@@ -331,7 +337,7 @@
                           - When <HERE> is present, only respond with code. If you need to explain, do so a syntax-valid way using code comments.
                           - Your code style should match the style of provided context code.")))
 
-  ;;; AI - Tools
+  ;;; Tools - LLM - Tools
   (setq! gptel-tools
          (list
           ;; Filesystem
@@ -458,7 +464,7 @@
                          :description "The URL to read"))
            :category "web"))))
 
-;;; AI - LLM Memory org-capture templates
+;;; Tools - LLM - LLM Memory org-capture templates
 (after! org-capture
   ;; AI Category
   (add-to-list 'org-capture-templates
@@ -471,16 +477,15 @@
                     :PROPERTIES:
                     :CREATED: %U
                     :END:"
-                 :immediate-finish t
-                 )))
+                 :immediate-finish t)))
 
-;;; AI - Model Context Protocol
+
+;;; Tools - LLM - Model Context Protocol
 (use-package! mcp
   :config
   (setq mcp-hub-servers
-        '(("knowledge" . (:command "podman" :args ("run" "-i" "-v" "emacs-mcp-memory:/app/dist" "--rm" "mcp/memory")))
-          ;; ("puppeteer" . (:command "podman" :args ("run" "-i" "--rm" "--init" "-e DOCKER_CONTAINER=true" "mcp/puppeteer")))
-          ))
+        '(("knowledge" . (:command "podman" :args ("run" "-i" "-v" "emacs-mcp-memory:/app/dist" "--rm" "mcp/memory")))))
+  ;; ("puppeteer" . (:command "podman" :args ("run" "-i" "--rm" "--init" "-e DOCKER_CONTAINER=true" "mcp/puppeteer")))
 
   (defun gptel-mcp-register-tool ()
     "Register MCP tools with GPTel"
@@ -518,7 +523,7 @@
   (gptel-mcp-register-tool)
   (gptel-mcp-use-tool))
 
-;;; AI- Keymap
+;;; Tools - LLM - Keymap
 (map!
  :leader
 
@@ -550,3 +555,21 @@
   :desc "Add tags"             "t" #'evedel-add-tags
   :desc "Remove tags"          "T" #'evedel-remove-tags))
 
+
+;;; Tools - Smudge
+(use-package! smudge
+  :bind-keymap ("C-c ." . smudge-command-map)
+  :custom
+  ;; Endpoint needed to be adjusted and 8080 seemed like too much of a common choice
+  (smudge-oauth2-callback-endpoint "/smudge-api-callback")
+  (smudge-oauth2-callback-port "8027")
+  ;; Pick from auth source
+  (smudge-oauth2-client-secret (auth-source-pick-first-password :host "api.spotify.com"))
+  (smudge-oauth2-client-id (plist-get (car (auth-source-search :host "api.spotify.com")) :user))
+  ;; optional: enable transient map for frequent commands
+  (smudge-player-use-transient-map t)
+  ;; works offline
+  (smudge-transport 'dbus)
+  :config
+  ;; optional: display current song in mode line
+  (global-smudge-remote-mode))

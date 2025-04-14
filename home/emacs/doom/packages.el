@@ -78,3 +78,4 @@
 
 ;; Utilities
 (package! gnus)
+(package! smudge)
