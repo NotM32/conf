@@ -39,6 +39,8 @@ in {
         ./devices/sdr.nix
         ./security/firejail.nix
         ./virtualisation/containers.nix
+
+        ./services/ollama.nix
       ];
 
       # Home-manager users
