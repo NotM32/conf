@@ -2,7 +2,7 @@
 
 {
   allowUnfreePackages = [
-    "cuda-.*"
+    "cuda.*"
   ];
 
   services.ollama = {
