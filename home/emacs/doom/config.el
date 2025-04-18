@@ -144,8 +144,10 @@
   (add-hook! 'yaml-mode-hook 'eglot-ensure))
 
 ;;; Languages - Markdown
-(setq-hook! 'markdown-mode-hook
-  line-spacing 2)
+(use-package! markdown-mode
+  :config
+  (setq-hook! 'markdown-mode-hook
+    line-spacing 2))
 
 ;;; Languages - SOPS
 (use-package! sops
@@ -559,17 +561,16 @@
 ;;; Tools - Smudge
 (use-package! smudge
   :bind-keymap ("C-c ." . smudge-command-map)
-  :custom
-  ;; Endpoint needed to be adjusted and 8080 seemed like too much of a common choice
-  (smudge-oauth2-callback-endpoint "/smudge-api-callback")
-  (smudge-oauth2-callback-port "8027")
-  ;; Pick from auth source
-  (smudge-oauth2-client-secret (auth-source-pick-first-password :host "api.spotify.com"))
-  (smudge-oauth2-client-id (plist-get (car (auth-source-search :host "api.spotify.com")) :user))
-  ;; optional: enable transient map for frequent commands
-  (smudge-player-use-transient-map t)
-  ;; works offline
-  (smudge-transport 'dbus)
   :config
+  ;; Endpoint needed to be adjusted and 8080 seemed like too much of a common choice
+  (setq! smudge-oauth2-callback-endpoint "/smudge-api-callback")
+  (setq! smudge-oauth2-callback-port "8027")
+  ;; Pick from auth source
+  (setq! smudge-oauth2-client-secret (auth-source-pick-first-password :host "api.spotify.com"))
+  (setq! smudge-oauth2-client-id (plist-get (car (auth-source-search :host "api.spotify.com")) :user))
+  ;; optional: enable transient map for frequent commands
+  (setq! smudge-player-use-transient-map t)
+  ;; works offline
+  (setq! smudge-transport 'dbus)
   ;; optional: display current song in mode line
   (global-smudge-remote-mode))
