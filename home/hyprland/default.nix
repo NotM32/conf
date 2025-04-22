@@ -197,6 +197,7 @@
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
         "$mainMod CTRL, L, exec, $lockcmd"
+        "CTRL ALT, L, exec, $lockcmd"
         ", XF86Battery, exec, $lockcmd"
 
       ];
