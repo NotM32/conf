@@ -1,35 +1,39 @@
-{ self, inputs, ... }:
-let inherit (inputs) home-manager emacs-overlay;
+{ self, inputs, lib, ... }:
+let inherit (inputs) home-manager;
 in {
   perSystem = { pkgs, ... }: {
-    legacyPackages.homeConfigurations = {
+    legacyPackages.
+      homeConfigurations = {
       "default" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit self; } // inputs;
 
-        modules = [ self.homeModules.default ];
+        modules = [
+          self.homeModules.default
+          { home.homeDirectory = lib.mkDefault "/home/m32"; }
+        ];
       };
       "desktop" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit self; } // inputs;
 
-        modules = [ self.homeModules.desktop ];
+        modules = [
+          self.homeModules.desktop
+          { home.homeDirectory = lib.mkDefault "/home/m32"; }
+        ];
       };
     };
   };
 
   flake.homeModules = {
     # * configuration sets
-    default = import ./default.nix;     # no gui or development stuff, just shell and utils
-    desktop = import ./desktop;         # desktop environment full setup
+    default = import ./default.nix; # no desktop apps or development
+    desktop = import ./desktop; # desktop environment full setup
     development = import ./development; # just development stuff
 
     # * individual applications
     alacritty = import ./alacritty;
-    emacs = {
-      nixpkgs.overlays = [ emacs-overlay.overlay ];
-      imports = [ ./emacs ];
-    };
+    emacs = import ./emacs;
     firefox = import ./firefox;
     git = import ./development/git.nix;
     gpg = import ./gpg;

@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     # * Nix
-    nixfmt
+    nixfmt-classic
     nixos-option
     nurl
 
