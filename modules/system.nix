@@ -19,7 +19,7 @@
   # Automatic Upgrades / Configuration sync
   system.autoUpgrade = lib.mkIf (self ? rev) {
     enable = true;
-    flake = "self-latest";
+    flake = "self";
     flags = [ "--refresh" ];
   };
 }

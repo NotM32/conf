@@ -25,8 +25,7 @@ with lib; {
   '';
 
   nix.registry = {
-    self.flake = self;
-    self-latest = {
+    self = {
       from = {
         id = "self-latest";
         type = "indirect";
@@ -37,6 +36,7 @@ with lib; {
         repo = "conf";
       };
     };
+    self-active.flake = self;
     home-manager.flake = home-manager;
     nixpkgs.flake = nixpkgs;
     nur.flake = nur;
