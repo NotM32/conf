@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     # # Internet
     signal-cli
-    signal-desktop
+    signal-desktop-source
     element-desktop
     protonvpn-gui
 
