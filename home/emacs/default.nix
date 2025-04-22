@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   emacs = with pkgs;
-    (emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs:
+    (emacsPackagesFor emacs-git-pgtk).emacsWithPackages (epkgs:
       with epkgs; [
         treesit-grammars.with-all-grammars
         vterm
@@ -23,12 +23,11 @@ let
       scheme-basic dvisvgm dvipng # for preview and export as html
       wrapfig amsmath ulem hyperref capt-of
       etoolbox metafont;
-    #(setq org-latex-compiler "lualatex")
-    #(setq org-preview-latex-default-process 'dvisvgm)
   });
 in {
   home.packages = with pkgs; [
     black
+    cabal-install
     cargo-edit
     cargo-outdated
     clang-tools
@@ -38,14 +37,18 @@ in {
     elixir-ls
     erlfmt
     fd
+    ghc
     gomodifytags
     gopls
     gore
     hadolint
+    haskell-language-server
+    haskellPackages.hoogle
     helm-ls # helm (kubernetes package manager) language server
     html-tidy
     ispell
     libvterm
+    libxml2
     nil
     nim
     nimlangserver
@@ -53,8 +56,10 @@ in {
     nodejs
     notmuch
     perlPackages.PerlLanguageServer
-    racket-minimal
+    python3Packages.editorconfig
+    racket
     ripgrep
+    ruby
     rubyPackages.prettier
     rubyPackages.pry
     rubyPackages.pry-doc
@@ -62,6 +67,7 @@ in {
     rubyPackages.ruby_parser
     rubyPackages.solargraph
     rust-analyzer
+    rustc
     rustfmt
     shellcheck
     shfmt
@@ -75,6 +81,7 @@ in {
     typescript-language-server
     yaml-language-server
     zig
+    zls
   ];
 
   home = { sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ]; };
