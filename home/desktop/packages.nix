@@ -17,6 +17,7 @@
     terraform
     ansible
     pomerium-cli
+    kanidm
     docker-compose # for use with podman compose
 
     # ## Extra dev tools

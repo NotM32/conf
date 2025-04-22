@@ -23,5 +23,6 @@
     settings.email = "m32@protonmail.com";
     settings.lock_timeout = 3600;
   };
+  services.poweralertd.enable = true;
   services.syncthing.enable = true;
 }
