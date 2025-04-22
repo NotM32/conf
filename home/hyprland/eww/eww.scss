@@ -1,0 +1,69 @@
+// Variables
+$background: #18181B;
+$foreground: #E4E4E8;
+
+$black: #4B5254;
+$red: #CD5C60;
+$green: #6FB593;
+$yellow: #DBAC66;
+$blue: #91B9C7;
+$magenta: #845A84;
+$cyan: #4D9391;
+$white: #E4E4E8;
+
+$bright-black: #879193;
+$bright-red: #E36D5B;
+$bright-green: #72CCBA;
+$bright-yellow: #F2C866;
+$bright-blue: #97B8DE;
+$bright-magenta: #8C629C;
+$bright-cyan: #5096AB;
+$bright-white: #EFEFF1;
+
+// Global Style Reset
+* {
+  all: unset;
+}
+
+.bar {
+  background-color: unset;
+  color: $foreground;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: $background;
+  }
+  25% {
+    background-color: $bright-black;
+  }
+  75% {
+    background-color: $bright-white;
+  }
+  100% {
+    background-color: $background;
+  }
+}
+
+// Metric bars
+.metric {
+  .popup {
+    background-color: $background;
+    min-height: 40px;
+    padding: 4px;
+    border-top-color: $bright-yellow;
+    border-top-width: 4px;
+    border-top-style: solid;
+  }
+
+  scale trough {
+    background-color: $background;
+    min-height: 4px;
+
+    highlight {
+      background-color: $foreground;
+    }
+  }
+}
+
+

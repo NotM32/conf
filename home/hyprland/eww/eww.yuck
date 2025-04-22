@@ -1,0 +1,161 @@
+;;; -*- mode: lisp -*-
+;;; Variables
+(defvar visible-metric "")
+
+;;; Widgets - Groups
+(defwidget group/storage []
+  (box :class "linear"
+       :orientation "h"
+       :halign "left"
+       (metric :label "DISK"
+               :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+               :onchange "")))
+
+(defwidget group/stats []
+  (box
+   :space-evenly false
+   :spacing 2
+   :orientation "h"
+   :halign "end"
+   :valign "end"
+   (metric/bat)
+   (metric/cpu)
+   (systray)))
+
+;;; Widgets - Metrics
+(defwidget metric/ram []
+  (box :orientation "h"
+       :class "metric"
+       (metric/linear :name "RAM"
+                      :value {EWW_RAM.used_mem_perc})))
+
+(defwidget metric/cpu [?orientation]
+  (util/scale :name "CPU" :value {EWW_CPU.avg}
+              (label :text "CPU")
+              (graph :value {EWW_CPU.avg}
+                     :min 0
+                     :max 101
+                     :dynamic true
+                     :line-style "round"
+                     :thickness 2
+                     :flip-x true
+                     :time-range "5m")))
+
+(defwidget metric/bat [?orientation]
+  (util/scale :name "BAT" :value {EWW_BATTERY.total_avg}
+              (label :text "BAT")
+              (graph :value {EWW_BATTERY.total_avg}
+                     :min 0
+                     :max 101
+                     :dynamic true
+                     :thickness 2
+                     :flip-x true
+                     :time-range "5m")))
+
+;;; Widgets - Utility
+(defwidget util/scale [name value ?active]
+           (eventbox :class "metric"
+                     :onclick "eww --config ~/conf/home/hyprland/eww update visible-metric=${name}"
+                     :onrightclick "eww --config ~/conf/home/hyprland/eww update visible-metric=''"
+                     (box :valign "end"
+                          :space-evenly false
+                          :orientation "v"
+                          ;;; Popup
+                          (revealer :reveal { visible-metric == name}
+                                    :transition "slideup"
+                                    (box :class "popup"
+                                         :orientation "v"
+                                         (children)))
+                          ;;; Value
+                          (scale :min 0
+                                 :max 101
+                                 :active { active ?: false}
+                                 :tooltip name
+                                 :orientation "h"
+                                 :value value
+                                 :valign "end"
+                                 :height 4
+                                 :width 150))))
+
+(defwidget metric/linear [name value]
+           (box :orientation "h"
+                :height 4
+                (scale :min 0
+                       :max 101
+                       :active true
+                       :orientation "h"
+                       :tooltip { name}
+                       :value { value})))
+
+(defwidget item/linearmetric [name ?onchange ?orientation]
+           (box :orientation "v"
+                :class "linear"
+                :valign "start"
+                (expander :expanded { visible-metric == name}
+                          (box :class "popup"
+                               (children :nth 0)))
+                (eventbox
+                 :onclick "eww --config ~/conf/home/hyprland/eww update visible-metric=${name}"
+                 :onrightclick "eww --config ~/conf/home/hyprland/eww update visible-metric=''"
+                 (children :nth 1))))
+
+(defwidget linear-scale [tooltip value ?onchange ?orientation]
+           (scale :min 0
+                  :max 101
+                  :active true
+                  :tooltip tooltip
+                  :value value
+                  :orientation { orientation ?: "h"}
+                  :onchange { onchange}
+                  :height 4
+                  :width 150))
+
+;; Widgets - Hyprland Sample
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
+            (box :space-evenly true
+                 (label :text "${workspaces}${current_workspace}" :visible false)
+                 (for workspace in workspaces
+                      (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+                                (box :class "workspace-entry ${workspace.windows > 0 ? "occupied" : "empty"}"
+                                     (label :text "${workspace.id}" :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""}")))))))
+
+(defwidget window_w [] (box (label :text "${window}")))
+
+;;; Polls
+(defpoll volume :interval "1s" "scripts/getvol")
+(defpoll time :interval "10s" "date '+%H:%M %b %d, %Y'")
+
+;;; Listeners
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+(deflisten window :initial "..." "sh ~/.config/eww/scripts/get-window-title")
+
+;;; Widgets - Layout
+(defwidget layout/bar [?orientation]
+  (box :orientation { orientation ?: "h"}
+       :class "bar"
+       (metric/cpu)))
+
+;;; Windows
+(defwindow bar
+    :monitor 0
+    :stacking "fg"
+    :exclusive false
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "100%"
+                        :height "4px"
+                        :anchor "bottom center")
+    (group/stats))
+
+(defwindow popup [?timeout]
+  :monitor 0
+  :stacking "fg"
+  :exclusive false
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "10%"
+                      :anchor "bottom center")
+  (group/stats))
