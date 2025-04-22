@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  emacs = with pkgs;
+  package = with pkgs;
     (emacsPackagesFor emacs-git-pgtk).emacsWithPackages (epkgs:
       with epkgs; [
         treesit-grammars.with-all-grammars
@@ -84,11 +84,13 @@ in {
     zls
   ];
 
-  home = { sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ]; };
+  home = {
+    sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ];
+  };
 
   programs.emacs = {
+    inherit package;
     enable = true;
-    package = emacs;
   };
 
   # doom-emacs configuration
@@ -99,6 +101,7 @@ in {
   # };
 
   services.emacs = {
+    inherit package;
     enable = true;
     defaultEditor = true;
     startWithUserSession = true;

@@ -1,7 +1,5 @@
 { self, pkgs, ... }: {
   imports = [
-    self.homeModules.emacs
-
     ./git.nix
   ];
 
