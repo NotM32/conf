@@ -49,6 +49,7 @@
         ./configurations.nix
         ./home/flake-module.nix
         ./devShells/flake-module.nix
+        ./lib/flake-module.nix
         ./modules/flake-module.nix
         ./pkgs/flake-module.nix
       ];
