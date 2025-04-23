@@ -27,7 +27,7 @@ with lib; {
   nix.registry = {
     self = {
       from = {
-        id = "self-latest";
+        id = "self";
         type = "indirect";
       };
       to = {
