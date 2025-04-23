@@ -26,6 +26,7 @@ let
   });
 in {
   home.packages = with pkgs; [
+    (aspellWithDicts (dicts: with dicts; [ en en-computers ]))
     black
     cabal-install
     cargo-edit
@@ -47,6 +48,7 @@ in {
     helm-ls # helm (kubernetes package manager) language server
     html-tidy
     ispell
+    languagetool
     libvterm
     libxml2
     nil

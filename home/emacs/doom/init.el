@@ -94,7 +94,10 @@
         +icons
         +flymake
         +childframe)
-       (spell +flyspell)   ; tasing you for misspelling mispelling
+       (spell              ; tasing you for misspelling mispelling
+        +aspell
+        +everywhere
+        +flyspell)
        grammar             ; tasing grammar mistake every you make
 
        :tools
@@ -137,7 +140,7 @@
        ;;csharp            ; unity, .NET, and mono shenanigans
        data                ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
-       ;;dhall
+       dhall
        (elixir             ; erlang done right
         +lsp
         +tree-sitter)
@@ -184,9 +187,13 @@
         +tree-sitter)
        ;;ocaml             ; an objective camel
        (org                ; organize your plain life in plain text
+        +contacts
+        +crypt
         +dragndrop
         +gnuplot
+        +jupyter
         +noter
+        +passwords
         +present
         +pretty)
        (php                ; perl's insecure younger brother

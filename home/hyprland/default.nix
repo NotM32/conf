@@ -3,9 +3,11 @@
   imports = [ ./hyprlock.nix ./wofi.nix ./wpaperd.nix ./mako.nix ];
 
   home.packages = with pkgs; [
-    maim
     wayshot
+    slurp
+
     wl-clipboard
+    wlrctl
 
     kdePackages.dolphin
     kdePackages.qtwayland
