@@ -542,20 +542,27 @@
 
  (:prefix ("c" . "mcp")
   :desc "MCP Hub"  "h" #'mcp-hub
-  :desc "Register" "r" #'gptel-mcp-register-tool)
+  :desc "Register" "r" #'gptel-mcp-register-tool))
 
- (:prefix ("e" . "Evedel")
-  :desc "Create reference"     "r" #'evedel-create-reference
-  :desc "Create directive"     "d" #'evedel-create-directive
-  :desc "Save instructions"    "s" #'evedel-save-instructions
-  :desc "Load instructions"    "l" #'evedel-load-instructions
-  :desc "Process directives"   "p" #'evedel-process-directives
-  :desc "Modify directive"     "m" #'evedel-modify-directive
-  :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
-  :desc "Delete instructions"  "k" #'evedel-delete-instructions
-  :desc "Convert instructions" "c" #'evedel-convert-instructions
-  :desc "Add tags"             "t" #'evedel-add-tags
-  :desc "Remove tags"          "T" #'evedel-remove-tags))
+(use-package! evedel
+  :defer t
+
+  :config
+  (map!
+   :leader
+   :prefix ("l" . "LLM")
+   (:prefix ("e" . "Evedel")
+    :desc "Create reference"     "r" #'evedel-create-reference
+    :desc "Create directive"     "d" #'evedel-create-directive
+    :desc "Save instructions"    "s" #'evedel-save-instructions
+    :desc "Load instructions"    "l" #'evedel-load-instructions
+    :desc "Process directives"   "p" #'evedel-process-directives
+    :desc "Modify directive"     "m" #'evedel-modify-directive
+    :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
+    :desc "Delete instructions"  "k" #'evedel-delete-instructions
+    :desc "Convert instructions" "c" #'evedel-convert-instructions
+    :desc "Add tags"             "t" #'evedel-add-tags
+    :desc "Remove tags"          "T" #'evedel-remove-tags)))
 
 
 ;;; Tools - Smudge
