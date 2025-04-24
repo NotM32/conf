@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  screenshotCmd = pkgs.writeShellScriptBin "screenshot" ''
+                wayshot -s "$(${pkgs.slurp}/bin/slurp)" --stdout | ${pkgs.satty}/bin/satty --save-after-copy --action-on-enter save-to-file -o "$HOME/media/pictures/screenshots/$(date +%s).png" -f -
+  '';
+in {
 
   imports = [ ./hyprlock.nix ./wofi.nix ./wpaperd.nix ./mako.nix ];
 
@@ -30,6 +35,7 @@
       "$menu" = "uwsm-app -- $(wofi --show drun --define=drun-print_desktop_file=true)";
       "$emacs" = "uwsm-app -- emacs";
       "$lockcmd" = "uwsm-app -- hyprlock";
+      "$scrotcmd" = "uwsm-app -- ${screenshotCmd}/bin/screenshot";
 
       env = [
         "XCURSOR_SIZE,24"
@@ -201,6 +207,9 @@
         "$mainMod CTRL, L, exec, $lockcmd"
         "CTRL ALT, L, exec, $lockcmd"
         ", XF86Battery, exec, $lockcmd"
+
+        "$mainMod SHIFT, S, exec, $scrotcmd"
+        ", Print, exec, $scrotcmd"
 
       ];
 
