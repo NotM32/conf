@@ -4,7 +4,6 @@
     signal-cli
     signal-desktop-source
     element-desktop
-    protonvpn-gui
 
     # # Games
     steam
