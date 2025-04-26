@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     # # Internet
     signal-cli
-    signal-desktop-source
+    signal-desktop
     element-desktop
 
     # # Games
