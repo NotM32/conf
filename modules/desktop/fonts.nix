@@ -5,5 +5,6 @@
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
     nerd-fonts.geist-mono
+    nerd-fonts.recursive-mono
   ];
 }
