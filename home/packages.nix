@@ -14,5 +14,7 @@
     minicom
     mosh
     btdu
+    kubectl
+    k9s
   ];
 }

@@ -4,6 +4,7 @@
     signal-cli
     signal-desktop
     element-desktop
+    monero-gui
 
     # # Games
     steam
