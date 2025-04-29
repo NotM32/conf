@@ -15,7 +15,7 @@
   # * Additional shell utils
   programs.broot = {
     enable = true;
-    enableNushellIntegration = true;
+    enableNushellIntegration = false;
   };
 
   programs.carapace = {
