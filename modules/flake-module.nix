@@ -38,7 +38,7 @@ in {
         ./devices/printers.nix
         ./devices/sdr.nix
         ./security/firejail.nix
-        ./virtualisation/containers.nix
+        ./containers/podman.nix
 
         ./services/ollama.nix
       ];
