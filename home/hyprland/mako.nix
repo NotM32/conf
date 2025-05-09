@@ -1,7 +1,6 @@
 { lib, config, ... }: {
   services.mako.enable = true;
-
-  services.mako = {
+  services.mako.settings = {
     maxVisible = 3;
     defaultTimeout = 5000;
     ignoreTimeout = true;
