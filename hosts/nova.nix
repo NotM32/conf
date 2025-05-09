@@ -42,5 +42,10 @@
     };
   };
 
+  networking.nftables.enable = true;
+  services.resolved.enable = true;
+  services.cloudflare-warp.enable = true;
+  allowUnfreePackages = [ "cloudflare-warp" ];
+
   system.stateVersion = "24.05";
 }
