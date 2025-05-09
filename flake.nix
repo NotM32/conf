@@ -3,40 +3,68 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nur.url = "github:nix-community/NUR";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     flake-parts.url = "github:hercules-ci/flake-parts";
-    sops-nix.url = "github:Mic92/sops-nix";
 
-    # Deployment / Provisioning
-    disko.url = "github:nix-community/disko";
-    deploy.url = "github:serokell/deploy-rs";
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-anywhere.url = "github:nix-community/nixos-anywhere/pxe-boot";
-
-    # System Utils
-    impermanence.url = "github:nix-community/impermanence";
-    lanzaboote.url = "github:nix-community/lanzaboote";
-
-    # Emacs
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
-
-    doomemacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
+    # Deployment / Provisioning
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    deploy = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere/pxe-boot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Secrets
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Lock a version of the flake registry
     flake-registry = {
       url = "github:NixOS/flake-registry";
       flake = false;
     };
 
-    # Extra packages
-    l5p-keyboard-rgb.url = "github:4JX/L5P-Keyboard-RGB";
+    # Emacs
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
 
-    lan-mouse.url = "github:feschber/lan-mouse";
+
+    # Extra packages
+    l5p-keyboard-rgb = {
+      url = "github:4JX/L5P-Keyboard-RGB";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lan-mouse = {
+      url = "github:feschber/lan-mouse";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, flake-parts, home-manager, ... }:

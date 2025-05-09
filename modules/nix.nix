@@ -1,4 +1,4 @@
-{ self, config, lib, pkgs, nur, home-manager, flake-registry, nixpkgs, ... }:
+{ self, config, lib, pkgs, home-manager, flake-registry, nixpkgs, ... }:
 with lib; {
   nix.settings = {
     system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
@@ -18,13 +18,14 @@ with lib; {
   };
 
   nix.nixPath =
-    [ "nixpkgs=${pkgs.path}" "nur=${nur}" "home-manager=${home-manager}" ];
+    [ "nixpkgs=${pkgs.path}" "home-manager=${home-manager}" ];
 
   nix.extraOptions = ''
     flake-registry = ${flake-registry}/flake-registry.json
   '';
 
   nix.registry = {
+    # a version that follows the latest changes from the repository
     self = {
       from = {
         id = "self";
@@ -36,10 +37,10 @@ with lib; {
         repo = "conf";
       };
     };
+    # a pinned version of this flake
     self-active.flake = self;
     home-manager.flake = home-manager;
     nixpkgs.flake = nixpkgs;
-    nur.flake = nur;
   };
 
   # The below generates a list of build hosts from the hosts in this flake
