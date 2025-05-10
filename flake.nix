@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     # Deployment / Provisioning
     disko = {
       url = "github:nix-community/disko";
@@ -55,11 +54,9 @@
       flake = false;
     };
 
-
     # Extra packages
     l5p-keyboard-rgb = {
       url = "github:4JX/L5P-Keyboard-RGB";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     lan-mouse = {
       url = "github:feschber/lan-mouse";
