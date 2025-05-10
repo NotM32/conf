@@ -164,4 +164,9 @@
   };
 
   services.logind.lidSwitch = "lock";
+
+  services.upower = {
+    enable = true;
+    criticalPowerAction = "Hibernate";
+  };
 }
