@@ -1,15 +1,21 @@
-{ config, lib, modulesPath, self, ... }:
+{ config, lib, modulesPath, self, pkgs, ... }:
 {
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  environment.systemPackages = [ self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default ];
+  environment.systemPackages = [
+    self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default
+    pkgs.linuxPackages.lenovo-legion-module
+  ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
-  boot.kernelModules = [ "kvm-amd" "nct6775" ];
+  boot.kernelModules = [ "kvm-amd" "nct6775" "legion_laptop" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    lenovo-legion-module
+  ];
 
   # boot.initrd.secrets =
   #   { "/persist/secrets/boot/pubkey.asc" =

@@ -1,4 +1,4 @@
-{ self, specialArgs, ... }: {
+{ self, specialArgs, pkgs, ... }: {
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "nova";
 
@@ -50,6 +50,10 @@
   services.tlp = {
     enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    lenovo-legion
+  ];
 
   system.stateVersion = "24.05";
 }
