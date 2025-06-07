@@ -47,5 +47,9 @@
   services.cloudflare-warp.enable = true;
   allowUnfreePackages = [ "cloudflare-warp" ];
 
+  services.tlp = {
+    enable = true;
+  };
+
   system.stateVersion = "24.05";
 }
