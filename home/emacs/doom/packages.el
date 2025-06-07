@@ -79,3 +79,4 @@
 ;; Utilities
 (package! gnus)
 (package! smudge)
+(package! ssh)
