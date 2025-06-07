@@ -1,7 +1,23 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 let
   screenshotCmd = pkgs.writeShellScriptBin "screenshot" ''
                 wayshot -s "$(${pkgs.slurp}/bin/slurp)" --stdout | ${pkgs.satty}/bin/satty --save-after-copy --action-on-enter save-to-file -o "$HOME/media/pictures/screenshots/$(date +%s).png" -f -
+  '';
+
+  brightnessCmd = pkgs.writeShellScriptBin "brightness" ''
+                case "$1" in
+                     "raise")
+                       ${pkgs.brightnessctl}/bin/brightnessctl +5%
+                       ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
+                       ;;
+                     "lower")
+                       ${pkgs.brightnessctl}/bin/brightnessctl -5
+                       ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
+                       ;;
+                     *)
+                       echo "invalid argument"
+                       exit 1
+                esac
   '';
 in {
 
