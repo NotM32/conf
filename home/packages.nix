@@ -1,6 +1,11 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     # * Nix
+    manix
+    nh
+    nvd
+    nix-output-monitor
+    nix-index
     nixfmt-classic
     nixos-option
     nurl
