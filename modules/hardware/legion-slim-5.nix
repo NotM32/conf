@@ -13,6 +13,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
   boot.kernelModules = [ "kvm-amd" "nct6775" "legion_laptop" ];
+  boot.blacklistedKernelModules = [ "ideapad_laptop" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     lenovo-legion-module
   ];
