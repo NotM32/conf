@@ -175,4 +175,6 @@
     enable = true;
     criticalPowerAction = "Hibernate";
   };
+
+  services.power-profiles-daemon.enable = true;
 }
