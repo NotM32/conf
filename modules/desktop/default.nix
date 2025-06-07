@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  plymouthThemes = pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "deus_ex" "owl" ]; };
+in {
   imports = [ ./audio.nix ./fonts.nix ];
 
   services.xserver.enable = true;
@@ -16,5 +19,13 @@
     wayland-utils
     vulkan-tools
   ];
+
+  boot.plymouth = {
+    enable = true;
+
+    themePackages = [ plymouthThemes ];
+    theme = "deus_ex";
+    font = "${pkgs.nerd-fonts.hack}/share/fonts/truetype/NerdFonts/Hack/HackNerdFontMono-Regular.ttf";
+  };
 
 }
