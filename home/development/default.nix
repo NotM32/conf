@@ -6,8 +6,6 @@
   home.packages = with pkgs; [
     # * Tools
     direnv
-    plandex
-    plandex-server
 
     # * Languages
     gcc
