@@ -7,9 +7,9 @@ in {
 
     wrappedBinaries = {
       signal-desktop-source = {
-        executable = "${lib.getBin pkgs.signal-desktop}/bin/signal-desktop";
+        executable = "${lib.getBin pkgs.signal-desktop-source}/bin/signal-desktop";
         profile = "${profiles}/signal-desktop.profile";
-        desktop = "${pkgs.signal-desktop}/share/applications/signal-desktop.desktop";
+        desktop = "${pkgs.signal-desktop-source}/share/applications/signal.desktop";
       };
 
       spotify = {
