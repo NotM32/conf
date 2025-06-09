@@ -170,7 +170,7 @@
     };
   };
 
-  services.logind.lidSwitch = "lock";
+  services.logind.lidSwitch = "suspend";
 
   services.upower = {
     enable = true;
