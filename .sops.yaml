@@ -10,7 +10,7 @@ creation_rules:
       age:
       - *host_phoenix
       - *host_nova
-  - path_regex: modules/users/[^/]+\.yml$
+  - path_regex: home/secrets\.yml$
     key_groups:
     - pgp:
       - *admin_m32

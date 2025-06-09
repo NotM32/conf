@@ -20,6 +20,7 @@
   home.packages = with pkgs; [ home-manager ];
 
   programs.home-manager.enable = true;
+
   xdg = {
     enable = true;
     userDirs.enable = true;
@@ -41,4 +42,8 @@
     };
   };
 
+  sops = {
+    defaultSopsFile = ./secrets.yml;
+    gnupg.home = "${config.home.homeDirectory}/.gnupg";
+  };
 }
