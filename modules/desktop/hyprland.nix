@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [ ./sddm.nix ];
+  imports = [ ./ly.nix ];
 
   environment.systemPackages = with pkgs; [
     qt6.qtwayland

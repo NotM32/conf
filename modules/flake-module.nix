@@ -31,7 +31,9 @@ in {
         self.nixosModules.common
 
         ./backup
+
         ./desktop
+        ./desktop/boot.nix
 
         ./devices/android.nix
         ./devices/iphone.nix
