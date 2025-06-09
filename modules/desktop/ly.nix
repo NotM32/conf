@@ -1,9 +1,7 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.displayManager.ly = {
-    enable = true;
+    enable = false;
 
-    settings = {
-      animation = "doom";
-    };
+    settings = { animation = "doom"; };
   };
 }
