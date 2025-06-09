@@ -3,7 +3,7 @@
     enable = true;
 
     settings = {
-      animation = "colormix";
+      animation = "doom";
     };
   };
 }
