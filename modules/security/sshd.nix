@@ -7,6 +7,4 @@
       PasswordAuthentication = false;
     };
   };
-
-  security.pam.sshAgentAuth.enable = true;
 }

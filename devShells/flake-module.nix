@@ -23,6 +23,10 @@
         pkgs.sops
         pkgs.jq
         pkgs.opentofu
+        pkgs.pam_u2f
+        pkgs.otpw
+        pkgs.oath-toolkit
+        pkgs.pamtester
       ] ++ pkgs.lib.optional (pkgs.stdenv.isLinux) pkgs.mkpasswd;
 
       shellHook = ''
