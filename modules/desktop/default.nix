@@ -1,6 +1,10 @@
-{ pkgs, ... }:
-{
-  imports = [ ./audio.nix ./fonts.nix ];
+{ pkgs, ... }: {
+  imports = [
+    ./audio.nix
+    ./boot.nix
+    ./display-manager.nix
+    ./fonts.nix
+  ];
 
   services.xserver.enable = true;
   programs.xwayland.enable = true;
@@ -16,6 +20,9 @@
     clinfo
     wayland-utils
     vulkan-tools
+
+    qt6.qtwayland
+    qt5.qtwayland
   ];
 
 }
