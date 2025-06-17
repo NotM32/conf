@@ -6,12 +6,9 @@
         self.packages.${system}.docs
 
         pkgs.ipmitool
-        pkgs.python3.pkgs.invoke
         inputs.nixos-anywhere.packages.${system}.nixos-anywhere-pxe
-        pkgs.mypy
         pkgs.pixiecore
         pkgs.dnsmasq
-        pkgs.python3.pkgs.netaddr
         pkgs.openssh
         pkgs.gitMinimal
         pkgs.rsync
