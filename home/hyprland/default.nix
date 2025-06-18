@@ -113,8 +113,8 @@ in {
           "border, 1, 12, default"
           "borderangle, 1, 8, default"
           "fade, 1, 7, inquick"
-          "workspaces, 1, 6, inquick, slidefadevert"
-          "specialWorkspace, 1, 6, inquick, slidefadevert"
+          "workspaces, 1, 6, inquick, slidevert"
+          "specialWorkspace, 1, 6, inquick, slidevert"
         ];
       };
 
