@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, self, pkgs, ... }:
+{ config, lib, modulesPath, self, pkgs, options, ... }:
 {
   imports =
     [
@@ -154,6 +154,9 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+  # HiDPI console font
+  console.packages = options.console.packages.default ++ [ pkgs.terminus_font ];
 
   # RGB Lighting Service
   systemd.services.legion-keyboard-rgb = {
