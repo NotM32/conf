@@ -4,6 +4,8 @@ let
     selected_themes = [ "deus_ex" "owl" ];
   };
 in {
+  boot.initrd.systemd.enable = true;
+
   boot.plymouth = {
     enable = true;
 
