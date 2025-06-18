@@ -18,51 +18,16 @@
     lenovo-legion-module
   ];
 
-  # boot.initrd.secrets =
-  #   { "/persist/secrets/boot/pubkey.asc" =
-  #       ../../home/gpg/pubkey.asc;
-  #     "/persist/secrets/boot/cryptkey.gpg" =
-  #       /persist/secrets/boot/cryptkey.gpg;
-  #   };
-
   # Support for YubiKey PBA (two factor decryption)
   boot.initrd.luks.yubikeySupport = false;
   # Support for GPG smartcard decryption
-  boot.initrd.luks.gpgSupport = true;
+  boot.initrd.luks.gpgSupport = false;
   # Support for FIDO2 decryption
   boot.initrd.luks.fido2Support = false;
 
-  # Necessary (and a default) for multiple drives
-  boot.initrd.luks.reusePassphrases = true;
-
   boot.initrd.luks.devices = {
-    # fido2: yes
-    # gpg: yes
-    # yk: no
     "ucrypt" = {
       device = "/dev/nvme0n1p2";
-      # PBA (haven't added key yet)
-      # yubikey = {
-      #   slot = 2;
-      #   twoFactor = true;
-      #   storage = {
-      #     device = "$EFI_PART";
-      #   };
-      # };
-
-      # gpg-card CCID smartcard support
-      # gpgCard = {
-      #   publicKey     = ../../home/gpg/pubkey.asc;
-      #   encryptedPass = /persist/secrets/boot/cryptkey.gpg;
-      # };
-
-      # # FIDO2 support
-      # fido2 = {
-      #   credential = "6f80d6063d2301878832f87c28a51fe5";
-      #   passwordLess = false;
-      # };
-
-      fallbackToPassword = true;
     };
   };
 
