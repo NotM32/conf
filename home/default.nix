@@ -1,4 +1,4 @@
-{ pkgs, config, self, ... }: {
+{ pkgs, config, self, nixosConfig, ... }: {
 
   imports = [
     self.homeModules.gpg
@@ -11,7 +11,7 @@
   ];
 
   home = {
-    stateVersion = "23.11";
+    stateVersion = nixosConfig.system.stateVersion;
     username = "m32";
 
     preferXdgDirectories = true;

@@ -34,7 +34,6 @@
   programs.keychain = {
     enable = true;
     enableBashIntegration = true;
-    agents = [ "ssh" "gpg" ];
     keys = [
       # General
       "id_ed25519"
