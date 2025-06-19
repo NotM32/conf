@@ -1,73 +1,37 @@
-{ config, lib, modulesPath, ... }:
-
+{ config, lib, ... }:
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "nzxt-kraken3"
+    "nct6775"
+    "i2c-dev"
+    "i2c-piix4"
+  ];
 
-  boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules =
-    [ "dm-snapshot" "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ];
-  boot.kernelModules = [ "kvm-amd" "nzxt-kraken3" "nct6775" "i2c-dev" "i2c-piix4" ];
+  boot.initrd = {
+    availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
 
-  boot.initrd.secrets = {
-    "/persist/secrets/boot/pubkey.asc" = ../../home/gpg/pubkey.asc;
-    # "/persist/secrets/boot/cryptkey.gpg" = /persist/secrets/boot/cryptkey.gpg;
-  };
+    kernelModules = [
+      "dm-snapshot"
+      "vfat"
+      "usbhid"
+    ];
 
-  # Support for YubiKey PBA (two factor decryption)
-  boot.initrd.luks.yubikeySupport = false;
-  # Support for GPG smartcard decryption
-  boot.initrd.luks.gpgSupport = false;
-  # Support for FIDO2 decryption
-  boot.initrd.luks.fido2Support = false;
-
-  # Necessary (and a default) for multiple drives
-  boot.initrd.luks.reusePassphrases = true;
-
-  boot.initrd.luks.devices = {
-    # fido2: yes
-    # gpg: yes
-    # yk: no
-    "uroot" = {
-      device = "/dev/disk/by-uuid/e245dbf3-1c20-4a16-8ac1-d45582a2abee";
-      preLVM = true;
-      # PBA (haven't added key yet)
-      # yubikey = {
-      #   slot = 2;
-      #   twoFactor = true;
-      #   storage = {
-      #     device = "$EFI_PART";
-      #   };
-      # };
-
-      # gpg-card CCID smartcard support
-      # gpgCard = {
-      #   publicKey = ../../home/gpg/pubkey.asc;
-      #   encryptedPass = /persist/secrets/boot/cryptkey.gpg;
-      # };
-
-      # FIDO2 support
-      fido2 = {
-        credential = "6f80d6063d2301878832f87c28a51fe5";
-        passwordLess = false;
+    luks.devices = {
+      "uroot" = {
+        device = "/dev/disk/by-uuid/e245dbf3-1c20-4a16-8ac1-d45582a2abee";
+        preLVM = true;
       };
-
-      fallbackToPassword = true;
-    };
-
-    # fido2: no
-    # gpg: yes
-    # yk: no
-    "uroot2" = {
-      device = "/dev/disk/by-uuid/53243a77-1b78-49c3-8d26-ccb118c5a692";
-      preLVM = true;
-
-      # gpgCard = {
-      #   publicKey = /persist/secrets/boot/pubkey.asc;
-      #   encryptedPass = /persist/secrets/boot/cryptkey.gpg;
-      # };
-
-      fallbackToPassword = true;
+      "uroot2" = {
+        device = "/dev/disk/by-uuid/53243a77-1b78-49c3-8d26-ccb118c5a692";
+        preLVM = true;
+      };
     };
   };
 
@@ -119,28 +83,23 @@
     fsType = "vfat";
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/9e60cced-d0fc-4fc9-9093-421dfcadf101"; }];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  # networking.interfaces.enp6s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp7s0f3u3u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
+  swapDevices = [ { device = "/dev/disk/by-uuid/9e60cced-d0fc-4fc9-9093-421dfcadf101"; } ];
 
   hardware.bluetooth.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Hardware Temps
   programs.coolercontrol.enable = true;
 
   # Video Drivers / Hardware options
-  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+  services.xserver.videoDrivers = [
+    "nvidia"
+    "modesetting"
+    "fbdev"
+  ];
+
   hardware.nvidia.modesetting.enable = true;
 
   # rgb
