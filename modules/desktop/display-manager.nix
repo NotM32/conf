@@ -25,6 +25,7 @@ in {
     font = {
       package = pkgs.nerd-fonts.hack;
       name = "Hack Nerd Font";
+      size = "14";
     };
 
     settings = {
