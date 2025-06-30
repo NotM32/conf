@@ -1,27 +1,34 @@
 { self, pkgs, ... }:
 let
   screenshotCmd = pkgs.writeShellScriptBin "screenshot" ''
-                wayshot -s "$(${pkgs.slurp}/bin/slurp)" --stdout | ${pkgs.satty}/bin/satty --save-after-copy --action-on-enter save-to-file -o "$HOME/media/pictures/screenshots/$(date +%s).png" -f -
+    wayshot -s "$(${pkgs.slurp}/bin/slurp)" --stdout | ${pkgs.satty}/bin/satty --save-after-copy --action-on-enter save-to-file -o "$HOME/media/pictures/screenshots/$(date +%s).png" -f -
   '';
 
   brightnessCmd = pkgs.writeShellScriptBin "brightness" ''
-                case "$1" in
-                     "raise")
-                       ${pkgs.brightnessctl}/bin/brightnessctl +5%
-                       ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
-                       ;;
-                     "lower")
-                       ${pkgs.brightnessctl}/bin/brightnessctl -5
-                       ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
-                       ;;
-                     *)
-                       echo "invalid argument"
-                       exit 1
-                esac
+    case "$1" in
+         "raise")
+           ${pkgs.brightnessctl}/bin/brightnessctl +5%
+           ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
+           ;;
+         "lower")
+           ${pkgs.brightnessctl}/bin/brightnessctl -5
+           ${self.inputs.l5p-keyboard-rgb.packages.x86_64-linux.default}/bin/legion-kb-rgb set -c 8,8,8,8,8,8,8,8,8,8,8,8 --effect Static -b Low
+           ;;
+         *)
+           echo "invalid argument"
+           exit 1
+    esac
   '';
-in {
+in
+{
 
-  imports = [ ./hyprlock.nix ./wofi.nix ./wpaperd.nix ./mako.nix ];
+  imports = [
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./wofi.nix
+    ./wpaperd.nix
+    ./mako.nix
+  ];
 
   home.packages = with pkgs; [
     wayshot
@@ -71,7 +78,9 @@ in {
 
         follow_mouse = 1;
 
-        touchpad = { natural_scroll = "no"; };
+        touchpad = {
+          natural_scroll = "no";
+        };
 
         sensitivity = 0; # -1.0 to 1.0, 0 means no modification.
       };
@@ -123,29 +132,38 @@ in {
         preserve_split = "yes";
       };
 
-      gestures = { workspace_swipe = "on"; };
+      gestures = {
+        workspace_swipe = "on";
+      };
 
-      misc = { force_default_wallpaper = 0; };
+      misc = {
+        force_default_wallpaper = 0;
+      };
 
-      device = let kb_options = "altwin:swap_alt_win";
-      in [
-        {
-          name = "mx-mchncl-m-keyboard";
-          inherit kb_options;
-        }
-        {
-          name = "mx-mchncl@--keyboard";
-          inherit kb_options;
-        }
-        {
-          name = "logitech-usb-receiver";
-          inherit kb_options;
-        }
-      ];
+      device =
+        let
+          kb_options = "altwin:swap_alt_win";
+        in
+        [
+          {
+            name = "mx-mchncl-m-keyboard";
+            inherit kb_options;
+          }
+          {
+            name = "mx-mchncl@--keyboard";
+            inherit kb_options;
+          }
+          {
+            name = "logitech-usb-receiver";
+            inherit kb_options;
+          }
+        ];
 
       windowrulev2 = "suppressevent maximize, class:.*";
 
-      binds = { movefocus_cycles_fullscreen = false; };
+      binds = {
+        movefocus_cycles_fullscreen = false;
+      };
 
       "$mainMod" = "SUPER";
       bind = [
@@ -246,56 +264,5 @@ in {
     };
   };
 
-  # Hypridle
-  services.hypridle = {
-    enable = true;
-
-    settings = {
-      general = {
-        lock_cmd = "pidof hyprlock || uwsm app -- hyprlock";
-        before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
-      };
-
-      listener = [
-        {
-          timeout = 240;
-          on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10";
-          on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
-        }
-        {
-          timeout = 270;
-          on-timeout = "loginctl lock-session";
-        }
-        {
-          timeout = 300;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-        {
-          timeout = 900;
-          on-timeout = "systemctl suspend";
-        }
-      ];
-    };
-  };
-
-  # Eww (status bar)
-  programs.eww = {
-    enable = true;
-    enableBashIntegration = true;
-    configDir = ./eww;
-  };
-
   services.swayosd.enable = true;
-
-  # QT/GTK Applications
-  qt.enable = true;
-  qt.style.name = "adwaita-dark";
-  gtk.enable = true;
-  gtk.theme.name = "Adwaita-dark";
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-  };
 }

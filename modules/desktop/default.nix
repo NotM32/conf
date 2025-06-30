@@ -25,4 +25,6 @@
     qt5.qtwayland
   ];
 
+  qt.enable = true;
+
 }

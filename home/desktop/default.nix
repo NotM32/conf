@@ -1,4 +1,5 @@
-{ self, pkgs, ... }: {
+{ self, pkgs, ... }:
+{
   imports = [
     self.homeModules.default
     self.homeModules.development
@@ -16,6 +17,7 @@
   ];
 
   programs.keychain.enableXsessionIntegration = true;
+
   programs.rbw = {
     enable = true;
     settings.pinentry = pkgs.pinentry-qt;
@@ -23,9 +25,18 @@
     settings.lock_timeout = 3600;
   };
 
-  services.poweralertd = {
-    enable = true;
-  };
 
   services.syncthing.enable = true;
+
+  # QT/GTK Applications
+  qt.enable = true;
+  qt.style.name = "adwaita-dark";
+  gtk.enable = true;
+  gtk.theme.name = "Adwaita-dark";
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
 }
