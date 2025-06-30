@@ -8,7 +8,8 @@ let
          disable_hyprland_qtutils_check = true
     }
   '';
-in {
+in
+{
   programs.regreet = {
     enable = true;
 
@@ -25,7 +26,7 @@ in {
     font = {
       package = pkgs.nerd-fonts.hack;
       name = "Hack Nerd Font";
-      size = 14;
+      size = 9;
     };
 
     settings = {
