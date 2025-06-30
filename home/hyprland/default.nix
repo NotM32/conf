@@ -42,8 +42,6 @@ in
     kdePackages.qtsvg
     kdePackages.kio-fuse
     kdePackages.kio-extras
-
-    hyprpolkitagent
   ];
 
   wayland.windowManager.hyprland = {
@@ -263,6 +261,8 @@ in
 
     };
   };
+
+  services.hyprpolkitagent.enable = true;
 
   services.swayosd.enable = true;
 }

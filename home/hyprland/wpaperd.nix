@@ -1,6 +1,4 @@
 { ... }: {
-  wayland.windowManager.hyprland.settings.exec-once = ["uwsm-app -- wpaperd &"];
-
   services.wpaperd.enable = true;
 
   services.wpaperd.settings = {
