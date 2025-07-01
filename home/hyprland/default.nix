@@ -19,8 +19,7 @@ let
            exit 1
     esac
   '';
-in
-{
+in {
 
   imports = [
     ./hypridle.nix

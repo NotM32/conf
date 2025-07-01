@@ -1,7 +1,6 @@
 { pkgs, lib, config, ... }:
 let
   inherit (lib) mkOption types;
-  cfg = config.allowUnfreePackages;
 in {
   options = {
     allowUnfreePackages = mkOption {
@@ -18,7 +17,6 @@ in {
       wget
       unzip
       lm_sensors
-      cachix
     ];
 
     allowUnfreePackages = [
@@ -39,6 +37,6 @@ in {
       let
         pkgName = (lib.getName pkg);
         matchPackges = (reg: !builtins.isNull (builtins.match reg pkgName));
-      in builtins.any matchPackges cfg;
+      in builtins.any matchPackges config.allowUnfreePackages;
   };
 }

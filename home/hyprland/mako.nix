@@ -10,7 +10,7 @@
 
   wayland.windowManager.hyprland.settings.exec-once =
     lib.mkIf (config.wayland.windowManager.hyprland.enable)
-      [ "uwsm-app -- mako" ];
+      [ "uwsm-app -s b -- mako" ];
 
   # Power notifications
   services.poweralertd = {
