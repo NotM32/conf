@@ -1,7 +1,4 @@
-{ self, specialArgs, pkgs, ... }: {
-  nixpkgs.hostPlatform = "x86_64-linux";
-  networking.hostName = "nova";
-
+{ self, specialArgs, ... }: {
   imports = [
     specialArgs.self.nixosModules.workstation
 
@@ -10,6 +7,8 @@
 
     ../modules/desktop/hyprland.nix
   ];
+
+  networking.hostName = "nova";
 
   home-manager.users.m32 = {
     imports = [ self.homeModules.desktop ];
@@ -42,13 +41,6 @@
     };
   };
 
-  services.tlp = {
-    enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    lenovo-legion
-  ];
-
+  nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "24.05";
 }

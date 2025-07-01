@@ -26,5 +26,4 @@
   ];
 
   qt.enable = true;
-
 }
