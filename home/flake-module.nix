@@ -40,6 +40,7 @@ in {
     hyprland = import ./hyprland;
     mail = import ./mail;
     nushell = import ./nushell;
+    quickshell = import ./quickshell;
     ssh = import ./ssh;
     vscode = import ./development/vscode.nix;
 

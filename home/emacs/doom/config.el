@@ -139,6 +139,9 @@
   (add-hook! 'nix-mode-hook 'eglot-ensure)
   (set-eglot-client! 'svelte-mode '("svelteserver" "--stdio"))
   (add-hook! 'svelte-mode-hook 'eglot-ensure)
+  ;; qml
+  (set-eglot-client! 'qml-ts-mode '("qmlls", "-E"))
+  (add-hook! 'qml-ts-mode-hook 'eglot-ensure)
   ;; yaml
   (set-eglot-client! 'yaml-mode '("yaml-language-server" "--stdio"))
   (add-hook! 'yaml-mode-hook 'eglot-ensure))

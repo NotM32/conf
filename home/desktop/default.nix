@@ -10,6 +10,7 @@
     self.homeModules.hyprland
     self.homeModules.mail
     self.homeModules.nushell
+    self.homeModules.quickshell
     self.homeModules.ssh
 
     ./packages.nix

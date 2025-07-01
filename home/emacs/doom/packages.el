@@ -63,8 +63,12 @@
 (package! k8s-mode)
 
 ;; Modes
-(package! nushell-mode);
-(package! nushell-ts-mode);
+(package! nushell-mode)
+(package! nushell-ts-babel
+  :recipe (:host github :repo "herbertjones/nushell-ts-babel"))
+(package! nushell-ts-mode)
+(package! qml-ts-mode
+  :recipe (:host github :repo "xhcoding/qml-ts-mode"))
 (package! sops)
 (package! svelte-mode)
 (package! svelte-ts-mode
