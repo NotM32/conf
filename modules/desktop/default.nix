@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./audio.nix
     ./boot.nix
@@ -25,5 +26,7 @@
     qt5.qtwayland
   ];
 
-  qt.enable = true;
+  qt = {
+    enable = true;
+  };
 }

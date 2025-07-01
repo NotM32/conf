@@ -75,6 +75,7 @@ in
     helm-ls # helm (kubernetes package manager) language server
     html-tidy
     ispell
+    kdePackages.qtdeclarative # qmlls
     languagetool
     libvterm
     libxml2

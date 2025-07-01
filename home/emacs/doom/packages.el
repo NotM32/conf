@@ -50,7 +50,6 @@
 
 ;; AI
 (when (package! gptel)
-  (package! elysium)
   (package! evedel)
   (package! mcp
     :recipe (:host github :repo "lizqwerscott/mcp.el"
