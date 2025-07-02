@@ -132,7 +132,7 @@ in
 
   services.emacs = {
     inherit package;
-    enable = true;
+    enable = false;
     defaultEditor = true;
     startWithUserSession = true;
   };
