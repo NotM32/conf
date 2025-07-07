@@ -6,7 +6,7 @@
     specialArgs.self.nixosModules.workstation
 
     ../modules/hardware/ryzen-desktop.nix
-    ../modules/boot/uefi.nix
+    ../modules/boot/secureboot.nix
 
     ../modules/desktop/hyprland.nix
   ];
