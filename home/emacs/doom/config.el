@@ -172,7 +172,7 @@
   (setq! magit-repository-directories '(("~/projects/" . 2) ("~/conf" . 1)))
   ;; See https://github.com/magit/transient/discussions/358
   ;;
-  ;; The doom default of (display-buffer-below-selected) causes new windows to becreated with tools like gptel
+  ;; The doom default of (display-buffer-below-selected) causes new windows to be created with tools like gptel
   (setq! transient-display-buffer-action
          '(display-buffer-below-selected
            (dedicated . t)

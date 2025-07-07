@@ -66,6 +66,9 @@ in
     erlfmt
     fd
     ghc
+    github-cli
+    glab
+    gnuplot
     gomodifytags
     gopls
     gore
