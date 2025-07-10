@@ -4,6 +4,7 @@
   ];
 
   home.packages = with pkgs; [
+    opencode
     # * Tools
     direnv
 
