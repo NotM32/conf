@@ -33,6 +33,9 @@ in
   };
 
   services.syncthing.enable = true;
+  systemd.user.services.syncthing.Unit.PartOf = [ "ac.target" ];
+  systemd.user.services.syncthing.Unit.BindsTo = [ "ac.target" ];
+  systemd.user.services.syncthing.Unit.WantedBy = [ "ac.target" ];
 
   # QT/GTK Applications
   qt = {
