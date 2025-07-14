@@ -236,61 +236,38 @@
     :endpoint "/api/v1/chat/completions"
     :stream t
     :key (auth-source-pick-first-password :host "openrouter.ai")
-    :models '((anthropic/claude-3.7-sonnet
-               :capabilities (media tool-use json url))
-              (anthropic/claude-3.7-sonnet:thinking
-               :capabilities (media tool-use json url))
-              (deepseek/deepseek-r1:free
-               :capabilities (media tool json url))
-              (deepseek/deepseek-r1-zero:free
-               :capabilities (media tool-use json url))
-              (google/gemini-2.0-flash-001
-               :capabilities (media tool-use json url))
-              (openai/gpt-4o-mini
-               :capabilities (media tool-use json url))
-              (mistralai/mistral-7b-instruct
-               :capabilities (media tool-use json url))
-              (mistralai/mixtral-8x7b-instruct
-               :capabilities (media tool-use json url))
-              (meta-llama/llama-3.3-70b-instruct
-               :capabilities (media tool-use json url))
-              (meta-llama/llama-3.1-405b-instruct
-               :capabilities (media tool-use json url))
-              (qwen/qwq-32b
-               :capabilities (media json url))
-              (qwen/qwen2.5-32b-instruct
-               :capabilities (media json url))
-              (x-ai/grok-beta
-               :capabilities (tool-use json url))
-              (x-ai/grok-2-1212
-               :capabilities (tool-use json url))
-              (x-ai/grok-2-vision-1212
-               :capabilities (media tool-use json url))))
+    :models '(anthropic/claude-sonnet-4
+              anthropic/claude-opus-4
+              x-ai/grok-4
+              x-ai/grok-3
+              x-ai/grok-3-mini
+              meta-llama/llama-4-maverick:free
+              meta-llama/llama-4-maverick
+              openai/gpt-4.1
+              openai/gpt-4.1-mini
+              google/gemini-2.5-pro
+              google/gemini-2.5-flash-preview-05-20))
 
   ;;; Tools - LLM - System Prompts
   (setq! gptel-directives
-         '((default . "You are a large language model integrated into Emacs.
-                       Be concise in your response, provide a intelligent response.
-                       Your responses are as intelligent as those of a 180+ IQ person
-                       You are in a general LLM mode right now. Switching modes will change this prompt.
-                       Other modes include: programming and writing mode.
-                       In this mode, the general mode, you will be interacted with conversationally. Your
-                       tasks may include research and general insight using the tools given to you.
+         '((default . "You are an LLM integrated into emacs via the gpt.el package.
 
-                       General rules:
+                       Output Rules:
+                       - The conversation happens in org-mode. Use org-mode formatting
+                       - We have gnuplot available in org-mode output, as well as org-babel - use these for chartting and writing code
+                       - This is doom-emacs so you have that configuration set and the capabilities of it available as well
+                       - Either take advantage of multi-line outline format, or tabulate for outline style outputs.
+
+                       Generally:
                        - When searching, use startpage.com.
-                       - Be terse, but not lossy. Feel free to use larger vocabulary words.
-                       - All the warning labels have been displayed outside your response and context in a conversation.
-                       - In the interest of terse and fast conversation, you can be certain that the human has asserted their understanding to be cautious
-                       - You may not have all context on a situation. Being inquisitive is better than wasting time on back and fourth.
+                       - Be terse, but not lossy in your responses.
+                       - The user is an expert and is responsible for weighing risks and making decisions on their own. Rather than muddling your response text with warning labels, focus instead on providing all the vantages of a topic.
+                       - In the interest of terse and fast conversation, you can be certain that the human has asserted their understanding to be cautious.
 
-                       Your memory:
-                       You have access to tools that allow you to read and write to your local memory. Please make use of the
-                       memory as you see fit. You may note simple remarks about the environment you're in, the user, projects,
-                       and more as a way to provide personalization to the experience and enable persistency of information
-                       across sessions. In general, you should read your memory if you think something pertinent is there.
-                       You certainly should address your memory if we are only being conversational, or if a context might be
-                       helpful. ")
+                       Programming:
+                       - Short scripts are preferred to be implemented in nushell, but if there are issues with nushell, you can fall back to python or elisp. As you can use org-babel in your response, implementations using that are also supported.
+                       - Preferred languages to implement things are Rust for programming, and Nix for infra stuff.
+                      ")
 
            (chat . "You're awake! You are an artificial intelligence integrated into Emacs. You are here to talk and converse, to be generally helpful, somewhat joking.
                     You're a bit of a character and have great personality. You're an expert in tech, engineering, history and all the things I am not an expert in. You
@@ -533,40 +510,21 @@
  :leader
 
  :prefix ("l" . "LLM")
- :desc "Abort"               "A" #'gptel-abort
+ :desc "Abort"               "g" #'gptel-abort
  :desc "Select GPTel Buffer" "b" #'gptel
- :desc "Open GPTel Menu"     "m" #'gptel-menu
+ :desc "Open GPTel Menu"     "l" #'gptel-menu
  :desc "Send to LLM"         "s" #'gptel-send
  :desc "Select tools"        "t" #'gptel-tools
 
- (:prefix ("a" . "context")
+ (:prefix ("c" . "context")
   :desc "file"   "f" #'gptel-add-file
   :desc "buffer" "b" #'gptel-add)
 
  (:prefix ("c" . "mcp")
   :desc "MCP Hub"  "h" #'mcp-hub
-  :desc "Register" "r" #'gptel-mcp-register-tool))
-
-(use-package! evedel
-  :defer t
-
-  :config
-  (map!
-   :leader
-   :prefix ("l" . "LLM")
-   (:prefix ("e" . "Evedel")
-    :desc "Create reference"     "r" #'evedel-create-reference
-    :desc "Create directive"     "d" #'evedel-create-directive
-    :desc "Save instructions"    "s" #'evedel-save-instructions
-    :desc "Load instructions"    "l" #'evedel-load-instructions
-    :desc "Process directives"   "p" #'evedel-process-directives
-    :desc "Modify directive"     "m" #'evedel-modify-directive
-    :desc "Modify commentary"    "C" #'evedel-modify-reference-commentary
-    :desc "Delete instructions"  "k" #'evedel-delete-instructions
-    :desc "Convert instructions" "c" #'evedel-convert-instructions
-    :desc "Add tags"             "t" #'evedel-add-tags
-    :desc "Remove tags"          "T" #'evedel-remove-tags)))
-
+  :desc "Register MCP tools with GPTel" "r" #'gptel-mcp-register-tool
+  :desc "Enable tools for use in GPTel" "u" #'gptel-mcp-use-tool
+  :desc "Disable MCP tools in GPTel"    "x" #'gptel-mcp-close-use-tool))
 
 ;;; Tools - Smudge
 (use-package! smudge
