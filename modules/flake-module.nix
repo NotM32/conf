@@ -1,122 +1,89 @@
 { self, inputs, ... }:
 let
-  inherit (inputs) nixpkgs sops-nix disko lanzaboote emacs-overlay;
-in {
+  inherit (inputs)
+    nixpkgs
+    disko
+    lanzaboote
+    sops-nix
+    emacs-overlay
+    ;
+in
+{
   flake.nixosModules = {
     # Modules common to all configuration profiles
-    common = { pkgs, ... }: {
-      imports = [
-        disko.nixosModules.disko
-        lanzaboote.nixosModules.lanzaboote
+    common =
+      { pkgs, ... }:
+      {
+        imports = [
+          disko.nixosModules.disko
+          lanzaboote.nixosModules.lanzaboote
 
-        self.nixosModules.home-manager
-        self.nixosModules.secrets
+          self.nixosModules.home-manager
+          self.nixosModules.secrets
 
-        ./nix.nix
-        ./packages.nix
-        ./system.nix
+          ./nix.nix
+          ./packages.nix
+          ./system.nix
 
-        ./networking
-        ./security
-        ./users
-      ];
+          ./networking
+          ./security
+          ./users
+        ];
 
-      # Nixpkgs
-      nixpkgs.overlays = [ emacs-overlay.overlay ];
-    };
-
-    # Modules common to a workstation
-    workstation = { ... }: {
-      imports = [
-        self.nixosModules.common
-
-        ./backup
-
-        ./desktop
-        ./desktop/boot.nix
-
-        ./devices/android.nix
-        ./devices/iphone.nix
-        ./devices/printers.nix
-        ./devices/sdr.nix
-        ./security/firejail.nix
-        ./containers/podman.nix
-
-        ./services/ollama.nix
-      ];
-
-      # Home-manager users
-      home-manager.users.m32 = nixpkgs.lib.mkDefault self.homeModules.desktop;
-
-      # Backups
-      backups.srv.enable = true;
-      backups.home.enable = true;
-      backups.podman.enable = true;
-
-      # Console
-      console.earlySetup = true;
-
-      # Networking
-      networking.networkmanager.enable = true;
-
-      time.timeZone = nixpkgs.lib.mkDefault "America/Denver";
-    };
-
-    # Module for handling secrets
-    secrets = { pkgs, config, lib, ... }:
-      let
-        sopsFile = ../hosts/. + "/${config.networking.hostName}.yml";
-      in {
-        imports = [ sops-nix.nixosModules.sops ];
-
-        sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-        sops.defaultSopsFile = lib.mkIf (builtins.pathExists sopsFile) sopsFile;
-        sops.defaultSopsFormat = "yaml";
-
-        # -- BACKUP --
-        sops.secrets."backup_repo/repository" = lib.mkIf (builtins.hasAttr "backups" config) {
-          sopsFile = ../secrets/backup.yml;
-          format = "yaml";
-        };
-        sops.secrets."backup_repo/connection" = lib.mkIf (builtins.hasAttr "backups" config) {
-          sopsFile = ../secrets/backup.yml;
-          format = "yaml";
-        };
-        sops.secrets."backup_repo/password" = lib.mkIf (builtins.hasAttr "backups" config) {
-          sopsFile = ../secrets/backup.yml;
-          format = "yaml";
-        };
-        sops.secrets."backup_repo/ssh_id" = lib.mkIf (builtins.hasAttr "backups" config) {
-          sopsFile = ../secrets/backup.yml;
-          format = "yaml";
-        };
-        sops.secrets."backup_repo/known_hosts" = lib.mkIf (builtins.hasAttr "backups" config) {
-          sopsFile = ../secrets/backup.yml;
-          format = "yaml";
-        };
-
-        # -- DEPLOYMENT --
-
-        # public ssh deploy key for repo
-        sops.secrets."deploy/deploy_pub" = {
-          sopsFile = ../secrets/deploy.yml;
-          format = "yaml";
-        };
-        # private ssh deploy key for repo
-        sops.secrets."deploy/deploy_private" = {
-          sopsFile = ../secrets/deploy.yml;
-          format = "yaml";
-        };
-        # authorized keys file for repo
-        sops.secrets."deploy/authorized_keys" = {
-          sopsFile = ../secrets/deploy.yml;
-          format = "yaml";
-        };
+        # Nixpkgs
+        nixpkgs.overlays = [ emacs-overlay.overlay ];
       };
 
-    backup = { ... } : {
-      imports = [ ./backup ];
-    };
+    # Modules common to a workstation
+    workstation =
+      { ... }:
+      {
+        imports = [
+          self.nixosModules.common
+
+          ./backup
+
+          ./desktop
+          ./desktop/boot.nix
+
+          ./devices/android.nix
+          ./devices/iphone.nix
+          ./devices/printers.nix
+          ./devices/sdr.nix
+          ./security/firejail.nix
+          ./containers/podman.nix
+
+          ./services/ollama.nix
+        ];
+
+        # Home-manager users
+        home-manager.users.m32 = nixpkgs.lib.mkDefault self.homeModules.desktop;
+
+        # Backups
+        backups.srv.enable = true;
+        backups.home.enable = true;
+        backups.podman.enable = true;
+
+        # Console
+        console.earlySetup = true;
+
+        # Networking
+        networking.networkmanager.enable = true;
+
+        time.timeZone = nixpkgs.lib.mkDefault "America/Denver";
+      };
+
+    # Module for handling secrets
+    secrets =
+      { ... }:
+      {
+        imports = [
+          sops-nix.nixosModules.sops
+
+          ./secrets.nix
+        ];
+      };
+
+    backup = import ./backup;
   };
 }

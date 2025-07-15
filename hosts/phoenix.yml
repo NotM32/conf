@@ -1,0 +1,29 @@
+remote_builds:
+    ssh_private_key: ENC[AES256_GCM,data:AY6qawqSzTxj+jM5gYVGhLohrLLxa6SzQdyN5B7OWSSGb6pUcB09mqRqcdjnYHjAfPU1omqDMub8DNjsChg6pDRJV0IT1jic/Qz6cL09k/MvVCL/1t7Rwhf0kjCtjfBWylTQBkJMuwJ+ENyfu0sU5eCMTdZz5kFmF43IVLCR8MskIXhjVFO2vHZLpG8tg8wpEj53vVDX/1E8IBLayaJ49bH4+EsyC7e/HNJzEQ8lLzWvFDaOHm5rHCMFaKUh8xkHVZz16A6+66BKf8V+OEUwWQw3U56FmlCvCm65fvPR2cRM9KbqOOxUSBbtmCU7y+vCm+zGF1erQAP2mJgmFStEd38xS0wPEgs99/nE6vo3Lzysq9MTb3qMRS0c/wQzJp2+MD9LQrhvDCSZS57PpNaMFfLrv0pMQ3NzAOZts/xIWTkskLyBx2lZHGa5FDgm1kNKafxhoq8flVrGGqAAVNTBTbDB9pXJ+cbugFIk6xEf3TXeKFEG6B87C/UinLJtnhyRBcg/nTJuX5+A3P8j7jI=,iv:mGXbyLhJIXsTYdrpPX47pp/j9mJ1fD5pD9Yj/J4l6xA=,tag:dkjStmjfkAL6kcmK36GKIg==,type:str]
+sops:
+    age:
+        - recipient: age1wnxruyg2pvwcmfuqfqy0r4s7u39y98jpma7rkt26hguxu5pfj5eqx687f3
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYdVJ0OFh4czQ1aFpmeVBj
+            S0lnS3RrUG04R1p0RE5iRU5UbUJKTGd0TzNBClJiYUhkT2MrcTdlSS90dTRzZkEw
+            SStWWUh3cERGMW1zd0ZKdEk2eXl5UVUKLS0tIFZQL2MrRjlta3F2VHJhQVcxTDBX
+            dU8zUjhaWEhFWmF1WnpkQzBUeHdJS28K6nHCYhW0YALL7EO5q87ngoLbGVmWLWiN
+            xh1vp5LoqAKDeeEiG9NGi+q1gsGqgJs5tr3InyzYDj1PYBe/Dmaw0A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-07-15T14:20:55Z"
+    mac: ENC[AES256_GCM,data:84559uyPt0Q/eZhVsZlTcSJVMd6TkSzjsayKuwoRraUVAEOZg/sYCf3AhTH/gki1sWHrxDNqdU5ZN1ANZqHS60QM1kuHgw1kja8w5l265ZiS6kuLq9aIZQsRXYrrbKBFb02fqrSnWnUr6QCiCqS1KUmvRSgLVMqsay94NRjJoSM=,iv:iOWKSGbone5+w2vp0w4TAyCCyQ5KRNJNRnqbKhWAKU4=,tag:2EaiUNiQLzvkBqfM/QzhCw==,type:str]
+    pgp:
+        - created_at: "2025-07-15T14:11:28Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hF4Dx6iNLFE9d+gSAQdAEa9eXWld7QgnqPqobdWP5UE/omftO6Jx2oSBchChwFgw
+            ipn431Oz7EsGW7mcHr3MyLiiCn5Lb/tVBfc0pm/do0WyWQdwdHX0q2dhrcOkPej/
+            0lwB24ckHS7hZ5yh3IUqa1hE12a+wH1nJbobmZ3mEqgCBtFa7KRaobA4lgTILH4g
+            WWmwNydPyrvgi4i7gjHNKEbmS7Op1Rzm3YjfyC6mdTCjE4F92k6aOjgRXlVsEw==
+            =Boc/
+            -----END PGP MESSAGE-----
+          fp: DE0FE946DDA34B3BD1F92D59E017B967AC29E321
+    unencrypted_suffix: _unencrypted
+    version: 3.10.2
