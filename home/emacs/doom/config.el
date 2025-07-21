@@ -152,6 +152,9 @@
   (setq-hook! 'markdown-mode-hook
     line-spacing 2))
 
+;;; Language - Rust
+(use-package! rustic)
+
 ;;; Languages - SOPS
 (use-package! sops
   :init

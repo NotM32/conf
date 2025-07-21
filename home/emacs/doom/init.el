@@ -75,8 +75,7 @@
 
        :emacs
        (dired              ; making dired pretty [functional]
-        +icons
-        +dirvish)
+        +icons)
        electric            ; smarter, keyword-based electric-indent
        eww                 ; the internet is gross
        (ibuffer +icons)    ; interactive buffer management
@@ -112,8 +111,8 @@
        (eval +overlay)     ; run code, run (also, repls)
        (lookup             ; navigate your code and its documentation
         +dictionary)
-       (lsp +eglot)        ; M-x vscode
-       (magit)      ; a git porcelain for Emacs
+       (lsp)               ; M-x vscode
+       (magit)             ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf                 ; pdf enhancements
