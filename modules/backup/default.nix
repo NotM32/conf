@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, self, ... }:
 with lib;
 let
   repoConfig = {
