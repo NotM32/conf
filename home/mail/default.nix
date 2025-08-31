@@ -1,7 +1,5 @@
 { pkgs, ... }:
 {
-  imports = [ ./protonmail-bridge.nix ];
-
   services.protonmail-bridge.enable = false;
 
   accounts.email = {
