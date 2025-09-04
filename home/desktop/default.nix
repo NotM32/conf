@@ -35,6 +35,8 @@ in
 
   services.syncthing.enable = true;
 
+  services.easyeffects.enable = true;
+
   # QT/GTK Applications
   qt = {
     platformTheme = "kvantum";
