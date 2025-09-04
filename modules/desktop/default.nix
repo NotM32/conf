@@ -5,6 +5,7 @@
     ./boot.nix
     ./display-manager.nix
     ./fonts.nix
+    ./stylix.nix
   ];
 
   services.xserver.enable = true;

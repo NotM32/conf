@@ -18,6 +18,7 @@ in
     self.homeModules.nushell
     self.homeModules.quickshell
     self.homeModules.ssh
+    self.homeModules.stylix
 
     ./packages.nix
     ../lan-mouse
@@ -61,9 +62,11 @@ in
     };
   };
 
+  gtk.enable = true;
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
+      color-scheme = lib.mkForce "prefer-dark";
     };
   };
 }

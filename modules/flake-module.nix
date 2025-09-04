@@ -6,6 +6,7 @@ let
     lanzaboote
     sops-nix
     emacs-overlay
+    stylix
     ;
 in
 {
@@ -40,6 +41,7 @@ in
       {
         imports = [
           self.nixosModules.common
+          stylix.nixosModules.stylix
 
           ./backup
 
@@ -58,6 +60,9 @@ in
 
         # Home-manager users
         home-manager.users.m32 = nixpkgs.lib.mkDefault self.homeModules.desktop;
+
+        # Stylix
+        stylix.enable = true;
 
         # Backups
         backups.srv.enable = true;

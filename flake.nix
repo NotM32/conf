@@ -44,6 +44,12 @@
       flake = false;
     };
 
+    # Desktop
+        stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Emacs
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
