@@ -20,23 +20,18 @@ in {
     ];
 
     allowUnfreePackages = [
-        "steam"
-        "steam-.*"
-        "obsidian"
-        "spotify"
-        "pycharm-community"
-        "terraform" # TODO: Use OpenTofu or migrate all HCL I've written to Pulumi
-        "zerotierone"
+      "steam"
+      "steam-.*"
+      "spotify"
+      "zerotierone"
     ];
 
-    nixpkgs.config.permittedInsecurePackages = [
-      "electron-25.9.0" # EOL, required for Obsidian
-    ];
-
-    nixpkgs.config.allowUnfreePredicate = pkg:
+    nixpkgs.config.allowUnfreePredicate =
+      pkg:
       let
         pkgName = (lib.getName pkg);
         matchPackges = (reg: !builtins.isNull (builtins.match reg pkgName));
-      in builtins.any matchPackges config.allowUnfreePackages;
+      in
+      builtins.any matchPackges config.allowUnfreePackages;
   };
 }

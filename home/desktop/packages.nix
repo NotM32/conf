@@ -14,7 +14,7 @@
     # # Infrastructure tools
     kubectl
     kubernetes-helm
-    terraform
+    opentofu
     ansible
     pomerium-cli
     kanidm
@@ -42,7 +42,6 @@
     virtualbox # for GNS3
 
     # # Office
-    obsidian
     onlyoffice-bin
     libreoffice
     unoconv
