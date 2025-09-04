@@ -42,6 +42,7 @@ in {
     nushell = import ./nushell;
     quickshell = import ./quickshell;
     ssh = import ./ssh;
+    stylix = import ./stylix;
     vscode = import ./development/vscode.nix;
 
     # A custom module for handling protonmail-bridge
