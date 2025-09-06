@@ -1,7 +1,24 @@
 { pkgs, self, ... }:
 let
+  followScript = pkgs.writeShellScript "follow-regreet.sh" ''
+    #!/usr/bin/env bash
+    sleep 1
+    ${pkgs.socat}/bin/socat - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r event; do
+      if [[ $event == focusedmon* ]]; then
+        mon=''${event#*>>}
+        mon=''${mon%%,*}
+        hyprctl="${pkgs.hyprland}/bin/hyprctl"
+        $hyprctl dispatch movewindow "mon:$mon,class:regreet"
+        $hyprctl dispatch focuswindow class:regreet
+        $hyprctl dispatch centerwindow
+      fi
+    done
+  '';
+
   hyprlandConfig = pkgs.writeText "config" ''
-    exec-once = ${pkgs.greetd.regreet}/bin/regreet; hyprctl dispatch exit
+    exec-once = ${pkgs.swaybg}/bin/swaybg -i ${self}/home/desktop/wallpaper.png -m fill & ${followScript} & ${pkgs.regreet}/bin/regreet; ${pkgs.hyprland}/bin/hyprctl dispatch exit
+    windowrulev2 = float, class:^(regreet)$
+    windowrulev2 = center, class:^(regreet)$
     misc {
          disable_hyprland_logo = true
          disable_splash_rendering = true
