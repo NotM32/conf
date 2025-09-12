@@ -111,7 +111,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        (lookup             ; navigate your code and its documentation
         +dictionary)
-       (lsp)               ; M-x vscode
+       (lsp +peek)         ; M-x vscode
        (magit)             ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -205,7 +205,7 @@
         +lsp
         +tree-sitter
         +pyenv)
-       ;;qt                ; the 'cutest' gui framework ever
+       qt                  ; the 'cutest' gui framework ever
        (racket +lsp)       ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        rest                ; Emacs as a REST client
