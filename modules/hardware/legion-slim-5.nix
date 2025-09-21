@@ -114,7 +114,7 @@
   hardware.graphics.enable32Bit = true;
 
   hardware.nvidia = {
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
