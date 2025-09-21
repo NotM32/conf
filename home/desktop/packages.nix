@@ -28,6 +28,7 @@
     psst
     mpv
     vlc
+    tidal-hifi
 
     # Video/Photo
     obs-studio
