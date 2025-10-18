@@ -20,4 +20,11 @@
     enable = true;
     env.GOPATH = "${config.home.homeDirectory}/.go";
   };
+
+  programs.kubeswitch.enable = true;
+
+  programs.kubecolor = {
+    enable = true;
+    enableAlias = true;
+  };
 }
