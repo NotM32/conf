@@ -20,6 +20,7 @@ in {
     ];
 
     allowUnfreePackages = [
+      "castlabs-electron"
       "steam"
       "steam-.*"
       "spotify"

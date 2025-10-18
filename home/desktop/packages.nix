@@ -1,10 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # # Internet
     signal-cli
     signal-desktop
     element-desktop
     monero-gui
+    ungoogled-chromium
 
     # # Games
     steam
