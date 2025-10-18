@@ -1,13 +1,12 @@
-{ config, lib, pkgs, ... }:
-
-{
-  allowUnfreePackages = [
-    "cuda.*"
-    "libcublas"
-  ];
+{ config, ... }: {
+  allowUnfreePackages = [ "cuda.*" "libcublas" ];
 
   services.ollama = {
-    enable = true;
-    acceleration = if (config.hardware.nvidia.enabled && !config.hardware.nvidia.open) then "cuda" else false;
+    enable = false;
+    acceleration =
+      if (config.hardware.nvidia.enabled && !config.hardware.nvidia.open) then
+        "cuda"
+      else
+        false;
   };
 }
