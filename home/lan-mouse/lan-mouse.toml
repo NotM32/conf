@@ -1,7 +1,6 @@
 [authorized_fingerprints]
 "e0:e7:7d:8d:52:41:ad:10:b2:ab:a5:d7:09:e7:57:55:21:31:a4:9c:02:57:a4:e2:c2:98:08:fc:1c:a5:0e:14" = "nova"
 "c0:51:81:2a:a7:27:55:59:f1:1a:3c:d0:f8:01:4a:b3:47:50:d8:e0:e1:5d:41:69:b1:32:d0:31:29:f9:6e:8a" = "phoenix"
-# define a client on the right side with host name "iridium"
 
 [[clients]]
 # position (left | right | top | bottom)
@@ -12,6 +11,8 @@ hostname = "phoenix"
 activate_on_startup = true
 # optional list of (known) ip addresses
 ips = [ "10.127.0.66" ]
+# undocumented, unlock screen when mouse enters
+enter_hook = "bash -c 'pidof hyprlock || pkill -USR1 hyprlock'"
 
 [[clients]]
 # position (left | right | top | bottom)
