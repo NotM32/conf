@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, config, ... }: {
   stylix = {
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark.yaml";
 
@@ -36,5 +35,7 @@
     targets.hyprlock.enable = false;
     # TODO: Package build fails, but probably don't need this
     targets.emacs.enable = false;
+
+    targets.firefox.profileNames = [ "default" ];
   };
 }
