@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     # # Internet
     signal-cli
@@ -18,7 +17,6 @@
     kubernetes-helm
     opentofu
     ansible
-    pomerium-cli
     kanidm
     docker-compose # for use with podman compose
 
@@ -45,7 +43,6 @@
     virtualbox # for GNS3
 
     # # Office
-    onlyoffice-bin
     libreoffice
     unoconv
     kdePackages.okular

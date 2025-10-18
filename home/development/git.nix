@@ -10,7 +10,7 @@
 
     difftastic = {
       enable = true;
-      color = "auto";
+      options.color = "auto";
     };
 
     # Additional configuration not defined in modules
@@ -18,7 +18,8 @@
   };
 
   # * Packages
-  home.packages = with pkgs; [
-    git-latexdiff # More helpful diffs for latex files in git
-  ];
+  home.packages = with pkgs;
+    [
+      git-latexdiff # More helpful diffs for latex files in git
+    ];
 }

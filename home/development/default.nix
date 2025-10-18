@@ -1,7 +1,5 @@
-{ self, pkgs, ... }: {
-  imports = [
-    ./git.nix
-  ];
+{ self, pkgs, config, ... }: {
+  imports = [ ./git.nix ];
 
   home.packages = with pkgs; [
     opencode
@@ -20,6 +18,6 @@
 
   programs.go = {
     enable = true;
-    goPath = ".go";
+    env.GOPATH = "${config.home.homeDirectory}/.go";
   };
 }

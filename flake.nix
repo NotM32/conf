@@ -15,14 +15,14 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    deploy = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    # Image generators
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Remote install support on live system
     nixos-anywhere = {
       url = "github:nix-community/nixos-anywhere/pxe-boot";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +33,8 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Secureboot
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,25 +47,13 @@
     };
 
     # Desktop
-        stylix = {
+    stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Emacs
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    doomemacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
-
     # Extra packages
-    l5p-keyboard-rgb = {
-      url = "github:4JX/L5P-Keyboard-RGB";
-    };
+    l5p-keyboard-rgb = { url = "github:4JX/L5P-Keyboard-RGB"; };
     lan-mouse = {
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";

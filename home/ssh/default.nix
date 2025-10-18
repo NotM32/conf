@@ -1,17 +1,17 @@
-{ config, ... }: {
+{ ... }: {
   programs.ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPersist = "10m";
 
     # Host Level configuration
     # TODO: Pull this in from ZeroTier somehow
     matchBlocks = {
-      # Personal
-      "maple" = {
-        hostname = "10.127.1.1";
-        forwardAgent = true;
+      # All Hosts
+      "*" = {
+        controlMaster = "auto";
+        controlPersist = "10m";
       };
+
+      # Personal
       "phoenix" = {
         hostname = "10.127.0.66";
         forwardAgent = true;

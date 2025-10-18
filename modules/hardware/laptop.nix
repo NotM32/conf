@@ -1,25 +1,20 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [ powertop ];
 
-  services.logind.lidSwitch = "suspend";
+  services.logind.settings.Login.HandleLidSwitch = "suspend";
 
   services.upower = {
     enable = true;
     criticalPowerAction = "Hibernate";
   };
 
-  services.tlp = {
-    enable = true;
-  };
+  services.tlp.enable = true;
 
   # Systemd targets for line power / battery power changes
   systemd.targets = {
     ac = {
       description = "AC Power Online";
-      unitConfig = {
-        DefaultDependencies = "no";
-      };
+      unitConfig.DefaultDependencies = "no";
     };
   };
 

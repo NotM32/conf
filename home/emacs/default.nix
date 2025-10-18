@@ -60,7 +60,7 @@ in
     cargo-outdated
     clang-tools
     clippy
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     dockfmt
     elixir-ls
     erlfmt
