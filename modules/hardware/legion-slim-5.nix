@@ -27,7 +27,14 @@
   # Support for FIDO2 decryption
   boot.initrd.luks.fido2Support = false;
 
-  boot.initrd.luks.devices = { "ucrypt" = { device = "/dev/nvme0n1p2"; }; };
+  boot.initrd.luks.devices = {
+    "ucrypt" = {
+      device = "/dev/nvme0n1p2";
+      # Bind PCRs 0+1+2+3+7+15=0
+      # PCRs 4, 9, 11 change on rebuild, so that should be handled if using those
+      crypttabExtraOpts = [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
+    };
+  };
 
   fileSystems."/" = {
     device = "/dev/mapper/ucrypt";
