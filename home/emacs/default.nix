@@ -1,27 +1,20 @@
-{
-  config,
-  pkgs,
-  self,
-  ...
-}:
+{ config, pkgs, self, ... }:
 let
-  package =
-    with pkgs;
-    (emacsPackagesFor emacs-pgtk).emacsWithPackages (
-      epkgs: with epkgs; [
+  package = with pkgs;
+    (emacsPackagesFor emacs-pgtk).emacsWithPackages (epkgs:
+      with epkgs; [
         (treesit-grammars.with-all-grammars)
-        (treesit-grammars.with-grammars (grammars: [
-          self.inputs.nix-qml-support.packages.${pkgs.stdenv.system}.tree-sitter-qmljs
-        ]))
+        (treesit-grammars.with-grammars (grammars:
+          [
+            self.inputs.nix-qml-support.packages.${pkgs.stdenv.system}.tree-sitter-qmljs
+          ]))
         vterm
         notmuch
         mbsync
         offlineimap
-      ]
-    );
+      ]);
 
-  doomReloadScript =
-    with pkgs;
+  doomReloadScript = with pkgs;
     writeScript "doom-reload" ''
       #!/bin/sh
       export PATH="${emacs}/bin:$PATH"
@@ -29,31 +22,14 @@ let
       ${config.home.homeDirectory}/.emacs.d/bin/doom -y sync -u
     '';
 
-  tex = (
-    pkgs.texlive.combine {
-      inherit (pkgs.texlive)
-        scheme-basic
-        dvisvgm
-        dvipng # for preview and export as html
-        wrapfig
-        amsmath
-        ulem
-        hyperref
-        capt-of
-        etoolbox
-        metafont
-        ;
-    }
-  );
-in
-{
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive)
+      scheme-basic dvisvgm dvipng # for preview and export as html
+      wrapfig amsmath ulem hyperref capt-of etoolbox metafont;
+  });
+in {
   home.packages = with pkgs; [
-    (aspellWithDicts (
-      dicts: with dicts; [
-        en
-        en-computers
-      ]
-    ))
+    (aspellWithDicts (dicts: with dicts; [ en en-computers ]))
     black
     cabal-install
     cargo-edit
@@ -117,9 +93,7 @@ in
     zls
   ];
 
-  home = {
-    sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ];
-  };
+  home = { sessionPath = [ "${config.home.homeDirectory}/.emacs.d/bin" ]; };
 
   programs.emacs = {
     inherit package;

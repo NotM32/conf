@@ -1,33 +1,12 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  home-manager,
-  flake-registry,
-  nixpkgs,
-  ...
-}:
-with lib;
-{
+{ self, config, lib, pkgs, home-manager, flake-registry, nixpkgs, ... }:
+with lib; {
   nix.settings = {
-    system-features = [
-      "recursive-nix"
-      "kvm"
-      "nixos-test"
-      "big-parallel"
-    ];
+    system-features = [ "recursive-nix" "kvm" "nixos-test" "big-parallel" ];
 
-    experimental-features = [
-      "nix-command"
-      "flakes"
-      "recursive-nix"
-    ];
+    experimental-features =
+      [ "nix-command" "flakes" "recursive-nix" "pipe-operators" ];
 
-    trusted-users = [
-      "root"
-      "m32"
-    ];
+    trusted-users = [ "root" "m32" ];
   };
 
   nix.gc = {
@@ -41,10 +20,7 @@ with lib;
     dates = [ "daily" ];
   };
 
-  nix.nixPath = [
-    "nixpkgs=${pkgs.path}"
-    "home-manager=${home-manager}"
-  ];
+  nix.nixPath = [ "nixpkgs=${pkgs.path}" "home-manager=${home-manager}" ];
 
   nix.extraOptions = ''
     flake-registry = ${flake-registry}/flake-registry.json
@@ -71,21 +47,19 @@ with lib;
   };
 
   # The below generates a list of build hosts from the hosts in this flake
-  nix.buildMachines =
-    attrsets.mapAttrsToList
-      (hostName: cfg: {
-        inherit hostName;
-        maxJobs = 4;
-        speedFactor = 2; # TODO: document this per host
-        # Support the hostPlatform and any emulated systems
-        systems = [ cfg.config.nixpkgs.hostPlatform.system ] ++ cfg.config.boot.binfmt.emulatedSystems;
-        # Support the features from that machine's own configurations
-        supportedFeatures = cfg.config.nix.settings.system-features;
-        sshKey = config.sops.secrets."remote_builds/ssh_private_key".path or "";
-      })
-      (
-        attrsets.filterAttrs (n: v: n != config.networking.hostName) # Filter out the same host, TODO: exclude certain hosts
-          self.nixosConfigurations
-      );
+  nix.buildMachines = attrsets.mapAttrsToList (hostName: cfg: {
+    inherit hostName;
+    maxJobs = 4;
+    speedFactor = 2; # TODO: document this per host
+    # Support the hostPlatform and any emulated systems
+    systems = [ cfg.config.nixpkgs.hostPlatform.system ]
+      ++ cfg.config.boot.binfmt.emulatedSystems;
+    # Support the features from that machine's own configurations
+    supportedFeatures = cfg.config.nix.settings.system-features;
+    sshKey = config.sops.secrets."remote_builds/ssh_private_key".path or "";
+  }) (attrsets.filterAttrs (n: v:
+    n
+    != config.networking.hostName) # Filter out the same host, TODO: exclude certain hosts
+    self.nixosConfigurations);
   nix.distributedBuilds = true;
 }
