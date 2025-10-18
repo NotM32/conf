@@ -4,15 +4,23 @@
   programs.nushell = {
     enable = true;
 
-    plugins = (with pkgs.nushellPlugins; [
-      formats
-      gstat
-      polars
-      query
-    ]);
+    # Plugins
+    plugins = (with pkgs.nushellPlugins; [ formats gstat polars query hcl ]);
+
+    # Config
+    extraConfig = builtins.readFile ./config.nu;
+
+    settings = { buffer_editor = "emacsclient"; };
+
+    # Environment
+    environmentVariables = { EDITOR = "emacsclient"; };
   };
 
-  # * Additional shell utils
+  # Prompt
+  programs.starship = { enable = true; };
+
+  #  Shell Integrations
+  home.shell.enableNushellIntegration = true;
   programs.broot = {
     enable = true;
     enableNushellIntegration = false;
