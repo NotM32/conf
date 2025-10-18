@@ -3,7 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 ;; (setq user-full-name "John Doe"
@@ -121,36 +120,36 @@
       (cfw:ical-create-source "Proton" (auth-source-pick-first-password :host "calendar.proton.me") "IndianRed")))))
 
 ;;; Languages
-;;; Languages - Eglot LSPs
-(after! eglot
-  "Setup hooks to call `eglot` for certain modes "
-  ;; elixir
-  (set-eglot-client! 'elixir-mode '("elixir-ls"))
-  (add-hook! 'elixir-mode-hook 'eglot-ensure)
-  ;; nim
-  (defclass eglot-nim (eglot-lsp-server) ()
-    :documentation "A custom class for Nim's LSP.")
-  (add-to-list 'eglot-server-programs '((nim-mode) . (eglot-nim "nimlsp")))
-  (cl-defmethod eglot-initialization-options ((server eglot-nim))
-    "Passes through required initialization options"
-    (list :enable t :lint t))
-  ;; nix
-  (set-eglot-client! 'nix-mode '("nil"))
-  (add-hook! 'nix-mode-hook 'eglot-ensure)
-  (set-eglot-client! 'svelte-mode '("svelteserver" "--stdio"))
-  (add-hook! 'svelte-mode-hook 'eglot-ensure)
-  ;; qml
-  (set-eglot-client! 'qml-ts-mode '("qmlls" "-E"))
-  (add-hook! 'qml-ts-mode-hook 'eglot-ensure)
-  ;; yaml
-  (set-eglot-client! 'yaml-mode '("yaml-language-server" "--stdio"))
-  (add-hook! 'yaml-mode-hook 'eglot-ensure))
+
+;;; Languages - Astro
+(use-package! web-mode
+  :mode "\\.astro\\'"
+  :config
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 ;;; Languages - Markdown
 (use-package! markdown-mode
   :config
   (setq-hook! 'markdown-mode-hook
     line-spacing 2))
+
+;;; Languages - Nix
+(use-package! nix-mode
+  :config
+  (setq-hook! 'nix-mode-hook +format-with 'nixfmt))
+
+;;; Languages - NuShell
+(use-package! nushell-ts-mode
+  :mode "\\.nu\\'"
+  :config
+  (defun m32/nushell/mode-hook ()
+    (corfu-mode 1)
+    (electric-pair-local-mode 1)
+    (electric-indent-local-mode 1)
+    (lsp-deferred))
+  (add-hook! 'nushell-ts-mode-hook 'm32/nushell/mode-hook))
 
 ;;; Languages - QML
 (use-package! qml-ts-mode
@@ -407,31 +406,6 @@
                          :description "Path to the file to read.  Supports relative paths and ~."))
            :category "filesystem")
 
-          ;; Memory
-          ;; memory_add
-          ;; (gptel-make-tool
-          ;;  :function (lambda (memory-text)
-          ;;              (with-temp-buffer
-          ;;                (org-capture-string memory-text "am")))
-          ;;  :name "memory_add"
-          ;;  :description "Save a notable fact, or bit of information in your memory"
-          ;;  :args (list '(:name "memory-text"
-          ;;                :type "string"
-          ;;                :description "The short single line of text that will be saved in the outline that is your memory"))
-          ;;  :category "memory")
-          ;; ;; memory_read
-          ;; (gptel-make-tool
-          ;;  :function (lambda nil
-          ;;              (with-temp-buffer
-          ;;                (insert-file-contents (expand-file-name (concat org-directory "/ai/memory.org")))
-          ;;                (org-mode)
-          ;;                (buffer-string)))
-          ;;  :name "memory_read"
-          ;;  :description "Read back your memory"
-          ;;  :args nil
-          ;;  :category "memory")
-
-
           ;; Utility
           (gptel-make-tool
            :function (lambda (&optional format)
@@ -541,20 +515,3 @@
   :desc "Register MCP tools with GPTel" "r" #'gptel-mcp-register-tool
   :desc "Enable tools for use in GPTel" "u" #'gptel-mcp-use-tool
   :desc "Disable MCP tools in GPTel"    "x" #'gptel-mcp-close-use-tool))
-
-;;; Tools - Smudge
-(use-package! smudge
-  :bind-keymap ("C-c ." . smudge-command-map)
-  :config
-  ;; Endpoint needed to be adjusted and 8080 seemed like too much of a common choice
-  (setq! smudge-oauth2-callback-endpoint "/smudge-api-callback")
-  (setq! smudge-oauth2-callback-port "8027")
-  ;; Pick from auth source
-  (setq! smudge-oauth2-client-secret (auth-source-pick-first-password :host "api.spotify.com"))
-  (setq! smudge-oauth2-client-id (plist-get (car (auth-source-search :host "api.spotify.com")) :user))
-  ;; optional: enable transient map for frequent commands
-  (setq! smudge-player-use-transient-map t)
-  ;; works offline
-  (setq! smudge-transport 'dbus)
-  ;; optional: display current song in mode line
-  (global-smudge-remote-mode))

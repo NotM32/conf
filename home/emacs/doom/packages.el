@@ -61,7 +61,6 @@
 (package! k8s-mode)
 
 ;; Modes
-(package! nushell-mode)
 (package! nushell-ts-babel
   :recipe (:host github :repo "herbertjones/nushell-ts-babel"))
 (package! nushell-ts-mode)
