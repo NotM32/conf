@@ -1,11 +1,12 @@
-{ self, pkgs, ... }:
+{ self, pkgs, lib, ... }:
 let
-  utterly-kanagawa = builtins.fetchGit {
-    url = "https://github.com/candyclaws/Utterly-Kanagawa.git";
-    rev = "9a24d61dbbc02d32c96667895be85c46313af0d8";
+  utterly-kanagawa = pkgs.fetchFromGitHub {
+    owner = "james-mkn";
+    repo = "Utterly-Kanagawa";
+    rev = "main";
+    hash = "sha256-t8zR6NYvV0TCd1+cbThWW1Zh58HdriXVG8ukM01pAFw=";
   };
-in
-{
+in {
   imports = [
     self.homeModules.default
     self.homeModules.development
@@ -22,7 +23,11 @@ in
 
     ./packages.nix
     ../lan-mouse
+
+    ./wluma.nix
   ];
+
+  home.packages = with pkgs; [ libsForQt5.qt5ct qt6ct ];
 
   programs.keychain.enableXsessionIntegration = true;
 
@@ -39,29 +44,28 @@ in
 
   # QT/GTK Applications
   qt = {
-    platformTheme = "kvantum";
+    enable = true;
+    platformTheme.name = "qtct";
     style = {
       name = "kvantum";
+      package = with pkgs; [
+        libsForQt5.qtstyleplugin-kvantum # Qt5 plugin
+        qt6Packages.qtstyleplugin-kvantum # Qt6 plugin
+      ];
     };
   };
 
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.kanagawa-gtk-theme;
-      name = "Kanagawa-BL-LB";
+  # QT Theme Settings via Kvantum
+  xdg.configFile = {
+    "Kvantum/Utterly-Kanagawa" = {
+      source = utterly-kanagawa;
+      recursive = true;
     };
 
-    iconTheme = {
-      package = pkgs.kanagawa-icon-theme;
-      name = "Kanagawa";
-    };
-
-    font = {
-      package = pkgs.nerd-fonts.hack;
-      name = "Hack Nerd Font";
-      size = 9;
-    };
+    "Kvantum/kvantum.kvconfig".text = ''
+      [General]
+      theme=Utterly-Kanagawa
+    '';
   };
 
   gtk.enable = true;

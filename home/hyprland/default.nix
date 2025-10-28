@@ -21,13 +21,8 @@ let
   '';
 in {
 
-  imports = [
-    ./hypridle.nix
-    ./hyprlock.nix
-    ./wofi.nix
-    ./wpaperd.nix
-    ./mako.nix
-  ];
+  imports =
+    [ ./hypridle.nix ./hyprlock.nix ./wofi.nix ./wpaperd.nix ./mako.nix ];
 
   home.packages = with pkgs; [
     wayshot
@@ -52,7 +47,8 @@ in {
     settings = {
       "$terminal" = "uwsm-app -- alacritty";
       "$fileManager" = "uwsm-app -- dolphin";
-      "$menu" = "uwsm-app -- $(wofi --show drun --define=drun-print_desktop_file=true)";
+      "$menu" =
+        "uwsm-app -- $(wofi --show drun --define=drun-print_desktop_file=true)";
       "$emacs" = "uwsm-app -- emacs";
       "$lockcmd" = "uwsm-app -- hyprlock";
       "$scrotcmd" = "uwsm-app -- ${screenshotCmd}/bin/screenshot";
@@ -63,9 +59,7 @@ in {
         "WLR_DRM_NO_ATOMIC,1"
       ]; # change to qt6ct if you have that
 
-      exec-once = [
-        "systemctl --user start hyprpolkitagent"
-      ];
+      exec-once = [ "systemctl --user start hyprpolkitagent" ];
 
       input = {
         kb_layout = "us";
@@ -77,6 +71,7 @@ in {
 
         touchpad = {
           natural_scroll = "no";
+          drag_3fg = 3;
         };
 
         sensitivity = 0; # -1.0 to 1.0, 0 means no modification.
@@ -127,38 +122,30 @@ in {
         preserve_split = "yes";
       };
 
-      gestures = {
-        workspace_swipe = "on";
-      };
+      gesture = [ "3, vertical, workspace" ];
+      gestures = { workspace_swipe_touch = "on"; };
 
-      misc = {
-        force_default_wallpaper = 0;
-      };
+      misc = { force_default_wallpaper = 0; };
 
-      device =
-        let
-          kb_options = "altwin:swap_alt_win";
-        in
-        [
-          {
-            name = "mx-mchncl-m-keyboard";
-            inherit kb_options;
-          }
-          {
-            name = "mx-mchncl@--keyboard";
-            inherit kb_options;
-          }
-          {
-            name = "logitech-usb-receiver";
-            inherit kb_options;
-          }
-        ];
+      device = let kb_options = "altwin:swap_alt_win";
+      in [
+        {
+          name = "mx-mchncl-m-keyboard";
+          inherit kb_options;
+        }
+        {
+          name = "mx-mchncl@--keyboard";
+          inherit kb_options;
+        }
+        {
+          name = "logitech-usb-receiver";
+          inherit kb_options;
+        }
+      ];
 
       windowrulev2 = "suppressevent maximize, class:.*";
 
-      binds = {
-        movefocus_cycles_fullscreen = false;
-      };
+      binds = { movefocus_cycles_fullscreen = false; };
 
       "$mainMod" = "SUPER";
       bind = [
@@ -231,6 +218,7 @@ in {
         "$mainMod, Backslash, togglespecialworkspace, magic"
         "$mainMod SHIFT, Backslash, movetoworkspace, special:magic"
 
+        # Three finger workspace change on touchpad
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
         "$mainMod CTRL, L, exec, $lockcmd"
@@ -254,6 +242,11 @@ in {
         ", XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
         ", XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
         ", XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+      ];
+
+      bindit = [
+        # Quickshell
+        ", SUPER_L, global, quickshell:modDown"
       ];
 
     };
