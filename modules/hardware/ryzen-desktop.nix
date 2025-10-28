@@ -1,36 +1,27 @@
-{ config, lib, ... }:
-{
-  boot.kernelModules = [
-    "kvm-amd"
-    "nzxt-kraken3"
-    "nct6775"
-    "i2c-dev"
-    "i2c-piix4"
-  ];
+{ config, lib, ... }: {
+  boot.kernelModules =
+    [ "kvm-amd" "nzxt-kraken3" "nct6775" "i2c-dev" "i2c-piix4" ];
 
   boot.initrd = {
-    availableKernelModules = [
-      "nvme"
-      "xhci_pci"
-      "usb_storage"
-      "usbhid"
-      "sd_mod"
-    ];
+    availableKernelModules =
+      [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
 
-    kernelModules = [
-      "dm-snapshot"
-      "vfat"
-      "usbhid"
-    ];
+    kernelModules = [ "dm-snapshot" "vfat" "usbhid" ];
 
     luks.devices = {
       "uroot" = {
         device = "/dev/disk/by-uuid/e245dbf3-1c20-4a16-8ac1-d45582a2abee";
         preLVM = true;
+        # Bind PCRs 0+1+2+3+7+15=0
+        # PCRs 4, 9, 11 change on rebuild, so that should be handled if using those
+        crypttabExtraOpts = [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
       };
       "uroot2" = {
         device = "/dev/disk/by-uuid/53243a77-1b78-49c3-8d26-ccb118c5a692";
         preLVM = true;
+        # Bind PCRs 0+1+2+3+7+15=0
+        # PCRs 4, 9, 11 change on rebuild, so that should be handled if using those
+        crypttabExtraOpts = [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
       };
     };
   };
@@ -83,22 +74,20 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/9e60cced-d0fc-4fc9-9093-421dfcadf101"; } ];
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/9e60cced-d0fc-4fc9-9093-421dfcadf101"; }];
 
   hardware.bluetooth.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Hardware Temps
   programs.coolercontrol.enable = true;
 
   # Video Drivers / Hardware options
-  services.xserver.videoDrivers = [
-    "nvidia"
-    "modesetting"
-    "fbdev"
-  ];
+  services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
 
   hardware.nvidia.modesetting.enable = true;
 
