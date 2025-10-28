@@ -17,8 +17,9 @@
     kubernetes-helm
     opentofu
     ansible
-    kanidm
+    kanidm_1_7
     docker-compose # for use with podman compose
+    rclone
 
     # ## Extra dev tools
     sops

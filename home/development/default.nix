@@ -1,12 +1,10 @@
-{ self, pkgs, config, ... }: {
+{ pkgs, config, ... }: {
   imports = [ ./git.nix ];
 
   home.packages = with pkgs; [
     opencode
-    # * Tools
     direnv
 
-    # * Languages
     gcc
     cargo
   ];
@@ -27,4 +25,6 @@
     enable = true;
     enableAlias = true;
   };
+
+  programs.awscli.enable = true;
 }

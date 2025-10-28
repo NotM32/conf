@@ -7,7 +7,12 @@
     matchBlocks = {
       # All Hosts
       "*" = {
+        forwardAgent = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+
         controlMaster = "auto";
+        controlPath = "~/.ssh/master-%r@%n:%p:";
         controlPersist = "10m";
       };
 
