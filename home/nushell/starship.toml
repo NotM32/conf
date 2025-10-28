@@ -1,0 +1,84 @@
+format = """ $directory$git_status$bun$elixir$nim$nodejs$rust$helm$nix_shell$terraform$package$git_branch$fill$cmd_duration$fill$git_state$git_commit$kubernetes$aws$line_break $character"""
+right_format = """"""
+
+[aws]
+symbol = '  '
+style = 'fg:black bg:orange'
+format = '[$symbol($region) ]($style)[(\[$duration\])]($style)'
+
+[aws.region_aliases]
+us-east-1 = "US:VA"
+us-east-2 = "US:OH"
+
+[bun]
+symbol = ' '
+style = 'bold bright-yellow'
+format = '[$symbol]($style)'
+
+[character]
+format = '$symbol  '
+success_symbol = '[](bold green)'
+error_symbol = '[](bold red)'
+
+[directory]
+truncate_to_repo = false
+style = ' green'
+before_repo_root_style = 'dimmed white'
+repo_root_style = 'bold green'
+
+[elixir]
+symbol = ' '
+format = '[$symbol]($style)'
+
+[fill]
+symbol = ' '
+
+[git_branch]
+only_attached = true
+style = 'bold orange'
+format = '[$symbol]($style)([$branch](bold dimmed))'
+ignore_branches = ['master', 'main']
+
+[git_metrics]
+disabled = false
+added_style = 'bold black bg:green'
+deleted_style = 'bold black bg:red'
+format = '([ $added ]($added_style))([ $deleted ]($deleted_style))'
+
+[helm]
+symbol = ' '
+style = 'bright-white bold'
+format = '[$symbol]($style)'
+
+[kubernetes]
+disabled = false
+style = 'white bg:blue'
+symbol = '  '
+format = '[[$symbol]($style)($cluster)( ns:[$namespace]($style)) ]($style)'
+detect_env_vars = ["KUBECONFIG"]
+
+[nim]
+symbol = ' '
+format = '[$symbol]($style)'
+
+[nix_shell]
+symbol = '󱄅 '
+format = '[$symbol]($style)'
+
+[nodejs]
+symbol = ' '
+style = 'yellow'
+format = '[$symbol]($style)'
+
+[package]
+symbol = ' '
+format = '[$symbol]($style)([$version]($style)) '
+
+[rust]
+symbol = ' '
+style = 'bold orange'
+format = '[$symbol]($style)'
+
+[terraform]
+symbol = ' '
+format = '[$symbol]($style)([$workspace](dimmed bold))'

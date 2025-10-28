@@ -17,7 +17,10 @@
   };
 
   # Prompt
-  programs.starship = { enable = true; };
+  programs.starship = {
+    enable = true;
+    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+  };
 
   #  Shell Integrations
   home.shell.enableNushellIntegration = true;
