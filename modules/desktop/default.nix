@@ -1,12 +1,6 @@
-{ pkgs, ... }:
-{
-  imports = [
-    ./audio.nix
-    ./boot.nix
-    ./display-manager.nix
-    ./fonts.nix
-    ./stylix.nix
-  ];
+{ pkgs, ... }: {
+  imports =
+    [ ./audio.nix ./boot.nix ./display-manager.nix ./fonts.nix ./stylix.nix ];
 
   services.xserver.enable = true;
   programs.xwayland.enable = true;
@@ -27,7 +21,5 @@
     qt5.qtwayland
   ];
 
-  qt = {
-    enable = true;
-  };
+  qt = { enable = true; };
 }
