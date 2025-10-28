@@ -138,6 +138,7 @@
 ;;; Languages - Nix
 (use-package! nix-mode
   :config
+  (setq! lsp-nix-nil-formatter "nixfmt")
   (setq-hook! 'nix-mode-hook +format-with 'nixfmt))
 
 ;;; Languages - NuShell
